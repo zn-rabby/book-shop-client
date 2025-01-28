@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")!).render(
           fontSize: 16,
 
           // Alias Token
-          // colorBgContainer: "#f6ffed",
+          colorBgContainer: "#f6ffed",
         },
       }}
     >
