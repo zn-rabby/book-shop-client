@@ -58,6 +58,19 @@ const Cart = () => {
 
   return (
     <div style={{ padding: "20px" }}>
+      <h2
+        style={{
+          margin: "40px 0", // Add top and bottom margin
+          padding: "10px", // Add padding inside the heading
+          color: "#333", // Set the text color
+          textAlign: "center", // Center-align the text
+          fontSize: "2rem", // Adjust font size if needed
+          fontWeight: "600", // Make the font bold
+        }}
+      >
+        Books Display
+      </h2>
+
       <Row gutter={[16, 24]}>
         {cardData.map((book, index) => (
           <Col xs={24} md={12} lg={8} key={index}>
@@ -81,28 +94,6 @@ const Cart = () => {
                       borderRadius: "4px 4px 0 0",
                     }}
                   />
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: "-10px",
-                      right: "0%",
-                      transform: "translateX(-50%)",
-                      background: "rgba(0, 0, 0, 0.6)",
-                      color: "#fff",
-                      padding: "8px 15px",
-                      borderRadius: "px",
-                      fontSize: "1.2rem",
-                      fontWeight: "600",
-                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      letterSpacing: "0.5px",
-                    }}
-                  >
-                    <span style={{ marginRight: "5px" }}>$</span>
-                    {book.price}
-                  </div>
                 </div>
               }
             >
@@ -125,10 +116,35 @@ const Cart = () => {
                     {book.author}
                   </span>
                 </div>
-                <div>
-                  <Rate disabled value={4} />
+
+                {/* Right-aligned Price and Rating */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-end", // Aligns both the price and rating to the right
+                    justifyContent: "center",
+                  }}
+                >
+                  {/* Price */}
+                  <div
+                    style={{
+                      fontSize: "1.4rem",
+                      fontWeight: "bold",
+                      color: "#333",
+                    }}
+                  >
+                    <span style={{ marginRight: "5px" }}>$</span>
+                    {book.price}
+                  </div>
+
+                  {/* Rating */}
+                  <div>
+                    <Rate disabled value={4} />
+                  </div>
                 </div>
               </div>
+
               <p
                 style={{
                   color: "#7f8c8d",
@@ -166,6 +182,28 @@ const Cart = () => {
           </Col>
         ))}
       </Row>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Button
+          type="primary"
+          style={{
+            backgroundColor: "#00b96b", // Button background color
+            border: "none", // Remove button border
+            borderRadius: "5px", // Round the corners
+            padding: "10px 20px", // Padding for button size
+            fontSize: "16px", // Font size of the button text
+            fontWeight: "bold", // Make text bold
+            transition: "background 0.3s", // Smooth background color transition
+          }}
+          onMouseEnter={
+            (e) => (e.currentTarget.style.background = "#1abc9c") // Change background on hover
+          }
+          onMouseLeave={
+            (e) => (e.currentTarget.style.background = "#00b96b") // Revert background color
+          }
+        >
+          View All Books
+        </Button>
+      </div>
     </div>
   );
 };
