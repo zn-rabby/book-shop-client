@@ -4,6 +4,7 @@ import About from "../pages/About/About";
 import Home from "../pages/Home/Home";
 import AllProduct from "../pages/AllProduct/AllProduct";
 import Checkout from "../pages/Checkout/Checkout";
+import Dashboard from "../components/layout/Dashboard";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -34,50 +35,58 @@ const router = createBrowserRouter([
       },
     ],
   },
-  //   {
-  //     path: '/admin',
-  //     element: (
-  //       <ProtectedRoute role="admin">
-  //         <App />
-  //       </ProtectedRoute>
-  //     ),
-  //     children: routeGenerator(adminPaths),
-  //   },
-  //   {
-  //     path: '/faculty',
-  //     element: (
-  //       <ProtectedRoute role="faculty">
-  //         <App />
-  //       </ProtectedRoute>
-  //     ),
-  //     children: routeGenerator(facultyPaths),
-  //   },
-  //   {
-  //     path: '/student',
-  //     element: (
-  //       <ProtectedRoute role="student">
-  //         <App />
-  //       </ProtectedRoute>
-  //     ),
-  //     children: routeGenerator(studentPaths),
-  //   },
-
   {
-    path: "/about",
-    element: <About />,
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      //   {
+      //     path: "userHome",
+      //     element: <UserHome></UserHome>,
+      //   },
+    ],
+    // children: [
+    //   // for normal user
+    //   {
+    //     path: "userHome",
+    //     element: <UserHome></UserHome>,
+    //   },
+    //   {
+    //     path: "cart",
+    //     element: <Cart></Cart>,
+    //   },
+    //   {
+    //     path: "payment",
+    //     element: <Payment></Payment>,
+    //   },
+    //   {
+    //     path: "history",
+    //     element: <PaymentHistory></PaymentHistory>,
+    //   },
+    //   // for admin
+    //   {
+    //     path: "adminHome",
+    //     element: <AdminHome></AdminHome>,
+    //   },
+    //   {
+    //     path: "addItems",
+    //     element: <AddItems></AddItems>,
+    //   },
+    //   {
+    //     path: "manageItem",
+    //     element: <ManageItems></ManageItems>,
+    //   },
+    //   {
+    //     path: "updateItem/:id",
+    //     element: <UpdateItem></UpdateItem>,
+    //     loader: ({ params }) =>
+    //       fetch(`https://bistroboss-server-silk.vercel.app/menu/${params.id}`),
+    //   },
+    //   {
+    //     path: "users",
+    //     element: <AllUsers></AllUsers>,
+    //   },
+    // ],
   },
-  //   {
-  //     path: '/login',
-  //     element: <Login />,
-  //   },
-  //   {
-  //     path: '/change-password',
-  //     element: <ChangePassword />,
-  //   },
-  //   {
-  //     path: '/register',
-  //     element: <Register />,
-  //   },
 ]);
 
 export default router;

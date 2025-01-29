@@ -32,11 +32,8 @@ const Navbar = () => {
             <Menu.Item key="checkout">
               <Link to="/checkout">Checkout</Link>
             </Menu.Item>
-            <Menu.Item key="services">
-              <Link to="/services">Services</Link>
-            </Menu.Item>
-            <Menu.Item key="contact">
-              <Link to="/contact">Contact</Link>
+            <Menu.Item key="dashboard">
+              <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
           </Menu>
 
@@ -74,6 +71,9 @@ const Navbar = () => {
             </Menu.Item>
             <Menu.Item key="about">
               <Link to="/about">About</Link>
+            </Menu.Item>
+            <Menu.Item key="checkout">
+              <Link to="/checkout">Checkout</Link>
             </Menu.Item>
             <Menu.Item key="services">
               <Link to="/services">Services</Link>
