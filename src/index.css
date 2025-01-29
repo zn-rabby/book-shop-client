@@ -137,10 +137,6 @@
   padding: 0 20px;
 }
 
-div {
-  border: 1px solid rebeccapurple;
-}
-
 .reverse-xs {
   display: flex;
   flex-wrap: wrap;
@@ -149,4 +145,15 @@ div {
   .reverse-xs {
     flex-direction: column-reverse;
   }
+}
+
+/* div {
+  border: 1px solid rebeccapurple;
+} */
+
+.ft {
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1600px;
+  margin: 0 auto;
 }

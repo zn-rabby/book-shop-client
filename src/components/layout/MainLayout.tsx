@@ -4,6 +4,7 @@ import { Layout } from "antd";
 // import { logout } from '../../redux/features/auth/authSlice';
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import BookshopFooter from "./Footer";
 // const { Header, Content } = Layout;
 
 const MainLayout = () => {
@@ -20,6 +21,7 @@ const MainLayout = () => {
       <div className="your-class">
         <Outlet />
       </div>
+      <BookshopFooter></BookshopFooter>
       {/* <Layout>
         <Header>
           <Button onClick={handleLogout}>Logout</Button>{" "}
