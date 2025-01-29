@@ -40,9 +40,12 @@ const Navbar = () => {
           {/* Right Section: Login Button and Hamburger Icon */}
           <div className="right-section">
             {/* Login Button for Large Screens */}
-            <Button type="primary" className="login-button">
-              Login
-            </Button>
+
+            <Link to="/login">
+              <Button type="primary" className="login-button">
+                Login
+              </Button>
+            </Link>
 
             {/* Hamburger Icon for Small Screens */}
             <Button
@@ -85,9 +88,11 @@ const Navbar = () => {
 
           {/* Login Button at the Bottom */}
           <div className="drawer-footer">
-            <Button type="primary" block>
-              Login
-            </Button>
+            <Link to="/login">
+              <Button type="primary" block>
+                Login
+              </Button>
+            </Link>
           </div>
         </Drawer>
       </Header>

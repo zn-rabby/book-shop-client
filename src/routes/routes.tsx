@@ -5,6 +5,8 @@ import Home from "../pages/Home/Home";
 import AllProduct from "../pages/AllProduct/AllProduct";
 import Checkout from "../pages/Checkout/Checkout";
 import Dashboard from "../components/layout/Dashboard";
+import Login from "../pages/Login";
+import RegisterPage from "../pages/Register";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
         element: <Checkout></Checkout>,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
   {
     path: "dashboard",
