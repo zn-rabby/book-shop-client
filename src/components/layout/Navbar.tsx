@@ -23,6 +23,9 @@ const Navbar = () => {
             <Menu.Item key="home">
               <Link to="/">Home</Link>
             </Menu.Item>
+            <Menu.Item key="product">
+              <Link to="/product">Books</Link>
+            </Menu.Item>
             <Menu.Item key="about">
               <Link to="/about">About</Link>
             </Menu.Item>
@@ -62,6 +65,9 @@ const Navbar = () => {
           <Menu mode="vertical" className="drawer-menu">
             <Menu.Item key="home">
               <Link to="/">Home</Link>
+            </Menu.Item>
+            <Menu.Item key="product">
+              <Link to="/">Books</Link>
             </Menu.Item>
             <Menu.Item key="about">
               <Link to="/about">About</Link>
