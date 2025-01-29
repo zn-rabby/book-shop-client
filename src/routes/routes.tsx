@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import About from "../pages/About";
+import About from "../pages/About/About";
 import Home from "../pages/Home/Home";
 import AllProduct from "../pages/AllProduct/AllProduct";
+import Checkout from "../pages/Checkout/Checkout";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About></About>,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout></Checkout>,
       },
     ],
   },
