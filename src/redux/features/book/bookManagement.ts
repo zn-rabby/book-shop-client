@@ -1,16 +1,10 @@
-import {
-  TAcademicDepartment,
-  TAcademicFaculty,
-  TAcademicSemester,
-  TQueryParam,
-  TResponseRedux,
-} from "../../../types";
-
+import { TProduct } from "../../../types/bookManagement.type";
+import { TQueryParam, TResponseRedux } from "../../../types/global";
 import { baseApi } from "../../api/baseApi";
 
-const academicManagementApi = baseApi.injectEndpoints({
+const bookManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSemesters: builder.query({
+    getAllBooks: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
 
@@ -21,67 +15,52 @@ const academicManagementApi = baseApi.injectEndpoints({
         }
 
         return {
-          url: "/academic-semesters",
+          url: "/product",
           method: "GET",
           params: params,
         };
       },
-      transformResponse: (response: TResponseRedux<TAcademicSemester[]>) => {
+      transformResponse: (response: TResponseRedux<TProduct[]>) => {
         return {
           data: response.data,
           meta: response.meta,
         };
       },
     }),
-    addAcademicSemester: builder.mutation({
+    getSingleBook: builder.query({
+      query: (id: string) => ({
+        url: `/books/${id}`,
+        method: "GET",
+      }),
+      transformResponse: (response: TResponseRedux<TProduct>) => response.data,
+    }),
+    addBook: builder.mutation({
       query: (data) => ({
-        url: "/academic-semesters/create-academic-semester",
+        url: "/books",
         method: "POST",
         body: data,
       }),
     }),
-    getAcademicFaculties: builder.query({
-      query: () => {
-        return { url: "/academic-faculties", method: "GET" };
-      },
-      transformResponse: (response: TResponseRedux<TAcademicFaculty[]>) => {
-        return {
-          data: response.data,
-          meta: response.meta,
-        };
-      },
-    }),
-    addAcademicFaculty: builder.mutation({
-      query: (data) => ({
-        url: "/academic-faculties/create-academic-faculty",
-        method: "POST",
+    updateBook: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/books/${id}`,
+        method: "PUT",
         body: data,
       }),
     }),
-    getAcademicDepartments: builder.query({
-      query: () => {
-        return { url: "/academic-departments", method: "GET" };
-      },
-      transformResponse: (response: TResponseRedux<TAcademicDepartment[]>) => {
-        return {
-          data: response.data,
-          meta: response.meta,
-        };
-      },
-    }),
-    addAcademicDepartment: builder.mutation({
-      query: (data) => ({
-        url: "/academic-departments/create-academic-department",
-        method: "POST",
-        body: data,
+    deleteBook: builder.mutation({
+      query: (id: string) => ({
+        url: `/books/${id}`,
+        method: "DELETE",
       }),
     }),
   }),
 });
 
 export const {
-  useGetAllSemestersQuery,
-  useAddAcademicSemesterMutation,
-  useGetAcademicDepartmentsQuery,
-  useGetAcademicFacultiesQuery,
-} = academicManagementApi;
+  useGetAllBooksQuery,
+  useGetSingleBookQuery,
+  useAddBookMutation,
+  useUpdateBookMutation,
+  useDeleteBookMutation,
+} = bookManagementApi;
