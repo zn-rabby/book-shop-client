@@ -1,15 +1,10 @@
-import { Row, Col, Card, Button, Tag, Rate } from "antd";
+import { Row, Col, Card, Button,  Rate } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import img from "../../assets/books.png";
-import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 
 const { Meta } = Card;
 
 const Cart = () => {
-  const { data: books } = useGetAllBooksQuery(undefined);
-  // const navigate = useNavigate();
-
-  console.log("data", books);
   const cardData = [
     {
       title: "Book 1",
