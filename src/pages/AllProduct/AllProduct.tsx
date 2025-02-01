@@ -1,5 +1,5 @@
 import { Col, Row, Input, Select, Pagination } from "antd";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
 import Cards from "./Cards";
@@ -13,25 +13,31 @@ const AllProduct = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("all"); // New state for category filter
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(3); // Customize page size as needed
+  const [pageSize, setPageSize] = useState(3); // Customizable page size
 
-  const filteredBooks = bookList.filter((book: TProduct) => {
-    const matchesSearch = book.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesPrice =
-      priceRange === "all" ||
-      (priceRange === "low" && book.price < 20) ||
-      (priceRange === "mid" && book.price >= 20 && book.price <= 50) ||
-      (priceRange === "high" && book.price > 50);
-    return matchesSearch && matchesPrice;
-  });
+  // Filtering books based on search term, price range, and category
+  const filteredBooks = useMemo(() => {
+    return bookList.filter((book: TProduct) => {
+      const matchesSearch = book.title
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesPrice =
+        priceRange === "all" ||
+        (priceRange === "low" && book.price < 20) ||
+        (priceRange === "mid" && book.price >= 20 && book.price <= 50) ||
+        (priceRange === "high" && book.price > 50);
+      const matchesCategory =
+        categoryFilter === "all" || book.category === categoryFilter;
 
-  // Calculate the index range for the current page
+      return matchesSearch && matchesPrice && matchesCategory;
+    });
+  }, [searchTerm, priceRange, categoryFilter, bookList]);
+
+  // Calculating the index range for pagination
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-
   const paginatedBooks = filteredBooks.slice(startIndex, endIndex);
 
   const onPageChange = (page: number) => {
@@ -64,10 +70,14 @@ const AllProduct = () => {
         {/* Search & Filter Section */}
         <Col xs={24} sm={6}>
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
           >
             <Select
-              defaultValue="all"
+              value={priceRange}
               style={{ width: "100%" }}
               onChange={(value) => setPriceRange(value)}
             >
@@ -75,6 +85,21 @@ const AllProduct = () => {
               <Option value="low">Below $20</Option>
               <Option value="mid">$20 - $50</Option>
               <Option value="high">Above $50</Option>
+            </Select>
+
+            {/* Category Filter */}
+            <Select
+              value={categoryFilter}
+              style={{ width: "100%" }}
+              onChange={(value) => setCategoryFilter(value)}
+            >
+              <Option value="all">All Categories</Option>
+              {/* Replace with dynamic categories if available */}
+              <Option value="fiction">Fiction</Option>
+              <Option value="non-fiction">Non-Fiction</Option>
+              <Option value="history">History</Option>
+              <Option value="science">Science</Option>
+              {/* Add more categories as necessary */}
             </Select>
           </div>
         </Col>
@@ -97,16 +122,14 @@ const AllProduct = () => {
         </Col>
       </Row>
 
-      {/* Pagination */}
-      <div
-        style={{ textAlign: "right", marginTop: "20px", marginRight: "0px" }}
-      >
+      {/* Pagination Section */}
+      <div style={{ textAlign: "right", marginTop: "20px" }}>
         <Pagination
           current={currentPage}
           total={filteredBooks.length}
           pageSize={pageSize}
           onChange={onPageChange}
-          showSizeChanger={false} // You can also add the option to change page size if needed
+          showSizeChanger={false} // Optional: show size changer for page size selection
         />
       </div>
     </div>
