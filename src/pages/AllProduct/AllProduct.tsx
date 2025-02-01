@@ -1,4 +1,4 @@
-import { Col, Row, Input, Select } from "antd";
+import { Col, Row, Input, Select, Pagination } from "antd";
 import { useState } from "react";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
@@ -13,6 +13,8 @@ const AllProduct = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(3); // Customize page size as needed
 
   const filteredBooks = bookList.filter((book: TProduct) => {
     const matchesSearch = book.title
@@ -25,6 +27,16 @@ const AllProduct = () => {
       (priceRange === "high" && book.price > 50);
     return matchesSearch && matchesPrice;
   });
+
+  // Calculate the index range for the current page
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  const paginatedBooks = filteredBooks.slice(startIndex, endIndex);
+
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="home" style={{ padding: "20px" }}>
@@ -76,7 +88,7 @@ const AllProduct = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{ width: "100%" }}
             />
-            {filteredBooks.map((book: TProduct) => (
+            {paginatedBooks.map((book: TProduct) => (
               <Col xs={24} sm={12} lg={6} key={book._id}>
                 <Cards book={book} />
               </Col>
@@ -84,6 +96,19 @@ const AllProduct = () => {
           </Row>
         </Col>
       </Row>
+
+      {/* Pagination */}
+      <div
+        style={{ textAlign: "right", marginTop: "20px", marginRight: "0px" }}
+      >
+        <Pagination
+          current={currentPage}
+          total={filteredBooks.length}
+          pageSize={pageSize}
+          onChange={onPageChange}
+          showSizeChanger={false} // You can also add the option to change page size if needed
+        />
+      </div>
     </div>
   );
 };
