@@ -1,15 +1,13 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Use useNavigate for navigation in React Router v6
 import { TProduct } from "../../types/bookManagement.type";
 import { Card, Button, Rate } from "antd";
-import { useNavigate } from "react-router-dom"; // Use useNavigate for navigation in React Router v6
 
 interface CartProps {
   book: TProduct | undefined; // Allow book to be undefined
 }
 
 const Cards: React.FC<CartProps> = ({ book }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate(); // Use navigate for routing in React Router v6
 
   // Check if book is undefined or missing properties

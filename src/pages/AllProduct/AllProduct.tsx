@@ -10,7 +10,9 @@ const { Option } = Select;
 
 const AllProduct = () => {
   const { data: books } = useGetAllBooksQuery(undefined);
-  const bookList = books?.data ?? [];
+
+  // Moved bookList initialization inside useMemo to avoid unnecessary re-calculations
+  const bookList = useMemo(() => books?.data ?? [], [books]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState("all");
@@ -43,6 +45,10 @@ const AllProduct = () => {
 
   const onPageChange = (page: number) => {
     setCurrentPage(page);
+  };
+
+  const onPageSizeChange = (value: string) => {
+    setPageSize(Number(value)); // Update page size based on the selected value
   };
 
   return (
@@ -99,6 +105,17 @@ const AllProduct = () => {
               <Option value="non-fiction">Non-Fiction</Option>
               <Option value="history">History</Option>
               <Option value="science">Science</Option>
+            </Select>
+
+            {/* Page Size Selector */}
+            <Select
+              value={pageSize.toString()}
+              style={{ width: "100%" }}
+              onChange={onPageSizeChange}
+            >
+              <Option value="3">3 Books per page</Option>
+              <Option value="6">6 Books per page</Option>
+              <Option value="9">9 Books per page</Option>
             </Select>
           </div>
         </Col>

@@ -4,6 +4,16 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { RootState } from "../../redux/store";
 import { removeFromCart } from "../../redux/features/cart/cartSlice";
 
+// Define the type of your cart items
+interface CartItem {
+  id: string; // Assuming id is a string, change this if it's a different type
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+  author: string;
+}
+
 const { Content } = Layout;
 const { Text, Title } = Typography;
 
@@ -12,19 +22,22 @@ const Checkout = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items || []); // ✅ Ensure it's always an array
 
   // Group items by ID to avoid duplicates
-  const groupedItems = cartItems.reduce((acc, item) => {
-    if (acc[item.id]) {
-      acc[item.id].quantity += item.quantity; // Merge items with the same id by adding quantity
-    } else {
-      acc[item.id] = { ...item }; // Clone the item to add it to the accumulator
-    }
-    return acc;
-  }, {});
+  const groupedItems = cartItems.reduce<{ [key: string]: CartItem }>(
+    (acc, item) => {
+      if (acc[item.id]) {
+        acc[item.id].quantity += item.quantity; // Merge items with the same id by adding quantity
+      } else {
+        acc[item.id] = { ...item }; // Clone the item to add it to the accumulator
+      }
+      return acc;
+    },
+    {}
+  ); // Explicitly define the type for the accumulator here
 
   const items = Object.values(groupedItems); // Convert grouped items object to an array
 
-  const calculateTotal = () => {
-    return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const calculateTotal = (): number => {
+    return items.reduce((acc, item) => acc + item.price * item.quantity, 0); // Ensure it returns a number
   };
 
   return (
@@ -36,7 +49,7 @@ const Checkout = () => {
               {items.length > 0 ? (
                 items.map((item) => (
                   <Row
-                    key={item.id}
+                    key={item.id} // ✅ Make sure the key is unique
                     align="middle"
                     gutter={[16, 16]}
                     style={{ marginBottom: "15px" }}
@@ -65,7 +78,7 @@ const Checkout = () => {
                         icon={<DeleteOutlined />}
                         type="text"
                         danger
-                        onClick={() => dispatch(removeFromCart(item.id))}
+                        onClick={() => dispatch(removeFromCart(item.id))} // ✅ Use the correct item ID for removal
                       />
                     </Col>
                   </Row>
