@@ -1,9 +1,9 @@
 import React from "react";
-import { Layout, Menu, Drawer, Button } from "antd";
+import { Layout, Menu, Drawer, Button, Badge } from "antd";
 import { Link } from "react-router-dom";
-import { MenuOutlined } from "@ant-design/icons";
-import { ShoppingCartOutlined } from "@ant-design/icons"; // Import the cart icon
-import { Badge } from "antd"; // Import Badge to show item count
+import { MenuOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store"; // Assuming you're using redux and RootState is configured
 
 const { Header } = Layout;
 
@@ -12,6 +12,10 @@ const Navbar = () => {
 
   const showDrawer = () => setDrawerVisible(true);
   const closeDrawer = () => setDrawerVisible(false);
+
+  // Get cart item count from Redux store (assuming 'cart' state exists)
+  const cartItems = useSelector((state: RootState) => state.cart.items || []);
+  const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <Layout>
@@ -31,15 +35,12 @@ const Navbar = () => {
             <Menu.Item key="about">
               <Link to="/about">About</Link>
             </Menu.Item>
-            {/* <Menu.Item key="checkout">
-              <Link to="/checkout">Checkout</Link>
-            </Menu.Item> */}
             <Menu.Item key="dashboard">
               <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
           </Menu>
 
-          {/* Right Section: Login Button and Hamburger Icon */}
+          {/* Right Section: Login Button and Cart Icon */}
           <div
             style={{
               display: "flex",
@@ -48,10 +49,10 @@ const Navbar = () => {
               gap: "20px",
             }}
           >
-            {/* Cart Icon with Badge */}
+            {/* Cart Icon with Dynamic Item Count */}
             <Link to="/checkout">
               <Badge
-                count={4} // The number of items in the cart
+                count={cartItemCount} // Dynamic item count
                 showZero // Show '0' if there are no items
                 style={{
                   backgroundColor: "#ff4d4f", // Red color for the badge

@@ -1,13 +1,27 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { TProduct } from "../../types/bookManagement.type";
 import { Card, Button, Rate } from "antd";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom"; // Use useNavigate for navigation in React Router v6
 
 interface CartProps {
-  book: TProduct;
+  book: TProduct | undefined; // Allow book to be undefined
 }
 
 const Cards: React.FC<CartProps> = ({ book }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Use navigate for routing in React Router v6
+
+  // Check if book is undefined or missing properties
+  if (!book) {
+    return <div>Loading...</div>; // Display a loading message or spinner while the book data is loading
+  }
+
+  const handleViewDetails = () => {
+    // Navigate to the book's details page
+    navigate(`/book-details/${book._id}`); // Navigate to book details page
+  };
+
   return (
     <Card
       hoverable
@@ -63,14 +77,12 @@ const Cards: React.FC<CartProps> = ({ book }) => {
           padding: "12px",
           fontSize: "1rem",
           display: "flex",
-          justifyContent: "center", // To align text and icon
-          alignItems: "center", // To vertically align
+          justifyContent: "center",
+          alignItems: "center",
         }}
+        onClick={handleViewDetails} // On button click, view the details of the book
       >
-        <span>Add to Cart</span>
-        <ShoppingCartOutlined
-          style={{ fontSize: "20px", marginLeft: "10px" }}
-        />
+        <span>View Details</span>
       </Button>
     </Card>
   );
