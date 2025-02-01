@@ -2,6 +2,7 @@ import { Col, Row } from "antd";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
 import Cards from "../AllProduct/Cards";
+import { Link } from "react-router-dom";
 // import Cards from "./Cards";
 
 const HomeProducts = () => {
@@ -32,7 +33,11 @@ const HomeProducts = () => {
       <Row gutter={[16, 16]}>
         {bookList.map((book: TProduct) => (
           <Col xs={24} sm={12} lg={6} key={book._id}>
-            <Cards book={book} />
+            <Link to={`/product/${book._id}`}>
+              {" "}
+              {/* Add Link here */}
+              <Cards book={book} />
+            </Link>
           </Col>
         ))}
       </Row>

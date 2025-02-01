@@ -2,6 +2,8 @@ import React from "react";
 import { Layout, Menu, Drawer, Button } from "antd";
 import { Link } from "react-router-dom";
 import { MenuOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined } from "@ant-design/icons"; // Import the cart icon
+import { Badge } from "antd"; // Import Badge to show item count
 
 const { Header } = Layout;
 
@@ -29,31 +31,54 @@ const Navbar = () => {
             <Menu.Item key="about">
               <Link to="/about">About</Link>
             </Menu.Item>
-            <Menu.Item key="checkout">
+            {/* <Menu.Item key="checkout">
               <Link to="/checkout">Checkout</Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item key="dashboard">
               <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
           </Menu>
 
           {/* Right Section: Login Button and Hamburger Icon */}
-          <div className="right-section">
-            {/* Login Button for Large Screens */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              gap: "20px",
+            }}
+          >
+            {/* Cart Icon with Badge */}
+            <Link to="/checkout">
+              <Badge
+                count={4} // The number of items in the cart
+                showZero // Show '0' if there are no items
+                style={{
+                  backgroundColor: "#ff4d4f", // Red color for the badge
+                  boxShadow: "0 0 0 2px white", // Optional: add some white border to the badge
+                }}
+              >
+                <ShoppingCartOutlined
+                  style={{
+                    fontSize: "24px", // Icon size
+                    color: "#333", // Icon color
+                  }}
+                />
+              </Badge>
+            </Link>
 
+            {/* Login Button */}
             <Link to="/login">
-              <Button type="primary" className="login-button">
+              <Button
+                type="primary"
+                style={{
+                  fontWeight: "bold", // Optional: bold text for emphasis
+                  padding: "8px 16px", // Padding for button size
+                }}
+              >
                 Login
               </Button>
             </Link>
-
-            {/* Hamburger Icon for Small Screens */}
-            <Button
-              className="menu-button"
-              type="primary"
-              icon={<MenuOutlined />}
-              onClick={showDrawer}
-            />
           </div>
         </div>
 

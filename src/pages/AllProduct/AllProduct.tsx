@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
 import Cards from "./Cards";
+import { Link } from "react-router-dom"; // Import Link component from react-router-dom
 
 const { Search } = Input;
 const { Option } = Select;
@@ -13,9 +14,9 @@ const AllProduct = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState("all");
-  const [categoryFilter, setCategoryFilter] = useState("all"); // New state for category filter
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(3); // Customizable page size
+  const [pageSize, setPageSize] = useState(3);
 
   // Filtering books based on search term, price range, and category
   const filteredBooks = useMemo(() => {
@@ -35,7 +36,7 @@ const AllProduct = () => {
     });
   }, [searchTerm, priceRange, categoryFilter, bookList]);
 
-  // Calculating the index range for pagination
+  // Pagination calculations
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedBooks = filteredBooks.slice(startIndex, endIndex);
@@ -94,12 +95,10 @@ const AllProduct = () => {
               onChange={(value) => setCategoryFilter(value)}
             >
               <Option value="all">All Categories</Option>
-              {/* Replace with dynamic categories if available */}
               <Option value="fiction">Fiction</Option>
               <Option value="non-fiction">Non-Fiction</Option>
               <Option value="history">History</Option>
               <Option value="science">Science</Option>
-              {/* Add more categories as necessary */}
             </Select>
           </div>
         </Col>
@@ -115,7 +114,11 @@ const AllProduct = () => {
             />
             {paginatedBooks.map((book: TProduct) => (
               <Col xs={24} sm={12} lg={6} key={book._id}>
-                <Cards book={book} />
+                <Link to={`/product/${book._id}`}>
+                  {" "}
+                  {/* Add Link here */}
+                  <Cards book={book} />
+                </Link>
               </Col>
             ))}
           </Row>
@@ -129,7 +132,7 @@ const AllProduct = () => {
           total={filteredBooks.length}
           pageSize={pageSize}
           onChange={onPageChange}
-          showSizeChanger={false} // Optional: show size changer for page size selection
+          showSizeChanger={false}
         />
       </div>
     </div>

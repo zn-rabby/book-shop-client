@@ -7,6 +7,7 @@ import Checkout from "../pages/Checkout/Checkout";
 import Dashboard from "../components/layout/Dashboard";
 import Login from "../pages/Login";
 import RegisterPage from "../pages/Register";
+import CardDetails from "../pages/AllProduct/CardDetails";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -28,12 +29,20 @@ const router = createBrowserRouter([
         element: <AllProduct />,
       },
       {
+        path: "/product/:id",
+        element: <CardDetails></CardDetails>,
+      },
+      {
+        path: "/product",
+        element: <AllProduct />,
+      },
+      {
         path: "/about",
         element: <About></About>,
       },
       {
-        path: "/checkout",
-        element: <Checkout></Checkout>,
+        path: "/cart",
+        element: <About></About>,
       },
     ],
   },
