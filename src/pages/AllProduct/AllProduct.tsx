@@ -5,22 +5,18 @@ import Carts from "../Home/Carts";
 
 const AllProduct = () => {
   const { data: books } = useGetAllBooksQuery(undefined);
-  // const navigate = useNavigate();
   const bookList = books?.data ?? [];
-  console.log("dd", bookList);
 
   return (
-    <div className="home">
-      <h2>All Product</h2>
-      <div>
-        <Row gutter={[16, 24]}>
-          <Col xs={24} md={12} lg={8}>
-            {bookList.map((book: TProduct) => (
-              <Carts key={book._id} book={book} />
-            ))}
+    <div className="home" style={{ padding: "20px" }}>
+      <h2>All Products</h2>
+      <Row gutter={[16, 16]}>
+        {bookList.map((book: TProduct) => (
+          <Col xs={24} sm={12} lg={8} key={book._id}>
+            <Carts book={book} />
           </Col>
-        </Row>
-      </div>
+        ))}
+      </Row>
     </div>
   );
 };
