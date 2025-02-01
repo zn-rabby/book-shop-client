@@ -54,7 +54,6 @@ const Cards: React.FC<CartProps> = ({ book }) => {
       </p>
       <Button
         type="primary"
-        icon={<ShoppingCartOutlined />}
         style={{
           width: "100%",
           background: "#00b96b",
@@ -63,9 +62,15 @@ const Cards: React.FC<CartProps> = ({ book }) => {
           fontWeight: "bold",
           padding: "12px",
           fontSize: "1rem",
+          display: "flex",
+          justifyContent: "center", // To align text and icon
+          alignItems: "center", // To vertically align
         }}
       >
-        Add to Cart
+        <span>Add to Cart</span>
+        <ShoppingCartOutlined
+          style={{ fontSize: "20px", marginLeft: "10px" }}
+        />
       </Button>
     </Card>
   );
