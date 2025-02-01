@@ -41,16 +41,9 @@ const Navbar = () => {
           </Menu>
 
           {/* Right Section: Login Button and Cart Icon */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              gap: "20px",
-            }}
-          >
-            {/* Cart Icon with Dynamic Item Count */}
-            <Link to="/checkout">
+          <div className="right-section">
+            {/* Cart Icon with Dynamic Item Count (Visible on Large Screens Only) */}
+            <Link to="/checkout" className="cart-icon">
               <Badge
                 count={cartItemCount} // Dynamic item count
                 showZero // Show '0' if there are no items
@@ -72,6 +65,7 @@ const Navbar = () => {
             <Link to="/login">
               <Button
                 type="primary"
+                className="login-button"
                 style={{
                   fontWeight: "bold", // Optional: bold text for emphasis
                   padding: "8px 16px", // Padding for button size
@@ -81,6 +75,18 @@ const Navbar = () => {
               </Button>
             </Link>
           </div>
+
+          {/* Hamburger Menu Icon for Small Screens */}
+          <Button
+            className="menu-button"
+            icon={<MenuOutlined />}
+            onClick={showDrawer}
+            type="text"
+            style={{
+              fontSize: "24px", // Adjust the hamburger icon size
+              color: "#333", // Icon color
+            }}
+          />
         </div>
 
         {/* Drawer Menu for Small Screens */}
@@ -96,7 +102,7 @@ const Navbar = () => {
               <Link to="/">Home</Link>
             </Menu.Item>
             <Menu.Item key="product">
-              <Link to="/">Books</Link>
+              <Link to="/product">Books</Link>
             </Menu.Item>
             <Menu.Item key="about">
               <Link to="/about">About</Link>
@@ -109,6 +115,26 @@ const Navbar = () => {
             </Menu.Item>
             <Menu.Item key="contact">
               <Link to="/contact">Contact</Link>
+            </Menu.Item>
+            {/* Cart Icon inside Drawer for Mobile */}
+            <Menu.Item key="cart" className="cart-menu">
+              <Link to="/checkout">
+                <Badge
+                  count={cartItemCount}
+                  showZero
+                  style={{
+                    backgroundColor: "#ff4d4f",
+                    boxShadow: "0 0 0 2px white",
+                  }}
+                >
+                  <ShoppingCartOutlined
+                    style={{
+                      fontSize: "24px",
+                      color: "#333",
+                    }}
+                  />
+                </Badge>
+              </Link>
             </Menu.Item>
           </Menu>
 

@@ -146,6 +146,11 @@
     flex-direction: column-reverse;
   }
 }
+@media (max-width: 576px) {
+  .cart-menu {
+    display: none;
+  }
+}
 
 /* div {
   border: 1px solid rebeccapurple;
