@@ -7,7 +7,7 @@ interface CartProps {
   book: TProduct;
 }
 
-const Carts: React.FC<CartProps> = ({ book }) => {
+const Cards: React.FC<CartProps> = ({ book }) => {
   return (
     <Card
       hoverable
@@ -71,4 +71,4 @@ const Carts: React.FC<CartProps> = ({ book }) => {
   );
 };
 
-export default Carts;
+export default Cards;

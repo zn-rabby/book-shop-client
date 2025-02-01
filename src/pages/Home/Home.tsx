@@ -1,6 +1,5 @@
 import Banner from "./Banner";
 import BannerCard from "./BannerCard";
-import Cart from "./Cart";
 import Testimonials from "./Testimonial";
 
 const Home = () => {
@@ -8,7 +7,6 @@ const Home = () => {
     <div className="home">
       <Banner></Banner>
       <BannerCard></BannerCard>
-      <Cart></Cart>
       <Testimonials></Testimonials>
     </div>
   );

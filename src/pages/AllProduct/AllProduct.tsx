@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
-import Carts from "../Home/Carts";
+import Cards from "./Cards";
 
 const AllProduct = () => {
   const { data: books } = useGetAllBooksQuery(undefined);
@@ -12,8 +12,8 @@ const AllProduct = () => {
       <h2>All Products</h2>
       <Row gutter={[16, 16]}>
         {bookList.map((book: TProduct) => (
-          <Col xs={24} sm={12} lg={8} key={book._id}>
-            <Carts book={book} />
+          <Col xs={24} sm={12} lg={6} key={book._id}>
+            <Cards book={book} />
           </Col>
         ))}
       </Row>
