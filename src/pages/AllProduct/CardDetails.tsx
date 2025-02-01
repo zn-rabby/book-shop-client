@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
@@ -14,6 +13,7 @@ const CardDetails = () => {
   const dispatch = useDispatch();
   const { data: books } = useGetAllBooksQuery(undefined);
   const book = books?.data?.find((book: TProduct) => book._id === id);
+  console.log(book, "ss");
 
   if (!book) {
     return <div>Book not found</div>;
