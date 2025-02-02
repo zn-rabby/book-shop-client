@@ -10,6 +10,7 @@ import RegisterPage from "../pages/Register";
 import CardDetails from "../pages/AllProduct/CardDetails";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard/AdminDashboard";
+import CreateUser from "../pages/Dashboard/User/CreateUser";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -69,10 +70,12 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <AdminDashboard></AdminDashboard>,
       },
+      {
+        path: "/dashboard/createUser",
+        element: <CreateUser></CreateUser>,
+      },
     ],
   },
 ]);
 
 export default router;
-
-
