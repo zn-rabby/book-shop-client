@@ -30,21 +30,21 @@ const userApi = baseApi.injectEndpoints({
     }),
     updateUserRole: builder.mutation({
       query: (args) => ({
-        url: `/user/users/${args.id}/role`,
+        url: `/user/role/${args.id}/`,
         method: "PATCH",
         body: args.data,
       }),
     }),
     updateUserStatus: builder.mutation({
       query: (args) => ({
-        url: `/user/users/${args.id}/status`,
+        url: `/user/status/${args.id}`,
         method: "PATCH",
         body: args.data,
       }),
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
-        url: `/user/users/${id}`,
+        url: `/user/delete/${id}`,
         method: "DELETE",
       }),
     }),
