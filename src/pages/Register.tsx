@@ -1,133 +1,111 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useNavigate } from "react-router-dom";
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Card, Col, Row, Typography } from "antd";
+import { toast } from "sonner";
+import { useSignupMutation } from "../redux/features/auth/authApi";
+import { TSignUp } from "../types/users";
+import PHForm from "../components/form/PHForm";
+import PHInput from "../components/form/PHInput";
 
-import { Form, Input, Button, Checkbox, Row, Col, Card, Space } from "antd";
-import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+const { Title, Text } = Typography;
 
-const RegisterPage = () => {
-  const onFinish = (values) => {
-    console.log("Received values: ", values);
+export default function CreateUser() {
+  const navigate = useNavigate();
+  const [signup] = useSignupMutation();
+
+  const onSubmit = async (data: TSignUp) => {
+    const toastId = toast.loading("Creating user account...");
+    try {
+      await signup(data).unwrap();
+      toast.success("User account has been created successfully!", {
+        id: toastId,
+        duration: 2000,
+      });
+
+      // Redirect to login after successful registration
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (err: any) {
+      toast.error(
+        err.data.message || "Registration failed. Please try again.",
+        {
+          id: toastId,
+          duration: 2000,
+        }
+      );
+    }
   };
 
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh", margin: 0 }}>
-      <Col xs={24} sm={12} md={8} lg={6}>
+    <Row
+      justify="center"
+      align="middle"
+      style={{ minHeight: "100vh", background: "#f5f5f5" }}
+    >
+      <Col xs={24} sm={18} md={12} lg={8} xl={6}>
         <Card
-          title="Register"
-          bordered={false}
           style={{
+            maxWidth: "400px",
+            width: "100%",
             padding: "24px",
-            borderRadius: "8px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            margin: "0 auto",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            borderRadius: "12px",
+            textAlign: "left",
           }}
         >
-          <Form
-            name="register"
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-          >
-            {/* Username */}
-            <Form.Item
-              name="username"
-              rules={[
-                { required: true, message: "Please input your Username!" },
-              ]}
-            >
-              <Input
-                prefix={<UserOutlined />}
-                placeholder="Username"
-                size="large"
-                autoComplete="username"
-              />
-            </Form.Item>
-
-            {/* Email */}
-            <Form.Item
+          <Title level={3} style={{ marginBottom: "20px" }}>
+            Register
+          </Title>
+          <PHForm onSubmit={onSubmit}>
+            <PHInput
+              label="Name"
+              type="text"
+              name="name"
+              placeholder="Enter Your Name"
+              rules={[{ required: true, message: "Please enter your name" }]}
+              icon={<UserOutlined />}
+            />
+            <PHInput
+              type="email"
+              label="Email"
               name="email"
-              rules={[
-                { required: true, message: "Please input your Email!" },
-                { type: "email", message: "Please enter a valid Email!" },
-              ]}
-            >
-              <Input
-                prefix={<MailOutlined />}
-                placeholder="Email"
-                size="large"
-                autoComplete="email"
-              />
-            </Form.Item>
-
-            {/* Password */}
-            <Form.Item
+              placeholder="Enter Your Email"
+              rules={[{ required: true, message: "Please enter your email" }]}
+              icon={<MailOutlined />}
+            />
+            <PHInput
+              type="password"
               name="password"
+              label="Password"
+              placeholder="Enter Your Password"
               rules={[
-                { required: true, message: "Please input your Password!" },
+                { required: true, message: "Please enter your password!" },
               ]}
+              icon={<LockOutlined />}
+            />
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              style={{ marginTop: "15px" }}
             >
-              <Input.Password
-                prefix={<LockOutlined />}
-                placeholder="Password"
-                size="large"
-                autoComplete="new-password"
-              />
-            </Form.Item>
-
-            {/* Confirm Password */}
-            <Form.Item
-              name="confirm"
-              dependencies={["password"]}
-              rules={[
-                { required: true, message: "Please confirm your password!" },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error("The two passwords do not match!")
-                    );
-                  },
-                }),
-              ]}
+              Register
+            </Button>
+          </PHForm>
+          <Text style={{ display: "block", marginTop: "15px" }}>
+            Already have an account?{" "}
+            <a
+              onClick={() => navigate("/login")}
+              style={{ color: "#1677ff", cursor: "pointer" }}
             >
-              <Input.Password
-                prefix={<LockOutlined />}
-                placeholder="Confirm Password"
-                size="large"
-                autoComplete="new-password"
-              />
-            </Form.Item>
-
-            {/* Terms & Conditions */}
-            <Form.Item name="agree" valuePropName="checked">
-              <Checkbox>
-                I agree to the <a href="#">terms and conditions</a>
-              </Checkbox>
-            </Form.Item>
-
-            {/* Submit Button */}
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                block
-                size="large"
-                style={{ borderRadius: "4px" }}
-              >
-                Register
-              </Button>
-            </Form.Item>
-
-            {/* Already have an account */}
-            <Form.Item>
-              <Space style={{ width: "100%", justifyContent: "space-between" }}>
-                <Link to="/login">Already have an account? Login</Link>
-              </Space>
-            </Form.Item>
-          </Form>
+              Login here
+            </a>
+          </Text>
         </Card>
       </Col>
     </Row>
   );
-};
-
-export default RegisterPage;
+}

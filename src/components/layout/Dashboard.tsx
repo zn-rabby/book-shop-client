@@ -161,11 +161,6 @@ const Dashboard = () => {
             <Outlet />
           </div>
         </Content>
-
-        {/* Footer */}
-        <Footer style={{ textAlign: "center", backgroundColor: "#f0f2f5" }}>
-          E-Commerce Dashboard ©2025 Created by Your Company
-        </Footer>
       </Layout>
     </Layout>
   );
