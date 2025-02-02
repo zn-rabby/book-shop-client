@@ -8,12 +8,14 @@ import {
   FaHome,
   FaHospitalUser,
   FaList,
+  FaUser,
   FaUsers,
   FaUtensils,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import { RootState } from "../../redux/store";
+import SubMenu from "antd/es/menu/SubMenu";
 const { Header, Content, Footer, Sider } = Layout;
 
 const Dashboard = () => {
@@ -51,9 +53,18 @@ const Dashboard = () => {
               <Menu.Item key="1" icon={<FaHome />}>
                 <Link to="/dashboard">Admin Home</Link>
               </Menu.Item>
-              <Menu.Item key="2" icon={<FaUtensils />}>
-                <Link to="/dashboard/addItems">Add Items</Link>
-              </Menu.Item>
+
+              <SubMenu key="sub1" icon={<FaUser />} title="Mange User">
+                <Menu.Item key="2">
+                  <Link to="/dashboard/createUser">Create User</Link>
+                </Menu.Item>
+                <Menu.Item key="3">
+                  <Link to="/dashboard/manageItems">Manage Items</Link>
+                </Menu.Item>
+                <Menu.Item key="4">
+                  <Link to="/dashboard/categories">Categories</Link>
+                </Menu.Item>
+              </SubMenu>
               <Menu.Item key="3" icon={<FaList />}>
                 <Link to="/dashboard/manageItem">Manage Items</Link>
               </Menu.Item>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Row } from "antd";
 import { FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
@@ -15,9 +14,10 @@ const Login = () => {
   const location = useLocation(); // Get the current location object to check the redirect path
   const dispatch = useAppDispatch();
 
+  // Default values (Re-enabled)
   const defaultValues = {
-    email: "user5@gmail.com",
-    password: "user5",
+    email: "", // Default to empty or a test email if needed
+    password: "", // Default to empty
   };
 
   const [login] = useLoginMutation();
@@ -30,6 +30,8 @@ const Login = () => {
         email: data.email,
         password: data.password,
       };
+      console.log(userInfo, "user info");
+
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.token) as TUser;
       dispatch(setUser({ user: user, token: res.data.token }));
@@ -41,16 +43,21 @@ const Login = () => {
       // Navigate to the previous location (or the default route)
       navigate(previousLocation);
     } catch (err) {
-      toast.error("Something went wrong", { id: toastId, duration: 2000 });
+      toast.error("Invalid credentials or something went wrong", {
+        id: toastId,
+        duration: 2000,
+      });
     }
   };
 
   return (
     <Row justify="center" align="middle" style={{ height: "100vh" }}>
       <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
-        <PHInput type="text" name="userId" label="ID:" />
-        <PHInput type="text" name="password" label="Password" />
-        <Button htmlType="submit">Login</Button>
+        <PHInput type="email" name="email" label="Email:" required />
+        <PHInput type="password" name="password" label="Password" required />
+        <Button htmlType="submit" type="primary">
+          Login
+        </Button>
       </PHForm>
     </Row>
   );
