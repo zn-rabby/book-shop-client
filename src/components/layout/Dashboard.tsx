@@ -66,7 +66,7 @@ const Dashboard = () => {
                   <Link to="/dashboard/createUser">Create User</Link>
                 </Menu.Item>
                 <Menu.Item key="3">
-                  <Link to="/dashboard/manageItems">Manage Items</Link>
+                  <Link to="/dashboard/users">Manage Users</Link>
                 </Menu.Item>
                 <Menu.Item key="4">
                   <Link to="/dashboard/categories">Categories</Link>

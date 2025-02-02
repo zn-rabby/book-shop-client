@@ -16,7 +16,7 @@ const userApi = baseApi.injectEndpoints({
         }
 
         return {
-          url: "/users",
+          url: "/user/users",
           method: "GET",
           params: params,
         };
@@ -30,21 +30,21 @@ const userApi = baseApi.injectEndpoints({
     }),
     updateUserRole: builder.mutation({
       query: (args) => ({
-        url: `/users/${args.id}/role`,
+        url: `/user/users/${args.id}/role`,
         method: "PATCH",
         body: args.data,
       }),
     }),
     updateUserStatus: builder.mutation({
       query: (args) => ({
-        url: `/users/${args.id}/status`,
+        url: `/user/users/${args.id}/status`,
         method: "PATCH",
         body: args.data,
       }),
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
-        url: `/users/${id}`,
+        url: `/user/users/${id}`,
         method: "DELETE",
       }),
     }),
