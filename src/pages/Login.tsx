@@ -1,56 +1,58 @@
-import { Button } from "antd";
-import { useForm } from "react-hook-form";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Button, Row } from "antd";
+import { FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch } from "../redux/hooks";
-import { setUser } from "../redux/features/auth/authSlice";
+import { TUser, setUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "sonner";
+import PHForm from "../components/form/PHForm";
+import PHInput from "../components/form/PHInput";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation(); // Get the current location object to check the redirect path
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      email: "user0@gmail.com",
-      password: "user0",
-    },
-  });
 
-  const [login, { error }] = useLoginMutation();
+  const defaultValues = {
+    email: "user0@gmail.com",
+    password: "user0",
+  };
 
-  const onSubmit = async (data) => {
-    const userInfo = {
-      email: data.email,
-      password: data.password,
-    };
-    console.log(data);
+  const [login] = useLoginMutation();
 
-    const res = await login(userInfo).unwrap();
-    const user = verifyToken(res.data.token);
+  const onSubmit = async (data: FieldValues) => {
+    const toastId = toast.loading("Logging in");
 
-    dispatch(setUser({ user: user, token: res.data.token }));
+    try {
+      const userInfo = {
+        email: data.email,
+        password: data.password,
+      };
+      const res = await login(userInfo).unwrap();
+      const user = verifyToken(res.data.token) as TUser;
+      dispatch(setUser({ user: user, token: res.data.token }));
+      toast.success("Logged in", { id: toastId, duration: 2000 });
+
+      // Get the previous location or default to "/" if not available
+      const previousLocation = location.state?.from || "/"; // Default to homepage if no previous location exists
+
+      // Navigate to the previous location (or the default route)
+      navigate(previousLocation);
+    } catch (err) {
+      toast.error("Something went wrong", { id: toastId, duration: 2000 });
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="email">Email: </label>
-        <input
-          type="email"
-          id="email"
-          {...register("email", { required: "Email is required" })}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          id="password"
-          {...register("password", { required: "Password is required" })}
-        />
-      </div>
-
-      <Button htmlType="submit">Login</Button>
-    </form>
+    <Row justify="center" align="middle" style={{ height: "100vh" }}>
+      <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
+        <PHInput type="text" name="userId" label="ID:" />
+        <PHInput type="text" name="password" label="Password" />
+        <Button htmlType="submit">Login</Button>
+      </PHForm>
+    </Row>
   );
 };
 
