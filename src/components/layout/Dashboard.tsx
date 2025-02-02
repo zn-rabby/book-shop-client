@@ -3,27 +3,34 @@ import {
   FaAd,
   FaBook,
   FaCalendar,
-  FaEnvelope,
-  FaGripHorizontal,
   FaHome,
   FaHospitalUser,
   FaList,
   FaUser,
   FaUsers,
-  FaUtensils,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import SubMenu from "antd/es/menu/SubMenu";
+import { useAppDispatch } from "../../redux/hooks";
+import { logout } from "../../redux/features/auth/authSlice";
 const { Header, Content, Footer, Sider } = Layout;
 
 const Dashboard = () => {
+  const dispatch = useAppDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
   console.log(user, 1);
 
   const isAdmin = user?.role === "admin";
   const isUser = user?.role === "user";
+
+  // Get user authentication state
+  const isAuthenticated = useSelector((state: RootState) => state.auth.user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -119,9 +126,22 @@ const Dashboard = () => {
             Dashboard
           </h2>
 
-          <Button style={{ marginRight: "16px" }} type="primary">
-            Logout
-          </Button>
+          {/* Conditional Rendering for Login/Logout */}
+          {isAuthenticated ? (
+            <Button
+              onClick={handleLogout}
+              type="primary"
+              style={{ fontWeight: "bold" }}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Link to="/login">
+              <Button type="primary" style={{ fontWeight: "bold" }}>
+                Login
+              </Button>
+            </Link>
+          )}
         </Header>
 
         {/* Content */}
