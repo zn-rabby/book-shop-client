@@ -8,6 +8,7 @@ import Dashboard from "../components/layout/Dashboard";
 import Login from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import CardDetails from "../pages/AllProduct/CardDetails";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -56,7 +57,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <ProtectedRoute>
+        <Dashboard></Dashboard>
+      </ProtectedRoute>
+    ),
     children: [
       //   {
       //     path: "userHome",
