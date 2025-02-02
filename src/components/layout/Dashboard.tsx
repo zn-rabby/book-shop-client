@@ -1,12 +1,4 @@
-import {
-  Layout,
-  Menu,
-  Breadcrumb,
-  Avatar,
-  Dropdown,
-  Space,
-  Button,
-} from "antd";
+import { Layout, Menu, Breadcrumb, Button } from "antd";
 import {
   FaAd,
   FaBook,
@@ -14,25 +6,22 @@ import {
   FaEnvelope,
   FaGripHorizontal,
   FaHome,
+  FaHospitalUser,
   FaList,
   FaUsers,
   FaUtensils,
 } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-
+import { RootState } from "../../redux/store";
 const { Header, Content, Footer, Sider } = Layout;
 
 const Dashboard = () => {
-  const isAdmin = true;
-  //   const isUser = true;
+  const user = useSelector((state: RootState) => state.auth.user);
+  console.log(user, 1);
 
-  const userMenu = (
-    <Menu>
-      <Menu.Item key="1" icon={<FaAd />}>
-        Logout
-      </Menu.Item>
-    </Menu>
-  );
+  const isAdmin = user?.role === "admin";
+  const isUser = user?.role === "user";
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -40,28 +29,33 @@ const Dashboard = () => {
       <Sider width={250} theme="dark" collapsible>
         <div className="logo">
           <h4
-            className="text-white text-center mt-8 text-xl font-bold"
-            style={{ color: "#00b96b" }}
+            className="text-white text-center mt-8 text-xl font-bold mb-24"
+            style={{ color: "#00b96b", marginBottom: "20px" }}
           >
-            ###
+            Dashboard
           </h4>
         </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          className="text-white text-center mt-16 text-xl font-bold"
-        >
-          {isAdmin ? (
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+          <Menu.Item key="5" icon={<FaHome />}>
+            <Link to="/">Home</Link>
+          </Menu.Item>
+          <Menu.Item key="6" icon={<FaBook />}>
+            <Link to="/product">Books</Link>
+          </Menu.Item>
+          <Menu.Item key="7" icon={<FaHospitalUser />}>
+            <Link to="/about">About</Link>
+          </Menu.Item>
+          <Menu.Divider />
+          {isAdmin && (
             <>
               <Menu.Item key="1" icon={<FaHome />}>
-                <Link to="/dashboard/adminHome">Admin Home</Link>
+                <Link to="/dashboard">Admin Home</Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<FaUtensils />}>
                 <Link to="/dashboard/addItems">Add Items</Link>
               </Menu.Item>
               <Menu.Item key="3" icon={<FaList />}>
-                <Link to="/dashboard/manageItem">Manage Item</Link>
+                <Link to="/dashboard/manageItem">Manage Items</Link>
               </Menu.Item>
               <Menu.Item key="4" icon={<FaBook />}>
                 <Link to="/dashboard/bookings">Manage Bookings</Link>
@@ -70,7 +64,9 @@ const Dashboard = () => {
                 <Link to="/dashboard/users">All Users</Link>
               </Menu.Item>
             </>
-          ) : (
+          )}
+
+          {isUser && (
             <>
               <Menu.Item key="1" icon={<FaHome />}>
                 <Link to="/dashboard/userHome">User Home</Link>
@@ -86,21 +82,11 @@ const Dashboard = () => {
               </Menu.Item>
             </>
           )}
-          <Menu.Divider />
-          <Menu.Item key="5" icon={<FaHome />}>
-            <Link to="/">Home</Link>
-          </Menu.Item>
-          <Menu.Item key="6" icon={<FaGripHorizontal />}>
-            <Link to="/order/salad">Menu</Link>
-          </Menu.Item>
-          <Menu.Item key="7" icon={<FaEnvelope />}>
-            <Link to="/contact">Contact</Link>
-          </Menu.Item>
         </Menu>
       </Sider>
 
       {/* Main Layout */}
-      <Layout style={{ padding: "0 " }}>
+      <Layout>
         <Header
           className="site-layout-background"
           style={{
@@ -108,26 +94,28 @@ const Dashboard = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            backgroundColor: "#001529", // Dark theme header
+            backgroundColor: "#001529",
           }}
         >
-          <div className="logo">
-            <h2
-              className="text-white "
-              style={{ textAlign: "center", color: "#00b96b" }}
-            >
-              Dashboard
-            </h2>
-          </div>
+          <h2
+            className="text-white"
+            style={{
+              textAlign: "center",
+              color: "#00b96b",
+              marginLeft: "16px",
+            }}
+          >
+            Dashboard
+          </h2>
 
-          <Button style={{ width: "60px" }} type="primary" block>
-            Login
+          <Button style={{ marginRight: "16px" }} type="primary">
+            Logout
           </Button>
         </Header>
 
         {/* Content */}
-        <Content style={{ padding: "0 0px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
+        <Content style={{ padding: "16px" }}>
+          <Breadcrumb style={{ marginBottom: "16px" }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
           </Breadcrumb>
@@ -136,7 +124,7 @@ const Dashboard = () => {
             style={{
               padding: 24,
               minHeight: 360,
-              backgroundColor: "#fff", // White background for content
+              backgroundColor: "#fff",
             }}
           >
             <Outlet />

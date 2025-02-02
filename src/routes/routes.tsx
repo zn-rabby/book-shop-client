@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import CardDetails from "../pages/AllProduct/CardDetails";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+import AdminDashboard from "../pages/Dashboard/AdminDashboard/AdminDashboard";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -62,54 +63,13 @@ const router = createBrowserRouter([
         <Dashboard></Dashboard>
       </ProtectedRoute>
     ),
+
     children: [
-      //   {
-      //     path: "userHome",
-      //     element: <UserHome></UserHome>,
-      //   },
+      {
+        path: "/dashboard",
+        element: <AdminDashboard></AdminDashboard>,
+      },
     ],
-    // children: [
-    //   // for normal user
-    //   {
-    //     path: "userHome",
-    //     element: <UserHome></UserHome>,
-    //   },
-    //   {
-    //     path: "cart",
-    //     element: <Cart></Cart>,
-    //   },
-    //   {
-    //     path: "payment",
-    //     element: <Payment></Payment>,
-    //   },
-    //   {
-    //     path: "history",
-    //     element: <PaymentHistory></PaymentHistory>,
-    //   },
-    //   // for admin
-    //   {
-    //     path: "adminHome",
-    //     element: <AdminHome></AdminHome>,
-    //   },
-    //   {
-    //     path: "addItems",
-    //     element: <AddItems></AddItems>,
-    //   },
-    //   {
-    //     path: "manageItem",
-    //     element: <ManageItems></ManageItems>,
-    //   },
-    //   {
-    //     path: "updateItem/:id",
-    //     element: <UpdateItem></UpdateItem>,
-    //     loader: ({ params }) =>
-    //       fetch(`https://bistroboss-server-silk.vercel.app/menu/${params.id}`),
-    //   },
-    //   {
-    //     path: "users",
-    //     element: <AllUsers></AllUsers>,
-    //   },
-    // ],
   },
 ]);
 
