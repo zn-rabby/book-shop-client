@@ -1,5 +1,4 @@
-import { Button, Row } from "antd";
-import { FieldValues } from "react-hook-form";
+import { Button, Card, Col, Row, Typography } from "antd";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch } from "../redux/hooks";
 import { TUser, setUser } from "../redux/features/auth/authSlice";
@@ -9,41 +8,35 @@ import { toast } from "sonner";
 import PHForm from "../components/form/PHForm";
 import PHInput from "../components/form/PHInput";
 
+const { Title, Text } = Typography;
+
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location object to check the redirect path
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
-  // Default values (Re-enabled)
   const defaultValues = {
-    email: "", // Default to empty or a test email if needed
-    password: "", // Default to empty
+    email: "",
+    password: "",
   };
 
   const [login] = useLoginMutation();
 
-  const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading("Logging in");
+  const onSubmit = async (data: any) => {
+    const toastId = toast.loading("Logging in...");
 
     try {
-      const userInfo = {
-        email: data.email,
-        password: data.password,
-      };
-      console.log(userInfo, "user info");
-
+      const userInfo = { email: data.email, password: data.password };
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.token) as TUser;
+
       dispatch(setUser({ user: user, token: res.data.token }));
-      toast.success("Logged in", { id: toastId, duration: 2000 });
+      toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
 
-      // Get the previous location or default to "/" if not available
-      const previousLocation = location.state?.from || "/"; // Default to homepage if no previous location exists
-
-      // Navigate to the previous location (or the default route)
+      const previousLocation = location.state?.from || "/";
       navigate(previousLocation);
     } catch (err) {
-      toast.error("Invalid credentials or something went wrong", {
+      toast.error("Invalid credentials or something went wrong.", {
         id: toastId,
         duration: 2000,
       });
@@ -51,14 +44,71 @@ const Login = () => {
   };
 
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
-        <PHInput type="email" name="email" label="Email:" required />
-        <PHInput type="password" name="password" label="Password" required />
-        <Button htmlType="submit" type="primary">
-          Login
-        </Button>
-      </PHForm>
+    <Row
+      justify="center"
+      align="middle"
+      style={{ minHeight: "100vh", background: "#f5f5f5" }}
+    >
+      <Col xs={24} sm={18} md={12} lg={8} xl={6}>
+        <Card
+          style={{
+            maxWidth: "400px",
+            width: "100%",
+            padding: "24px",
+            margin: "0 auto",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            borderRadius: "12px",
+            textAlign: "left",
+          }}
+        >
+          <Title level={3} style={{ marginBottom: "20px" }}>
+            Login
+          </Title>
+          <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
+            <PHInput
+              type="email"
+              name="email"
+              label="Email"
+              placeholder="Enter your email"
+              rules={[{ required: true, message: "Please enter your email!" }]}
+            />
+            <PHInput
+              type="password"
+              name="password"
+              label="Password"
+              placeholder="Enter your password"
+              rules={[
+                { required: true, message: "Please enter your password!" },
+              ]}
+            />
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              style={{ marginTop: "15px" }}
+            >
+              Login
+            </Button>
+          </PHForm>
+          <Text style={{ display: "block", marginTop: "10px" }}>
+            <a
+              onClick={() => navigate("/forgot-password")}
+              style={{ color: "#1677ff", cursor: "pointer" }}
+            >
+              Forgot password?
+            </a>
+          </Text>
+          <Text style={{ display: "block", marginTop: "10px" }}>
+            Don't have an account?{" "}
+            <a
+              onClick={() => navigate("/register")}
+              style={{ color: "#1677ff", cursor: "pointer" }}
+            >
+              Register here
+            </a>
+          </Text>
+        </Card>
+      </Col>
     </Row>
   );
 };
