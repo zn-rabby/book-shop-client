@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb, Button } from "antd";
+import { Layout, Menu, Breadcrumb, Button, Row, Col } from "antd";
 import {
   FaAd,
   FaCalendar,
@@ -14,7 +14,8 @@ import SubMenu from "antd/es/menu/SubMenu";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { AiFillProduct } from "react-icons/ai";
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
+import { Typography } from "antd";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -35,14 +36,21 @@ const Dashboard = () => {
     <Layout style={{ minHeight: "100vh" }}>
       {/* Sidebar */}
       <Sider width={250} theme="dark" collapsible>
-        <div className="logo">
-          <h4
-            className="text-white text-center mt-8 text-xl font-bold mb-24"
-            style={{ color: "#00b96b", marginBottom: "20px" }}
-          >
-            Dashboard
-          </h4>
-        </div>
+        <Row justify="center" align="middle" style={{ height: "80px" }}>
+          <Col>
+            <Typography.Title
+              level={4}
+              style={{
+                color: "#00b96b",
+                textAlign: "center",
+                fontWeight: "bold",
+                margin: 0,
+              }}
+            >
+              Dashboard
+            </Typography.Title>
+          </Col>
+        </Row>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
           <Menu.Item key="5" icon={<FaHome />}>
             <Link to="/">Home</Link>
@@ -119,7 +127,7 @@ const Dashboard = () => {
             backgroundColor: "#001529",
           }}
         >
-          <h2
+          {/* <h2
             className="text-white"
             style={{
               textAlign: "center",
@@ -128,7 +136,7 @@ const Dashboard = () => {
             }}
           >
             Dashboard
-          </h2>
+          </h2> */}
 
           {/* Conditional Rendering for Login/Logout */}
           {isAuthenticated ? (
