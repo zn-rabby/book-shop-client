@@ -46,7 +46,7 @@ export default function UpdateProduct() {
         id: toastId,
         duration: 2000,
       });
-      navigate("/products"); // Redirect to the products page after update
+      navigate("/dashboard/products");
     } catch (err: any) {
       toast.error(
         err.data.message || "Product update failed. Please try again.",

@@ -37,6 +37,7 @@ export default function Products() {
 
   const { data: productsData, isFetching } = useGetAllProductsQuery([
     { name: "page", value: currentPage },
+    { name: "limit", value: 3 },
     ...params,
   ]);
 
@@ -70,6 +71,7 @@ export default function Products() {
   );
 
   const metaData = productsData?.meta;
+  console.log(metaData);
 
   const columns = [
     {
@@ -146,21 +148,21 @@ export default function Products() {
     },
   ];
 
-  const onChange = (_pagination, filters, _sorter, extra) => {
-    if (extra.action === "filter") {
-      const queryParams: TQueryParam[] = [];
+  // const onChange = (_pagination, filters, _sorter, extra) => {
+  //   if (extra.action === "filter") {
+  //     const queryParams: TQueryParam[] = [];
 
-      filters.language?.forEach((item) =>
-        queryParams?.push({ name: "language", value: item })
-      );
+  //     filters.language?.forEach((item) =>
+  //       queryParams?.push({ name: "language", value: item })
+  //     );
 
-      filters.category?.forEach((item) =>
-        queryParams?.push({ name: "category", value: item })
-      );
+  //     filters.category?.forEach((item) =>
+  //       queryParams?.push({ name: "category", value: item })
+  //     );
 
-      setParams(queryParams);
-    }
-  };
+  //     setParams(queryParams);
+  //   }
+  // };
 
   return (
     <Fragment>
@@ -183,7 +185,7 @@ export default function Products() {
                 pagination={false}
                 scroll={{ x: "max-content" }}
                 loading={isFetching}
-                onChange={onChange}
+                // onChange={onChange}
                 style={{ height: "100%" }}
               />
               <Pagination

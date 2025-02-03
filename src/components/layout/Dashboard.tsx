@@ -75,10 +75,16 @@ const Dashboard = () => {
                   <Link to="/dashboard/products">Manage Manage</Link>
                 </Menu.Item>
               </SubMenu>
+              {/*  */}
+              <SubMenu key="sub3" icon={<FaList />} title="Mange Order">
+                <Menu.Item key="32">
+                  <Link to="/dashboard/orders">Orders</Link>
+                </Menu.Item>
+              </SubMenu>
 
-              <Menu.Item key="3" icon={<FaList />}>
+              {/* <Menu.Item key="3" icon={<FaList />}>
                 <Link to="/dashboard/manageItem">Manage Items</Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </>
           )}
 
