@@ -1,87 +1,115 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Use useNavigate for navigation in React Router v6
+import { useNavigate } from "react-router-dom";
 import { TProduct } from "../../types/bookManagement.type";
 import { Card, Button, Rate } from "antd";
 
 interface CartProps {
-  book: TProduct | undefined; // Allow book to be undefined
+  book: TProduct | undefined;
 }
 
 const Cards: React.FC<CartProps> = ({ book }) => {
-  const navigate = useNavigate(); // Use navigate for routing in React Router v6
+  const navigate = useNavigate();
 
-  // Check if book is undefined or missing properties
   if (!book) {
-    return <div>Loading...</div>; // Display a loading message or spinner while the book data is loading
+    return (
+      <div style={{ textAlign: "center", padding: "20px" }}>Loading...</div>
+    ); // Centered loading message
   }
 
   const handleViewDetails = () => {
-    // Navigate to the book's details page
-    navigate(`/book-details/${book._id}`); // Navigate to book details page
+    navigate(`/book-details/${book._id}`);
   };
 
   return (
     <Card
       hoverable
       style={{
-        borderRadius: "15px",
-        boxShadow: "0 8px 16px rgba(0, 0, 0, 0.15)",
-        transition: "transform 0.3s, box-shadow 0.3s",
-        marginBottom: "20px",
+        borderRadius: "12px", // Slightly less rounded corners
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Softer shadow
+        overflow: "hidden", // Ensure image doesn't overflow
       }}
       cover={
         <img
           alt={book.title}
           src={book.image}
           style={{
-            height: "250px",
+            height: "280px", // Slightly taller image
             width: "100%",
             objectFit: "cover",
-            borderRadius: "4px 4px 0 0",
+            borderTopLeftRadius: "12px", // Match card border radius
+            borderTopRightRadius: "12px",
           }}
         />
       }
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "10px",
-        }}
-      >
-        <span style={{ fontStyle: "italic", color: "#95a5a6" }}>
-          {book.author}
-        </span>
-        <div style={{ textAlign: "right" }}>
-          <div
-            style={{ fontSize: "1.4rem", fontWeight: "bold", color: "#333" }}
-          >
+      <div style={{ padding: "12px" }}>
+        {" "}
+        {/* Add padding inside the card content */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "10px",
+          }}
+        >
+          {" "}
+          {/* Align items vertically */}
+          <h4 style={{ margin: 0, fontWeight: 600 }}>{book.name}</h4>{" "}
+          {/* Removed extra margin */}
+          <span style={{ fontWeight: 500, color: "#2ecc71" }}>
             ${book.price}
-          </div>
-          <Rate disabled value={4} />
+          </span>{" "}
+          {/* Nicer price color */}
         </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "12px",
+          }}
+        >
+          {" "}
+          {/* Align items vertically, added margin */}
+          <span style={{ fontStyle: "italic", color: "#7f8c8d" }}>
+            {book.author}
+          </span>
+          <Rate style={{ fontSize: "14px" }} disabled value={4} />{" "}
+          {/* Slightly larger star size */}
+        </div>
+        <p
+          style={{
+            color: "#555",
+            margin: "0 0 16px 0",
+            lineHeight: "1.6",
+            fontSize: "14px",
+          }}
+        >
+          {" "}
+          {/* Improved description styling */}
+          {book.description.length > 50
+            ? book.description.slice(0, 50) + "..."
+            : book.description}{" "}
+          {/* Added ellipsis for longer descriptions */}
+        </p>
+        <Button
+          type="primary"
+          style={{
+            width: "100%",
+            backgroundColor: "#2ecc71", // Updated button color
+            borderColor: "#2ecc71",
+            borderRadius: "6px", // Slightly less rounded button
+            fontWeight: 500, // Slightly less bold
+            padding: "12px",
+            fontSize: "15px", // Slightly bigger button text
+            boxShadow: "0 2px 4px rgba(0,0,0,0.1)", // Added a subtle box shadow to the button
+          }}
+          onClick={handleViewDetails}
+        >
+          View Details
+        </Button>
       </div>
-      <p style={{ color: "#7f8c8d", margin: "10px 0", lineHeight: "1.5" }}>
-        {book.description}
-      </p>
-      <Button
-        type="primary"
-        style={{
-          width: "100%",
-          background: "#00b96b",
-          border: "none",
-          borderRadius: "5px",
-          fontWeight: "bold",
-          padding: "12px",
-          fontSize: "1rem",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onClick={handleViewDetails} // On button click, view the details of the book
-      >
-        <span>View Details</span>
-      </Button>
     </Card>
   );
 };

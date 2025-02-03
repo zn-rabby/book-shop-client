@@ -1,8 +1,5 @@
 import { Layout, Row, Col, Input, Button } from "antd";
 import {
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
   MailOutlined,
   PhoneOutlined,
   EnvironmentOutlined,

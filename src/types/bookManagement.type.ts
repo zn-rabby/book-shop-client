@@ -1,5 +1,6 @@
 export type TProduct = {
   _id: string;
+  name: string;
   title: string;
   category: string;
   author: string;
