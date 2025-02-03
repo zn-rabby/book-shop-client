@@ -128,7 +128,7 @@ export default function Products() {
             <Link to={`/dashboard/products/${item.key}`}>
               <Button type="primary" icon={<EyeOutlined />} />
             </Link>
-            <Link to={`/update/products/${item.key}`}>
+            <Link to={`/dashboard/products/update/${item.key}`}>
               <Button type="default" icon={<EditOutlined />} />
             </Link>
             <Popconfirm

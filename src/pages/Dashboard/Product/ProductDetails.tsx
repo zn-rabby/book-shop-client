@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, Col, Row, Divider, Space, Rate, Button, Skeleton } from "antd";
-import { useMediaQuery } from "react-responsive";
 import { useGetProductQuery } from "../../../redux/features/book/productsApi";
 import { TProduct } from "../../../types/bookManagement.type";
 
@@ -9,8 +8,7 @@ export default function ProductDetails() {
   const { id } = useParams();
   const { data: productData, isFetching } = useGetProductQuery(id);
 
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
+
 
   if (isFetching) {
     return (
