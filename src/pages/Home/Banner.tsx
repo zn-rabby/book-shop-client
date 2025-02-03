@@ -59,7 +59,7 @@ const Banner = () => {
                   padding: "12px 24px",
                   fontSize: "1rem",
                   fontWeight: "bold",
-                  borderRadius: "8px",
+                  borderRadius: "6px",
                 }}
               >
                 Browse Books

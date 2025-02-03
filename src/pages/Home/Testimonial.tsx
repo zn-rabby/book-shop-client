@@ -84,10 +84,10 @@ const Testimonial: React.FC = () => {
               style={{
                 textAlign: "center",
                 borderRadius: "15px",
-                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
+                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)",
                 border: "none",
                 background: "linear-gradient(135deg, #ffffff, #f3f4f6)",
-                padding: "20px",
+                padding: "15px",
                 maxWidth: "330px",
                 height: "300px",
                 margin: "auto",

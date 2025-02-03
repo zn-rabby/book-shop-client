@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
 import Cards from "../AllProduct/Cards";
@@ -16,7 +16,7 @@ const HomeProducts = () => {
           textAlign: "center",
           marginBottom: "20px",
           padding: "10px 0",
-          borderBottom: "3px solid #00b96b",
+          borderBottom: "2px solid #00b96b",
         }}
       >
         <h2
@@ -25,9 +25,11 @@ const HomeProducts = () => {
             fontWeight: "bold",
             color: "#333",
             textTransform: "uppercase",
+            marginTop: "30px",
+            marginBottom: "30px",
           }}
         >
-          📚 Books Display
+          Books Display
         </h2>
       </div>
       <Row gutter={[16, 16]}>
@@ -41,6 +43,29 @@ const HomeProducts = () => {
           </Col>
         ))}
       </Row>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
+        }}
+      >
+        <Link to="/product">
+          <Button
+            type="primary"
+            size="large"
+            style={{
+              padding: "12px 24px",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              borderRadius: "6px",
+            }}
+          >
+            View All
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };
