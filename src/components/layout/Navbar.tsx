@@ -16,10 +16,7 @@ const Navbar = () => {
   const showDrawer = () => setDrawerVisible(true);
   const closeDrawer = () => setDrawerVisible(false);
 
-  // Get user authentication state
   const isAuthenticated = useSelector((state: RootState) => state.auth.user);
-
-  // Get cart item count
   const cartItems = useSelector((state: RootState) => state.cart.items || []);
   const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -47,8 +44,14 @@ const Navbar = () => {
               <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
           </Menu>
-
-          <div className="right-section">
+          <div
+            className="right-section"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
             <Link to="/checkout" className="cart-icon">
               <Badge
                 count={cartItemCount}
@@ -61,7 +64,6 @@ const Navbar = () => {
               </Badge>
             </Link>
 
-            {/* Conditional Rendering for Login/Logout */}
             {isAuthenticated ? (
               <Button
                 onClick={handleLogout}
@@ -88,7 +90,6 @@ const Navbar = () => {
           />
         </div>
 
-        {/* Drawer Menu for Mobile */}
         <Drawer
           title="Menu"
           placement="right"
@@ -96,25 +97,31 @@ const Navbar = () => {
           open={drawerVisible}
         >
           <Menu mode="vertical" className="drawer-menu">
-            <Menu.Item key="home">
+            <Menu.Item key="home" onClick={closeDrawer}>
+              {" "}
+              {/* Close drawer on click */}
               <Link to="/">Home</Link>
             </Menu.Item>
-            <Menu.Item key="product">
+            <Menu.Item key="product" onClick={closeDrawer}>
               <Link to="/product">Books</Link>
             </Menu.Item>
-            <Menu.Item key="about">
+            <Menu.Item key="about" onClick={closeDrawer}>
               <Link to="/about">About</Link>
             </Menu.Item>
-            <Menu.Item key="checkout">
+            <Menu.Item key="dashboard" onClick={closeDrawer}>
+              <Link to="/dashboard">Dashboard</Link>
+            </Menu.Item>
+            <Menu.Item key="checkout" onClick={closeDrawer}>
               <Link to="/checkout">Checkout</Link>
             </Menu.Item>
-            <Menu.Item key="services">
+            <Menu.Item key="services" onClick={closeDrawer}>
               <Link to="/services">Services</Link>
             </Menu.Item>
-            <Menu.Item key="contact">
+            <Menu.Item key="contact" onClick={closeDrawer}>
               <Link to="/contact">Contact</Link>
             </Menu.Item>
-            <Menu.Item key="cart" className="cart-menu">
+
+            <Menu.Item key="cart" className="cart-menu" onClick={closeDrawer}>
               <Link to="/checkout">
                 <Badge
                   count={cartItemCount}
@@ -129,15 +136,25 @@ const Navbar = () => {
             </Menu.Item>
           </Menu>
 
-          {/* Conditional Rendering for Login/Logout in Drawer */}
           <div className="drawer-footer">
             {isAuthenticated ? (
-              <Button onClick={handleLogout} type="primary" block>
+              <Button
+                onClick={() => {
+                  handleLogout();
+                  closeDrawer();
+                }}
+                type="primary"
+                block
+              >
+                {" "}
+                {/* Close drawer after logout */}
                 Logout
               </Button>
             ) : (
               <Link to="/login">
-                <Button type="primary" block>
+                <Button type="primary" block onClick={closeDrawer}>
+                  {" "}
+                  {/* Close drawer after login navigation */}
                   Login
                 </Button>
               </Link>
