@@ -1,7 +1,5 @@
 import { Layout, Menu, Breadcrumb, Button, Row, Col } from "antd";
 import {
-  FaAd,
-  FaCalendar,
   FaHome,
   FaList,
   FaUser,
@@ -99,16 +97,7 @@ const Dashboard = () => {
           {isUser && (
             <>
               <Menu.Item key="1" icon={<FaHome />}>
-                <Link to="/dashboard/userHome">User Home</Link>
-              </Menu.Item>
-              <Menu.Item key="2" icon={<FaCalendar />}>
-                <Link to="/dashboard/history">Payment History</Link>
-              </Menu.Item>
-              <Menu.Item key="3" icon={<FaAd />}>
-                <Link to="/dashboard/review">Add Review</Link>
-              </Menu.Item>
-              <Menu.Item key="4" icon={<FaList />}>
-                <Link to="/dashboard/bookings">My Bookings</Link>
+                <Link to="/dashboard/orderHistory">Orders History</Link>
               </Menu.Item>
             </>
           )}

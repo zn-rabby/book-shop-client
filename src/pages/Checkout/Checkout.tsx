@@ -2,11 +2,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Layout, Row, Col, Card, Button, Space, Image, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { RootState } from "../../redux/store";
-import { removeFromCart } from "../../redux/features/cart/cartSlice";
+import { removeFromCart, clearCart } from "../../redux/features/cart/cartSlice";
+import { useAddOrderMutation } from "../../redux/features/order/orderApi";
 
-// Define the type of your cart items
 interface CartItem {
-  id: string; // Assuming id is a string, change this if it's a different type
+  id: string;
   name: string;
   price: number;
   quantity: number;
@@ -19,25 +19,70 @@ const { Text, Title } = Typography;
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.cart.items || []); // ✅ Ensure it's always an array
+  const cartItems = useSelector((state: RootState) => state.cart.items || []);
+  const [addOrder, { isLoading }] = useAddOrderMutation(); // ✅ Redux API mutation
 
-  // Group items by ID to avoid duplicates
   const groupedItems = cartItems.reduce<{ [key: string]: CartItem }>(
     (acc, item) => {
       if (acc[item.id]) {
-        acc[item.id].quantity += item.quantity; // Merge items with the same id by adding quantity
+        acc[item.id].quantity += item.quantity;
       } else {
-        acc[item.id] = { ...item }; // Clone the item to add it to the accumulator
+        acc[item.id] = { ...item };
       }
       return acc;
     },
     {}
-  ); // Explicitly define the type for the accumulator here
+  );
 
-  const items = Object.values(groupedItems); // Convert grouped items object to an array
+  const items = Object.values(groupedItems);
 
   const calculateTotal = (): number => {
-    return items.reduce((acc, item) => acc + item.price * item.quantity, 0); // Ensure it returns a number
+    return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  };
+
+  const handleCheckout = async () => {
+    if (items.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+
+    try {
+      const orderData = {
+        userId: "67667005127a16ef726212af", // ✅ ব্যবহারকারীর আইডি যুক্ত করুন (ডায়নামিক করলে ভালো হয়)
+        product: items[0].id, // ✅ ব্যাকএন্ড একক `product` ফিল্ড আশা করে, তাই প্রথম প্রোডাক্ট পাঠানো হচ্ছে
+        quantity: items[0].quantity,
+        total_amount: calculateTotal(),
+        paymentMethod: "sslCommerz", // ✅ পেমেন্ট মেথড সেট করুন
+        paymentStatus: "pending",
+        shippingAddress: {
+          name: "home",
+          phone: "1234567890",
+          address: "123 Main Street, Apartment 4B",
+          postalCode: "12345",
+          city: "Dhaka",
+          country: "Bangladesh",
+          isDeleted: false,
+        },
+        status: "pending",
+        orderDate: new Date().toISOString(),
+        transactionId: "abcd1234efgh5678", 
+      };
+
+      console.log("Sending Order Data:", orderData);
+
+      const response = await addOrder(orderData).unwrap();
+      console.log("Order placed successfully:", response);
+
+      if (response.success) {
+        dispatch(clearCart()); 
+        // alert("Order placed successfully!");
+      } else {
+        alert(response.message || "Order placement failed.");
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Failed to place order. Please try again.");
+    }
   };
 
   return (
@@ -49,7 +94,7 @@ const Checkout = () => {
               {items.length > 0 ? (
                 items.map((item) => (
                   <Row
-                    key={item.id} // ✅ Make sure the key is unique
+                    key={item.id}
                     align="middle"
                     gutter={[16, 16]}
                     style={{ marginBottom: "15px" }}
@@ -78,13 +123,13 @@ const Checkout = () => {
                         icon={<DeleteOutlined />}
                         type="text"
                         danger
-                        onClick={() => dispatch(removeFromCart(item.id))} // ✅ Use the correct item ID for removal
+                        onClick={() => dispatch(removeFromCart(item.id))}
                       />
                     </Col>
                   </Row>
                 ))
               ) : (
-                <Text>No items in cart</Text> // ✅ Handle empty cart scenario
+                <Text>No items in cart</Text>
               )}
             </Card>
             <Card title="Checkout Summary" style={{ marginTop: "20px" }}>
@@ -94,10 +139,14 @@ const Checkout = () => {
               direction="vertical"
               style={{ width: "100%", marginTop: "20px" }}
             >
-              <Button type="primary" size="large">
+              <Button
+                type="primary"
+                size="large"
+                onClick={handleCheckout}
+                loading={isLoading}
+              >
                 Proceed to Checkout →
               </Button>
-              <Button size="large">Order as a Gift</Button>
             </Space>
           </Col>
         </Row>
