@@ -13,7 +13,6 @@ const CardDetails = () => {
   const dispatch = useDispatch();
   const { data: books } = useGetAllBooksQuery(undefined);
   const book = books?.data?.find((book: TProduct) => book._id === id);
-  console.log(book, "ss");
 
   if (!book) {
     return <div>Book not found</div>;
@@ -24,7 +23,7 @@ const CardDetails = () => {
     dispatch(
       addToCart({
         id: book._id,
-        name: book.title,
+        title: book.title,
         price: book.price,
         image: book.image,
         quantity: 1,

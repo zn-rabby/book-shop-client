@@ -1,5 +1,3 @@
-
-
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
@@ -13,7 +11,6 @@ const baseQuery = fetchBaseQuery({
     } | null;
     if (token) {
       headers.set("Authorization", `${token}`);
-      console.log(token, "token");
     }
     return headers;
   },

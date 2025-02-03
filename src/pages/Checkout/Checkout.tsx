@@ -4,6 +4,8 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { RootState } from "../../redux/store";
 import { removeFromCart, clearCart } from "../../redux/features/cart/cartSlice";
 import { useAddOrderMutation } from "../../redux/features/order/orderApi";
+import { useGetProductQuery } from "../../redux/features/book/productsApi";
+import { useParams } from "react-router-dom";
 
 interface CartItem {
   id: string;
@@ -18,9 +20,15 @@ const { Content } = Layout;
 const { Text, Title } = Typography;
 
 const Checkout = () => {
+  const { id } = useParams();
+  const { data: books } = useGetProductQuery(id);
+  console.log(books, "books"); //////////////////////
+
   const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.cart.items || []);
-  const [addOrder, { isLoading }] = useAddOrderMutation(); // ✅ Redux API mutation
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  console.log(cartItems, "cartItems");
+  const [addOrder, { isLoading }] = useAddOrderMutation();
+  console.log("addOrder", addOrder); //////////////////////
 
   const groupedItems = cartItems.reduce<{ [key: string]: CartItem }>(
     (acc, item) => {
@@ -35,10 +43,12 @@ const Checkout = () => {
   );
 
   const items = Object.values(groupedItems);
+  // console.log(items, "items");
 
   const calculateTotal = (): number => {
     return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
+  console.log(calculateTotal);
 
   const handleCheckout = async () => {
     if (items.length === 0) {
@@ -48,11 +58,11 @@ const Checkout = () => {
 
     try {
       const orderData = {
-        userId: "67667005127a16ef726212af", // ✅ ব্যবহারকারীর আইডি যুক্ত করুন (ডায়নামিক করলে ভালো হয়)
-        product: items[0].id, // ✅ ব্যাকএন্ড একক `product` ফিল্ড আশা করে, তাই প্রথম প্রোডাক্ট পাঠানো হচ্ছে
+        userId: "67667005127a16ef726212af", // User ID
+        product: items[0].id, // First product ID
         quantity: items[0].quantity,
         total_amount: calculateTotal(),
-        paymentMethod: "sslCommerz", // ✅ পেমেন্ট মেথড সেট করুন
+        paymentMethod: "sslCommerz", // Payment method
         paymentStatus: "pending",
         shippingAddress: {
           name: "home",
@@ -65,7 +75,7 @@ const Checkout = () => {
         },
         status: "pending",
         orderDate: new Date().toISOString(),
-        transactionId: "abcd1234efgh5678", 
+        transactionId: "abcd1234efgh5678",
       };
 
       console.log("Sending Order Data:", orderData);
@@ -74,8 +84,12 @@ const Checkout = () => {
       console.log("Order placed successfully:", response);
 
       if (response.success) {
-        dispatch(clearCart()); 
-        // alert("Order placed successfully!");
+        // Proceed with payment (fixed URL for SSLCommerz or test URL)
+        const paymentUrl = "https://sandbox.sslcommerz.com/your-payment-url"; // Replace with your actual payment URL or sandbox URL
+
+        window.location.href = paymentUrl; // Redirect to the payment page
+
+        dispatch(clearCart());
       } else {
         alert(response.message || "Order placement failed.");
       }
