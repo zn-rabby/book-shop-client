@@ -23,7 +23,7 @@ export type User = {
 export type OrderItem = {
   key: string;
   paymentMethod: string;
-  totalAmount: number | undefined; // Allow undefined
+  totalAmount: number | undefined;
   transactionId: string;
   shippingAddress: string;
   orderDate: string;
@@ -44,12 +44,11 @@ export default function Orders() {
 
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
-  // Function to handle status update
   const handleOrderStatusUpdate = async (value: string, id: string) => {
     const toastId = toast.loading("Updating status...");
     try {
       await updateOrderStatus({ id: id, data: { status: value } }).unwrap();
-      toast.success("Status has been successfully updated.", { id: toastId });
+      toast.success("Status successfully updated.", { id: toastId });
       refetch();
     } catch (err: any) {
       toast.error(err?.data?.message || "Error updating status.", {
@@ -58,7 +57,6 @@ export default function Orders() {
     }
   };
 
-  // Map the orders data to table-friendly format
   const tableData: OrderItem[] = ordersData?.data.map(
     ({
       paymentMethod,
@@ -85,16 +83,8 @@ export default function Orders() {
   const metaData = ordersData?.meta;
 
   const columns = [
-    {
-      title: "Name",
-      dataIndex: "userName",
-      key: "userName",
-    },
-    {
-      title: "Email",
-      dataIndex: "userEmail",
-      key: "userEmail",
-    },
+    { title: "Name", dataIndex: "userName", key: "userName" },
+    { title: "Email", dataIndex: "userEmail", key: "userEmail" },
     {
       title: "Payment Method",
       dataIndex: "paymentMethod",
@@ -104,22 +94,15 @@ export default function Orders() {
       title: "Total Amount",
       dataIndex: "totalAmount",
       key: "totalAmount",
-      render: (amount: number | undefined) => {
-        // Ensure amount is a valid number, otherwise default to 0
-        const formattedAmount = amount ? amount.toFixed(2) : "0.00";
-        return `$${formattedAmount}`;
-      },
+      render: (amount: number | undefined) =>
+        `$${amount ? amount.toFixed(2) : "0.00"}`,
     },
     {
       title: "Transaction ID",
       dataIndex: "transactionId",
       key: "transactionId",
     },
-    {
-      title: "Order Date",
-      dataIndex: "orderDate",
-      key: "orderDate",
-    },
+    { title: "Order Date", dataIndex: "orderDate", key: "orderDate" },
     {
       title: "Order Progress",
       dataIndex: "status",
@@ -146,19 +129,6 @@ export default function Orders() {
       dataIndex: "shippingAddress",
       key: "shippingAddress",
     },
-    // {
-    //   title: "Action",
-    //   dataIndex: "",
-    //   key: "x",
-    //   render: (item: OrderItem) => (
-    //     <Space>
-    //       <Link to={`/orders/${item.key}`}>
-    //         <Button>Details</Button>
-    //       </Link>
-    //     </Space>
-    //   ),
-    //   width: "1%",
-    // },
   ];
 
   const onChange = (_pagination, filters, _sorter, extra) => {
@@ -173,15 +143,10 @@ export default function Orders() {
 
   return (
     <Fragment>
-      <div style={{ width: "100%", margin: "0 auto", padding: "20px" }}>
-        <Row gutter={[20, 20]}>
+      <div className="p-6 min-h-screen bg-gray-100">
+        <Row gutter={[20, 20]} justify="center">
           <Col xs={24}>
-            <div
-              style={{
-                minHeight: "80vh",
-                overflowY: "auto",
-              }}
-            >
+            <div className="bg-white p-6 shadow-md rounded-lg overflow-auto">
               <Table
                 columns={columns}
                 dataSource={tableData}
@@ -189,11 +154,9 @@ export default function Orders() {
                 scroll={{ x: "max-content" }}
                 loading={isFetching}
                 onChange={onChange}
-                style={{ height: "100%" }}
               />
               <Pagination
-                style={{ marginTop: "20px" }}
-                align="end"
+                className="mt-4 flex justify-end"
                 current={currentPage}
                 onChange={(page) => setCurrentPage(page)}
                 pageSize={metaData?.limit}
