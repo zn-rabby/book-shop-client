@@ -13,6 +13,7 @@ import AdminDashboard from "../pages/Dashboard/AdminDashboard/AdminDashboard";
 import CreateUser from "../pages/Dashboard/User/CreateUser";
 import Users from "../pages/Dashboard/User/Users";
 import CreateProduct from "../pages/Dashboard/Product/CreateProduct";
+import Products from "../pages/Dashboard/Product/Products";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/createProduct",
         element: <CreateProduct></CreateProduct>,
+      },
+      {
+        path: "/dashboard/products",
+        element: <Products></Products>,
       },
     ],
   },

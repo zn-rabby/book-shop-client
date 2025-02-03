@@ -72,7 +72,7 @@ const Dashboard = () => {
                   <Link to="/dashboard/createProduct">Create Product</Link>
                 </Menu.Item>
                 <Menu.Item key="13">
-                  <Link to="/dashboard/products">Manage Users</Link>
+                  <Link to="/dashboard/products">Manage Manage</Link>
                 </Menu.Item>
               </SubMenu>
 
