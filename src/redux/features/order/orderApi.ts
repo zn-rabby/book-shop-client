@@ -61,7 +61,7 @@ const orderApi = baseApi.injectEndpoints({
     }),
     updateOrderStatus: builder.mutation({
       query: (args) => ({
-        url: `/order/${args.id}/status`,
+        url: `/order/${args.id}`,
         method: "PATCH",
         body: args.data,
       }),
