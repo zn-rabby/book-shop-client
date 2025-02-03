@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Row, Col, Card, Input, Button } from "antd";
+import { Typography, Row, Col, Card, Button, Input, Divider } from "antd";
 import {
   BookOutlined,
   UsergroupAddOutlined,
@@ -11,7 +11,7 @@ const { Title, Paragraph } = Typography;
 const aboutContent = [
   {
     id: 1,
-    icon: <BookOutlined style={{ fontSize: "40px", color: "#00b96b" }} />,
+    icon: <BookOutlined style={{ fontSize: "40px", color: "#1890ff" }} />,
     title: "Our Mission",
     description:
       "At [Book Shop Name], we believe in the power of books to transform lives. Our mission is to provide a wide selection of books to cater to readers of all interests and ages.",
@@ -19,7 +19,7 @@ const aboutContent = [
   {
     id: 2,
     icon: (
-      <UsergroupAddOutlined style={{ fontSize: "40px", color: "#00b96b" }} />
+      <UsergroupAddOutlined style={{ fontSize: "40px", color: "#1890ff" }} />
     ),
     title: "Our Values",
     description:
@@ -27,7 +27,7 @@ const aboutContent = [
   },
   {
     id: 3,
-    icon: <PhoneOutlined style={{ fontSize: "40px", color: "#00b96b" }} />,
+    icon: <PhoneOutlined style={{ fontSize: "40px", color: "#1890ff" }} />,
     title: "Customer Support",
     description:
       "We are committed to offering exceptional customer service. Whether you need assistance with book selection or shipping, our friendly team is here to help.",
@@ -60,10 +60,13 @@ const About: React.FC = () => {
   return (
     <div
       className="home"
-      style={{ padding: "60px 20px", background: "#f0f4f8" }}
+      style={{ padding: "60px 20px", background: "#f4f7fc" }}
     >
       {/* About Section */}
-      <Title level={2} style={{ textAlign: "center", color: "#333" }}>
+      <Title
+        level={2}
+        style={{ textAlign: "center", color: "#333", fontWeight: "600" }}
+      >
         About [Book Shop Name]
       </Title>
 
@@ -72,16 +75,17 @@ const About: React.FC = () => {
           textAlign: "center",
           color: "#555",
           fontSize: "18px",
-          maxWidth: "700px",
+          maxWidth: "800px",
           margin: "auto",
         }}
       >
         Welcome to [Book Shop Name], your go-to destination for all things
-        books. Our goal is to provide you with an exceptional shopping
-        experience and a diverse selection of titles to ignite your passion for
-        reading.
+        books. We strive to provide you with a diverse selection of books that
+        ignite your passion for reading and make your shopping experience truly
+        unforgettable.
       </Paragraph>
 
+      {/* About Content Cards */}
       <Row gutter={[30, 30]} justify="center" style={{ marginBottom: "50px" }}>
         {aboutContent.map(({ id, icon, title, description }) => (
           <Col key={id} xs={24} sm={12} md={8}>
@@ -90,10 +94,11 @@ const About: React.FC = () => {
               style={{
                 textAlign: "center",
                 borderRadius: "10px",
-                boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.1)",
+                boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.1)",
                 background: "#ffffff",
                 padding: "30px",
                 transition: "transform 0.3s ease-in-out",
+                border: "1px solid #f0f0f0",
               }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.transform = "scale(1.05)")
@@ -103,8 +108,12 @@ const About: React.FC = () => {
               }
             >
               {icon}
-              <Title level={4}>{title}</Title>
-              <Paragraph>{description}</Paragraph>
+              <Title level={4} style={{ color: "#1890ff", marginTop: "20px" }}>
+                {title}
+              </Title>
+              <Paragraph style={{ fontSize: "16px", color: "#555" }}>
+                {description}
+              </Paragraph>
             </Card>
           </Col>
         ))}
@@ -112,7 +121,7 @@ const About: React.FC = () => {
 
       {/* Featured Books Section */}
       <div style={{ marginBottom: "50px", textAlign: "center" }}>
-        <Title level={3} style={{ color: "#333" }}>
+        <Title level={3} style={{ color: "#333", fontWeight: "600" }}>
           Featured Books
         </Title>
 
@@ -124,7 +133,7 @@ const About: React.FC = () => {
                 style={{
                   width: "100%",
                   borderRadius: "12px",
-                  boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.1)",
+                  boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.1)",
                   background: "#ffffff",
                   padding: "20px",
                   transition: "transform 0.3s ease-in-out",
@@ -138,7 +147,7 @@ const About: React.FC = () => {
                 }
               >
                 <img
-                  src="https://i.ibb.co.com/sRcVc1d/come.jpg"
+                  src={image}
                   alt={title}
                   style={{
                     width: "100%",
@@ -154,6 +163,17 @@ const About: React.FC = () => {
                   <Paragraph style={{ fontStyle: "italic", color: "#777" }}>
                     {author}
                   </Paragraph>
+                  <Button
+                    type="primary"
+                    style={{
+                      marginTop: "12px",
+                      borderRadius: "4px",
+                      width: "100%",
+                      background: "#1890ff",
+                    }}
+                  >
+                    Add to Cart
+                  </Button>
                 </div>
               </Card>
             </Col>
@@ -161,104 +181,24 @@ const About: React.FC = () => {
         </Row>
       </div>
 
-      {/* Contact Section */}
-      <div style={{ marginBottom: "50px", textAlign: "center" }}>
-        <Title level={3} style={{ color: "#333" }}>
-          Contact Us
+      {/* Search Bar */}
+      <Divider />
+      <div style={{ textAlign: "center", marginTop: "30px" }}>
+        <Title level={3} style={{ color: "#1890ff" }}>
+          Find Your Next Favorite Book
         </Title>
-        <Paragraph
+        <Input.Search
+          placeholder="Search books by title, author, or genre"
+          enterButton="Search"
+          size="large"
           style={{
-            color: "#555",
-            fontSize: "16px",
-            maxWidth: "700px",
-            margin: "auto",
+            width: "80%",
+            maxWidth: "600px",
+            margin: "0 auto",
+            borderRadius: "5px",
+            boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
           }}
-        >
-          We would love to hear from you! Whether you have questions,
-          suggestions, or feedback, feel free to reach out to us.
-        </Paragraph>
-
-        <Row gutter={[16, 16]} justify="center">
-          <Col
-            xs={24}
-            sm={20}
-            md={12}
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <div style={{ width: "100%", maxWidth: "500px" }}>
-              <Input
-                placeholder="Your Name"
-                style={{
-                  marginBottom: "16px",
-                  padding: "12px",
-                  borderRadius: "8px",
-                  border: "1px solid #00b96b",
-                  fontSize: "14px",
-                }}
-              />
-              <Input
-                placeholder="Your Email"
-                style={{
-                  marginBottom: "16px",
-                  padding: "12px",
-                  borderRadius: "8px",
-                  border: "1px solid #00b96b",
-                  fontSize: "14px",
-                }}
-              />
-              <Input.TextArea
-                placeholder="Your Message"
-                rows={4}
-                style={{
-                  marginBottom: "16px",
-                  padding: "12px",
-                  borderRadius: "8px",
-                  border: "1px solid #00b96b",
-                  fontSize: "14px",
-                }}
-              />
-              <Button
-                type="primary"
-                style={{
-                  width: "100%",
-                  borderRadius: "8px",
-                  padding: "12px",
-                  fontWeight: "bold",
-                  backgroundColor: "#00b96b",
-                  border: "none",
-                  fontSize: "16px",
-                }}
-              >
-                Send Message
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      </div>
-
-      {/* Location Section */}
-      {/* Google Map Embed */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "1200px",
-          height: "400px",
-          marginBottom: "30px",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.8937006883317!2d90.37542421489724!3d23.763365484576953!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7940f91d95f%3A0x13d99f48f67238d7!2sBook%20Shop%20Location!5e0!3m2!1sen!2sbd!4v1677519149351!5m2!1sen!2sbd"
-          width="100%"
-          height="100%"
-          style={{
-            border: "0",
-            borderRadius: "10px",
-          }}
-          allowFullScreen=""
-          loading="lazy"
-        ></iframe>
+        />
       </div>
     </div>
   );
