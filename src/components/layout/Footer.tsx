@@ -22,7 +22,7 @@ const BookshopFooter = () => {
           <Col xs={24} md={12} lg={6}>
             {/* Logo */}
             <img
-              src="/path-to-your-logo.png"
+              src="https://i.ibb.co.com/tpWdH6mM/books-fotor-2025020321554.png"
               alt="Bookshop Logo"
               style={{ width: "80px", marginBottom: "20px" }}
             />
@@ -103,17 +103,20 @@ const BookshopFooter = () => {
               <Input
                 style={{
                   width: "calc(100% - 80px)",
-                  borderRadius: "5px 0 0 5px",
-                  border: "none",
+                  borderRadius: "5px",
+                  border: "1px solid #ddd",
+                  padding: "10px 10px",
                 }}
                 placeholder="Enter your email"
               />
               <Button
                 type="primary"
                 style={{
-                  borderRadius: "0 5px 5px 0",
+                  borderRadius: "5px ",
+                  marginTop: "6px",
                   background: "#00b96b",
-                  border: "none",
+                  border: "1px solid #00b96b",
+                  padding: "10px 10px",
                 }}
               >
                 Subscribe
@@ -133,40 +136,6 @@ const BookshopFooter = () => {
               alt="Payment Methods"
               style={{ width: "100%", maxWidth: "800px" }}
             />
-          </Col>
-        </Row>
-
-        {/* Footer Bottom */}
-        <Row
-          justify="center"
-          style={{ marginTop: "40px", textAlign: "center" }}
-        >
-          <Col span={24}>
-            <div>
-              <a
-                href="#"
-                style={{
-                  marginRight: "10px",
-                  color: "#00b96b",
-                  fontSize: "1.2rem",
-                }}
-              >
-                <FacebookOutlined />
-              </a>
-              <a
-                href="#"
-                style={{
-                  marginRight: "10px",
-                  color: "#00b96b",
-                  fontSize: "1.2rem",
-                }}
-              >
-                <TwitterOutlined />
-              </a>
-              <a href="#" style={{ color: "#00b96b", fontSize: "1.2rem" }}>
-                <InstagramOutlined />
-              </a>
-            </div>
           </Col>
         </Row>
       </div>
