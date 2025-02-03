@@ -19,6 +19,8 @@ import UpdateProduct from "../pages/Dashboard/Product/UpdateProduct";
 import Orders from "../pages/Dashboard/Orders/Orders";
 import OrderHistory from "../pages/Dashboard/OrderHistory/OrderHistory";
 import Success from "../pages/Success";
+import Fail from "../pages/Fail";
+import Cancel from "../pages/Cancel";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "/pay-success",
         element: <Success></Success>,
+      },
+      {
+        path: "/pay-fail",
+        element: <Fail></Fail>,
+      },
+      {
+        path: "/pay-cancel",
+        element: <Cancel></Cancel>,
       },
       {
         path: "/product",

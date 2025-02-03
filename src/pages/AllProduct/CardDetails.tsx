@@ -146,7 +146,11 @@ const CardDetails = () => {
                 onClick={handleAddToCart}
               >
                 <ShoppingCartOutlined
-                  style={{ fontSize: "18px", marginRight: "8px" }}
+                  style={{
+                    fontSize: "28px",
+                    marginRight: "8px",
+                    padding: "6px",
+                  }}
                 />
                 <span>Add to Cart</span>
               </Button>
