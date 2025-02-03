@@ -1,207 +1,332 @@
-import React from "react";
-import { Typography, Row, Col, Card, Button, Input, Divider } from "antd";
+import { Row, Col, Typography, Button } from "antd";
 import {
-  BookOutlined,
-  UsergroupAddOutlined,
-  PhoneOutlined,
-} from "@ant-design/icons";
+  SmileOutlined,
+  DollarOutlined,
+  RocketOutlined,
+} from "@ant-design/icons"; // Ant Design Icons
 
 const { Title, Paragraph } = Typography;
 
-const aboutContent = [
-  {
-    id: 1,
-    icon: <BookOutlined style={{ fontSize: "40px", color: "#1890ff" }} />,
-    title: "Our Mission",
-    description:
-      "At [Book Shop Name], we believe in the power of books to transform lives. Our mission is to provide a wide selection of books to cater to readers of all interests and ages.",
-  },
-  {
-    id: 2,
-    icon: (
-      <UsergroupAddOutlined style={{ fontSize: "40px", color: "#1890ff" }} />
-    ),
-    title: "Our Values",
-    description:
-      "We value creativity, knowledge, and learning. Our goal is to offer our customers not just books, but an experience that nurtures curiosity and growth.",
-  },
-  {
-    id: 3,
-    icon: <PhoneOutlined style={{ fontSize: "40px", color: "#1890ff" }} />,
-    title: "Customer Support",
-    description:
-      "We are committed to offering exceptional customer service. Whether you need assistance with book selection or shipping, our friendly team is here to help.",
-  },
-];
-
-// Featured Books Section Data
-const featuredBooks = [
-  {
-    id: 1,
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    title: "1984",
-    author: "George Orwell",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 3,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    image: "https://via.placeholder.com/150",
-  },
-];
-
-const About: React.FC = () => {
+const AboutPage = () => {
   return (
-    <div
-      className="home"
-      style={{ padding: "60px 20px", background: "#f4f7fc" }}
-    >
-      {/* About Section */}
-      <Title
-        level={2}
-        style={{ textAlign: "center", color: "#333", fontWeight: "600" }}
-      >
-        About [Book Shop Name]
-      </Title>
-
-      <Paragraph
+    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+      {/* Hero Section */}
+      <Row
+        align="middle"
         style={{
-          textAlign: "center",
-          color: "#555",
-          fontSize: "18px",
-          maxWidth: "800px",
-          margin: "auto",
+          background: "#f0f2f5",
+          padding: "0",
+          borderRadius: "8px",
+          marginBottom: "40px",
+          width: "100%",
+          height: "500px",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        Welcome to [Book Shop Name], your go-to destination for all things
-        books. We strive to provide you with a diverse selection of books that
-        ignite your passion for reading and make your shopping experience truly
-        unforgettable.
-      </Paragraph>
-
-      {/* About Content Cards */}
-      <Row gutter={[30, 30]} justify="center" style={{ marginBottom: "50px" }}>
-        {aboutContent.map(({ id, icon, title, description }) => (
-          <Col key={id} xs={24} sm={12} md={8}>
-            <Card
-              hoverable
+        <Col xs={24} md={24}>
+          <div style={{ position: "relative", width: "100%", height: "100%" }}>
+            <img
+              src="https://i.ibb.co.com/xS1JK1FJ/fs.jpg" // Replace with your image
+              alt="Bookshop"
               style={{
-                textAlign: "center",
-                borderRadius: "10px",
-                boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.1)",
-                background: "#ffffff",
-                padding: "30px",
-                transition: "transform 0.3s ease-in-out",
-                border: "1px solid #f0f0f0",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "8px",
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                color: "#fff",
+                textAlign: "center",
+                zIndex: 1,
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                padding: "40px",
+                borderRadius: "8px",
+                width: "80%",
+                maxWidth: "600px",
+              }}
             >
-              {icon}
-              <Title level={4} style={{ color: "#1890ff", marginTop: "20px" }}>
-                {title}
+              <Title
+                style={{
+                  fontSize: "2.5rem",
+                  color: "#fff",
+                  marginBottom: "20px",
+                }}
+              >
+                Welcome to Our Bookshop
               </Title>
-              <Paragraph style={{ fontSize: "16px", color: "#555" }}>
-                {description}
+              <Paragraph
+                style={{
+                  fontSize: "1.1rem",
+                  color: "#fff",
+                  marginBottom: "30px",
+                }}
+              >
+                Discover a world of books that inspire, educate, and entertain.
               </Paragraph>
-            </Card>
-          </Col>
-        ))}
+              <Button
+                type="primary"
+                size="large"
+                style={{ fontWeight: "bold" }}
+              >
+                Explore Our Collection
+              </Button>
+            </div>
+          </div>
+        </Col>
       </Row>
 
-      {/* Featured Books Section */}
-      <div style={{ marginBottom: "50px", textAlign: "center" }}>
-        <Title level={3} style={{ color: "#333", fontWeight: "600" }}>
-          Featured Books
-        </Title>
+      {/* Our Story Section */}
+      <Row style={{ marginBottom: "60px", padding: "0 20px" }}>
+        <Col xs={24}>
+          <Title
+            level={2}
+            style={{
+              textAlign: "center",
+              marginBottom: "20px",
+              color: "#333",
+              fontWeight: 600,
+            }}
+          >
+            Our Story
+          </Title>
+          <Paragraph
+            style={{
+              fontSize: "1.1rem",
+              textAlign: "center",
+              color: "#666",
+              maxWidth: "800px",
+              margin: "0 auto",
+            }}
+          >
+            Founded in 2023, our bookshop started as a small passion project.
+            Over the years, we have grown into a trusted destination for book
+            lovers, offering a curated selection of titles across genres.
+          </Paragraph>
+        </Col>
+      </Row>
 
-        <Row gutter={[16, 16]} justify="center">
-          {featuredBooks.map(({ id, title, author, image }) => (
-            <Col key={id} xs={24} sm={12} md={8} lg={6}>
-              <Card
-                hoverable
-                style={{
-                  width: "100%",
-                  borderRadius: "12px",
-                  boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.1)",
-                  background: "#ffffff",
-                  padding: "20px",
-                  transition: "transform 0.3s ease-in-out",
-                  overflow: "hidden",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
-              >
-                <img
-                  src={image}
-                  alt={title}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    borderRadius: "8px",
-                    objectFit: "cover", // Ensure the image covers the space properly
-                  }}
-                />
-                <div style={{ marginTop: "16px" }}>
-                  <Title level={4} style={{ color: "#333", margin: "0" }}>
-                    {title}
-                  </Title>
-                  <Paragraph style={{ fontStyle: "italic", color: "#777" }}>
-                    {author}
-                  </Paragraph>
-                  <Button
-                    type="primary"
-                    style={{
-                      marginTop: "12px",
-                      borderRadius: "4px",
-                      width: "100%",
-                      background: "#1890ff",
-                    }}
-                  >
-                    Add to Cart
-                  </Button>
-                </div>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </div>
+      {/* Our Mission Section */}
+      <Row
+        style={{
+          background: "#f0f2f5",
+          padding: "60px 20px",
+          borderRadius: "8px",
+          marginBottom: "60px",
+        }}
+      >
+        <Col xs={24}>
+          <Title
+            level={2}
+            style={{
+              textAlign: "center",
+              marginBottom: "20px",
+              color: "#333",
+              fontWeight: 600,
+            }}
+          >
+            Our Mission
+          </Title>
+          <Paragraph
+            style={{
+              fontSize: "1.1rem",
+              textAlign: "center",
+              color: "#666",
+              maxWidth: "800px",
+              margin: "0 auto",
+            }}
+          >
+            Our mission is to promote a love for reading by providing
+            high-quality books, exceptional customer service, and a welcoming
+            community for readers of all ages.
+          </Paragraph>
+        </Col>
+      </Row>
 
-      {/* Search Bar */}
-      <Divider />
-      <div style={{ textAlign: "center", marginTop: "30px" }}>
-        <Title level={3} style={{ color: "#1890ff" }}>
-          Find Your Next Favorite Book
-        </Title>
-        <Input.Search
-          placeholder="Search books by title, author, or genre"
-          enterButton="Search"
-          size="large"
-          style={{
-            width: "80%",
-            maxWidth: "600px",
-            margin: "0 auto",
-            borderRadius: "5px",
-            boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
-          }}
-        />
-      </div>
+      {/* Why Choose Us Section */}
+      <Row
+        gutter={[16, 16]}
+        style={{
+          marginBottom: "60px",
+          padding: "60px 20px",
+          borderRadius: "12px",
+        }}
+      >
+        <Col xs={24}>
+          <Title
+            level={2}
+            style={{
+              textAlign: "center",
+              marginBottom: "40px",
+              color: "#333",
+              fontWeight: 600,
+            }}
+          >
+            Why Choose Us?
+          </Title>
+        </Col>
+
+        <Col xs={24} md={8} style={{ marginBottom: "30px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "30px",
+              borderRadius: "12px",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              cursor: "pointer",
+              border: "1px solid #f0f2f5",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-10px)";
+              e.currentTarget.style.boxShadow =
+                "0 12px 24px rgba(0, 0, 0, 0.1)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            <SmileOutlined
+              style={{
+                fontSize: "48px",
+                color: "#00b96b",
+                marginBottom: "20px",
+              }}
+            />
+            <Title level={4} style={{ color: "#00b96b", marginBottom: "15px" }}>
+              Curated Selection
+            </Title>
+            <Paragraph
+              style={{ fontSize: "1.1rem", color: "#666", lineHeight: 1.6 }}
+            >
+              We handpick every book to ensure quality and relevance for our
+              readers.
+            </Paragraph>
+          </div>
+        </Col>
+
+        <Col xs={24} md={8} style={{ marginBottom: "30px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "30px",
+              borderRadius: "12px",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              cursor: "pointer",
+              border: "1px solid #f0f2f5",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-10px)";
+              e.currentTarget.style.boxShadow =
+                "0 12px 24px rgba(0, 0, 0, 0.1)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            <DollarOutlined
+              style={{
+                fontSize: "48px",
+                color: "#00b96b",
+                marginBottom: "20px",
+              }}
+            />
+            <Title level={4} style={{ color: "#00b96b", marginBottom: "15px" }}>
+              Affordable Prices
+            </Title>
+            <Paragraph
+              style={{ fontSize: "1.1rem", color: "#666", lineHeight: 1.6 }}
+            >
+              Enjoy great books at prices that won't break the bank.
+            </Paragraph>
+          </div>
+        </Col>
+
+        <Col xs={24} md={8} style={{ marginBottom: "30px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "30px",
+              borderRadius: "12px",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              cursor: "pointer",
+              border: "1px solid #f0f2f5",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-10px)";
+              e.currentTarget.style.boxShadow =
+                "0 12px 24px rgba(0, 0, 0, 0.1)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            <RocketOutlined
+              style={{
+                fontSize: "48px",
+                color: "#00b96b",
+                marginBottom: "20px",
+              }}
+            />
+            <Title level={4} style={{ color: "#00b96b", marginBottom: "15px" }}>
+              Fast Delivery
+            </Title>
+            <Paragraph
+              style={{ fontSize: "1.1rem", color: "#666", lineHeight: 1.6 }}
+            >
+              Get your books delivered quickly and securely to your doorstep.
+            </Paragraph>
+          </div>
+        </Col>
+      </Row>
+
+      {/* Call to Action Section */}
+      <Row
+        style={{
+          background: "#00b96b",
+          padding: "60px 20px",
+          borderRadius: "8px",
+          textAlign: "center",
+          marginBottom: "40px",
+        }}
+      >
+        <Col xs={24}>
+          <Title level={2} style={{ color: "#fff", marginBottom: "20px" }}>
+            Ready to Explore?
+          </Title>
+          <Paragraph
+            style={{ fontSize: "1.1rem", color: "#fff", marginBottom: "30px" }}
+          >
+            Start your reading journey today with our extensive collection of
+            books.
+          </Paragraph>
+          <Button type="default" size="large" style={{ fontWeight: "bold" }}>
+            Shop Now
+          </Button>
+        </Col>
+      </Row>
     </div>
   );
 };
 
-export default About;
+export default AboutPage;
