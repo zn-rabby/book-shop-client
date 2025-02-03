@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment, useState } from "react";
 import { Button, Col, Pagination, Row, Select, Space, Table } from "antd";
-import { Link } from "react-router-dom";
 import moment from "moment-timezone";
 import { toast } from "sonner";
 import { TQueryParam } from "../../../types/global";
@@ -41,6 +40,7 @@ export default function Orders() {
     isFetching,
     refetch,
   } = useGetAllOrdersQuery([{ name: "page", value: currentPage }, ...params]);
+  console.log(ordersData, "order data");
 
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
@@ -73,7 +73,7 @@ export default function Orders() {
       totalAmount,
       transactionId,
       shippingAddress: `${shippingAddress?.address}, ${shippingAddress?.city}`,
-      orderDate: moment(orderDate).tz("Asia/Dhaka").format("YYYY-MMM-DD"),
+      orderDate: moment(orderDate).tz("Asia/Dhaka").format("DD-MM-YYYY"),
       status,
       userName: userId?.name,
       userEmail: userId?.email,

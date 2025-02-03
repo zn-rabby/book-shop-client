@@ -31,7 +31,7 @@ const HomeProducts = () => {
         </h2>
       </div>
       <Row gutter={[16, 16]}>
-        {bookList.map((book: TProduct) => (
+        {bookList?.slice(0, 8)?.map((book: TProduct) => (
           <Col xs={24} sm={12} lg={6} key={book._id}>
             <Link to={`/product/${book._id}`}>
               {" "}

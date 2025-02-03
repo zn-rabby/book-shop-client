@@ -18,6 +18,7 @@ import ProductDetails from "../pages/Dashboard/Product/ProductDetails";
 import UpdateProduct from "../pages/Dashboard/Product/UpdateProduct";
 import Orders from "../pages/Dashboard/Orders/Orders";
 import OrderHistory from "../pages/Dashboard/OrderHistory/OrderHistory";
+import Success from "../pages/Success";
 // import { adminPaths } from './admin.routes';
 // import { routeGenerator } from '../utils/routesGenerator';
 // import { facultyPaths } from './faculty.routes';
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/pay-success",
+        element: <Success></Success>,
       },
       {
         path: "/product",

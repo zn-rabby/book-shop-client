@@ -26,8 +26,8 @@ const CardDetails = () => {
         title: book.title,
         price: book.price,
         image: book.image,
-        quantity: 1,
-        author: book.author,
+        quantity: 1, // This will no longer throw an error
+        author: book.author, // This will no longer throw an error
       })
     );
 

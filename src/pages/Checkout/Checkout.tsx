@@ -4,7 +4,6 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { RootState } from "../../redux/store";
 import { removeFromCart, clearCart } from "../../redux/features/cart/cartSlice";
 import { useAddOrderMutation } from "../../redux/features/order/orderApi";
-import { useGetProductQuery } from "../../redux/features/book/productsApi";
 import { useParams } from "react-router-dom";
 
 interface CartItem {
@@ -20,16 +19,12 @@ const { Content } = Layout;
 const { Text, Title } = Typography;
 
 const Checkout = () => {
-  const { id } = useParams();
-  const { data: books } = useGetProductQuery(id);
-  console.log(books, "books"); //////////////////////
-
+  const { id } = useParams(); // Get the ID from the URL
   const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.cart.items);
-  console.log(cartItems, "cartItems");
+  const cartItems = useSelector((state: RootState) => state.cart.items || []);
   const [addOrder, { isLoading }] = useAddOrderMutation();
-  console.log("addOrder", addOrder); //////////////////////
 
+  // Group cart items by ID
   const groupedItems = cartItems.reduce<{ [key: string]: CartItem }>(
     (acc, item) => {
       if (acc[item.id]) {
@@ -43,12 +38,11 @@ const Checkout = () => {
   );
 
   const items = Object.values(groupedItems);
-  // console.log(items, "items");
 
+  // Calculate the total price
   const calculateTotal = (): number => {
     return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
-  console.log(calculateTotal);
 
   const handleCheckout = async () => {
     if (items.length === 0) {
@@ -58,7 +52,7 @@ const Checkout = () => {
 
     try {
       const orderData = {
-        userId: "67667005127a16ef726212af", // User ID
+        userId: "67667005127a16ef726212af", // Replace with dynamic userId
         product: items[0].id, // First product ID
         quantity: items[0].quantity,
         total_amount: calculateTotal(),
@@ -75,7 +69,7 @@ const Checkout = () => {
         },
         status: "pending",
         orderDate: new Date().toISOString(),
-        transactionId: "abcd1234efgh5678",
+        transactionId: "abcd1234efgh5678", // Replace with dynamic transaction ID
       };
 
       console.log("Sending Order Data:", orderData);
@@ -84,12 +78,14 @@ const Checkout = () => {
       console.log("Order placed successfully:", response);
 
       if (response.success) {
-        // Proceed with payment (fixed URL for SSLCommerz or test URL)
-        const paymentUrl = "https://sandbox.sslcommerz.com/your-payment-url"; // Replace with your actual payment URL or sandbox URL
+        // Redirect to the payment URL
+        const paymentUrl = response.data.paymentUrl;
+        console.log(paymentUrl, "paymentUrl");
 
-        window.location.href = paymentUrl; // Redirect to the payment page
+        // Uncomment to enable redirection
+        window.location.href = paymentUrl;
 
-        dispatch(clearCart());
+        dispatch(clearCart()); // Clear the cart after successful order
       } else {
         alert(response.message || "Order placement failed.");
       }
@@ -158,6 +154,7 @@ const Checkout = () => {
                 size="large"
                 onClick={handleCheckout}
                 loading={isLoading}
+                disabled={items.length === 0}
               >
                 Proceed to Checkout →
               </Button>
