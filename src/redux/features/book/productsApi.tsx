@@ -38,7 +38,7 @@ const productsApi = baseApi.injectEndpoints({
     }),
     getProduct: builder.query({
       query: (id) => ({
-        url: `/products/${id}`,
+        url: `/product/${id}`,
         method: "GET",
       }),
       transformResponse: (response: ApiResponse<TProduct>) => {
@@ -49,7 +49,7 @@ const productsApi = baseApi.injectEndpoints({
     }),
     updateProduct: builder.mutation({
       query: (args) => ({
-        url: `/products/${args.id}`,
+        url: `/product/${args.id}`,
         method: "PATCH",
         body: args.data,
       }),
@@ -57,7 +57,7 @@ const productsApi = baseApi.injectEndpoints({
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
-        url: `/products/${id}`,
+        url: `/product/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["products"],

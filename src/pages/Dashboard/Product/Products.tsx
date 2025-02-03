@@ -125,7 +125,7 @@ export default function Products() {
       render: (item: ProductItem) => {
         return (
           <Space>
-            <Link to={`/products/${item.key}`}>
+            <Link to={`/dashboard/products/${item.key}`}>
               <Button type="primary" icon={<EyeOutlined />} />
             </Link>
             <Link to={`/update/products/${item.key}`}>

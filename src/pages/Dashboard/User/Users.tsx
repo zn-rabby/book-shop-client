@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment, useState } from "react";
-import { Col, Row, Table, Select, Button, Pagination, Tooltip } from "antd";
+import { Col, Row, Table, Select, Button, Pagination, Tooltip, Card, Space } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import moment from "moment-timezone";
 import { toast } from "sonner";
@@ -178,15 +178,10 @@ export default function Users() {
       <div style={{ width: "100%", margin: "0 auto", padding: "20px" }}>
         <Row gutter={[20, 20]}>
           <Col xs={24}>
-            <div
-              style={{
-                minHeight: "80vh",
-                overflowY: "auto",
-                background: "#fff",
-                padding: "20px",
-                borderRadius: "10px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
+            <Card
+              title="User Management"
+              bordered={false}
+              style={{ borderRadius: "10px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
             >
               <Table
                 columns={columns}
@@ -195,16 +190,18 @@ export default function Users() {
                 scroll={{ x: "max-content" }}
                 loading={isFetching}
                 onChange={onChange}
-                style={{ height: "100%" }}
+                style={{ width: "100%" }}
               />
-              <Pagination
-                style={{ marginTop: "20px", textAlign: "right" }}
-                current={currentPage}
-                onChange={(page) => setCurrentPage(page)}
-                pageSize={metaData?.limit}
-                total={metaData?.total}
-              />
-            </div>
+              <Space style={{ marginTop: "20px", justifyContent: "flex-end", width: "100%" }}>
+                <Pagination
+                  current={currentPage}
+                  onChange={(page) => setCurrentPage(page)}
+                  pageSize={metaData?.limit}
+                  total={metaData?.total}
+                  showSizeChanger={false}
+                />
+              </Space>
+            </Card>
           </Col>
         </Row>
       </div>
