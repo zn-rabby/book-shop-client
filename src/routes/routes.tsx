@@ -19,12 +19,6 @@ import UpdateProduct from "../pages/Dashboard/Product/UpdateProduct";
 import Orders from "../pages/Dashboard/Orders/Orders";
 import OrderHistory from "../pages/Dashboard/OrderHistory/OrderHistory";
 import Success from "../pages/Success";
-// import { adminPaths } from './admin.routes';
-// import { routeGenerator } from '../utils/routesGenerator';
-// import { facultyPaths } from './faculty.routes';
-// import { studentPaths } from './student.routes';
-// import ProtectedRoute from '../components/layout/ProtectedRoute';
-// import ChangePassword from '../pages/ChangePassword';
 
 const router = createBrowserRouter([
   {
@@ -57,7 +51,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <Checkout></Checkout>,
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <Checkout></Checkout>
+          </ProtectedRoute>
+        ),
       },
     ],
   },

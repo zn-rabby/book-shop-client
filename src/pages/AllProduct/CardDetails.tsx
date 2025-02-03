@@ -2,11 +2,20 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
-import { Card, Col, Row, Typography, Button, Space, notification } from "antd";
+import {
+  Card,
+  Col,
+  Row,
+  Typography,
+  Button,
+  notification,
+  Rate,
+  Space,
+} from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { addToCart } from "../../redux/features/cart/cartSlice"; // Importing addToCart action
+import { addToCart } from "../../redux/features/cart/cartSlice";
 
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 
 const CardDetails = () => {
   const { id } = useParams();
@@ -15,77 +24,133 @@ const CardDetails = () => {
   const book = books?.data?.find((book: TProduct) => book._id === id);
 
   if (!book) {
-    return <div>Book not found</div>;
+    return (
+      <div style={{ textAlign: "center", padding: "20px" }}>Book not found</div>
+    );
   }
 
   const handleAddToCart = () => {
-    // Dispatch addToCart action with book details
     dispatch(
       addToCart({
         id: book._id,
         title: book.title,
         price: book.price,
         image: book.image,
-        quantity: 1, // This will no longer throw an error
-        author: book.author, // This will no longer throw an error
+        quantity: 1,
+        author: book.author,
       })
     );
 
-    // Show success notification
     notification.success({
       message: "Added to Cart",
       description: `${book.title} has been added to your cart.`,
       placement: "bottomRight",
+      duration: 2,
     });
   };
 
   return (
-    <div style={{ padding: "20px", backgroundColor: "#f9f9f9" }}>
-      <Row gutter={[16, 16]} justify="center">
-        {/* Left side: Book details */}
-        <Col xs={24} sm={12} lg={8}>
+    <div style={{ padding: "40px", backgroundColor: "#f8f8f8" }}>
+      <Row justify="center" gutter={[24, 24]}>
+        <Col xs={24} sm={16} md={12}>
           <Card
-            hoverable
-            cover={<img alt={book.title} src={book.image} />}
+            cover={
+              <img
+                alt={book.title}
+                src={book.image}
+                style={{
+                  height: "400px",
+                  objectFit: "cover",
+                  borderTopLeftRadius: "12px",
+                  borderTopRightRadius: "12px",
+                }}
+              />
+            }
             style={{
-              borderRadius: "8px",
-              boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+              borderRadius: "12px",
+              boxShadow: "0 6px 16px rgba(0, 0, 0, 0.12)",
+              overflow: "hidden",
             }}
           >
-            <Title level={3}>{book.title}</Title>
-            <Text type="secondary">{book.category}</Text>
-            <Title level={4} style={{ color: "#ff4d4f", marginTop: "10px" }}>
-              ${book.price}
-            </Title>
-            <Text style={{ fontSize: "16px", color: "#555" }}>
-              {book.description}
-            </Text>
-            <Space
-              style={{ marginTop: "20px" }}
-              direction="vertical"
-              size="middle"
-            ></Space>{" "}
-            <Button
-              type="primary"
+            <div
               style={{
-                width: "100%",
-                background: "#00b96b",
-                border: "none",
-                borderRadius: "5px",
-                fontWeight: "bold",
-                padding: "12px",
-                fontSize: "1rem",
                 display: "flex",
-                justifyContent: "center", // To align text and icon
-                alignItems: "center", // To vertically align
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
-              onClick={handleAddToCart} // Add to cart functionality
             >
-              <span>Add to Cart</span>
-              <ShoppingCartOutlined
-                style={{ fontSize: "20px", marginLeft: "10px" }}
-              />
-            </Button>
+              {" "}
+              {/* Flex for price & rating */}
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Text
+                  style={{
+                    fontSize: "18px",
+                    color: "#2ecc71",
+                    fontWeight: 500,
+                  }}
+                >
+                  ${book.price}
+                </Text>
+              </div>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Rate style={{ fontSize: "14px" }} disabled value={4} />
+              </div>
+            </div>
+            <div style={{ padding: "24px" }}>
+              <Title
+                level={4}
+                style={{ marginBottom: "10px", fontWeight: 600 }}
+              >
+                Name: {book.name}
+              </Title>
+              <Title
+                level={5}
+                style={{ marginBottom: "10px", fontWeight: 600 }}
+              >
+                Title: {book.title}
+              </Title>
+
+              <div style={{ marginBottom: "16px" }}>
+                {" "}
+                {/* Author below Title */}
+                <Text type="secondary">Author: {book.author}</Text>
+              </div>
+
+              <Paragraph
+                style={{
+                  fontSize: "15px",
+                  color: "#555",
+                  lineHeight: "1.6",
+                  marginBottom: "20px",
+                }}
+              >
+                Description: {book.description}
+              </Paragraph>
+
+              <Button
+                type="primary"
+                style={{
+                  width: "100%",
+                  backgroundColor: "#2ecc71",
+                  borderColor: "#2ecc71",
+                  borderRadius: "8px",
+                  fontWeight: 500,
+                  padding: "14px",
+                  fontSize: "16px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxShadow: "0 2px 5px rgba(0,0,0,0.15)",
+                  marginTop: "20px", // Added margin top
+                }}
+                onClick={handleAddToCart}
+              >
+                <ShoppingCartOutlined
+                  style={{ fontSize: "18px", marginRight: "8px" }}
+                />
+                <span>Add to Cart</span>
+              </Button>
+            </div>
           </Card>
         </Col>
       </Row>
