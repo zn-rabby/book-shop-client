@@ -79,30 +79,49 @@ export default function OrderHistory() {
   };
 
   const columns = [
-    { title: "User Name", dataIndex: "userName", key: "userName" },
-    { title: "User Email", dataIndex: "userEmail", key: "userEmail" },
+    {
+      title: "User Name",
+      dataIndex: "userName",
+      key: "userName",
+      responsive: ["xs", "sm", "md", "lg", "xl"],
+    },
+    {
+      title: "User Email",
+      dataIndex: "userEmail",
+      key: "userEmail",
+      responsive: ["xs", "sm", "md", "lg", "xl"],
+    },
     {
       title: "Payment Method",
       dataIndex: "paymentMethod",
       key: "paymentMethod",
+      responsive: ["xs", "sm", "md", "lg", "xl"],
     },
     {
       title: "Total Amount",
       dataIndex: "totalAmount",
       key: "totalAmount",
       render: (amount: number) => `$${amount.toFixed(2)}`,
+      responsive: ["xs", "sm", "md", "lg", "xl"],
     },
     {
       title: "Transaction ID",
       dataIndex: "transactionId",
       key: "transactionId",
+      responsive: ["xs", "sm", "md", "lg", "xl"],
     },
-    { title: "Date", dataIndex: "orderDate", key: "orderDate" },
+    {
+      title: "Date",
+      dataIndex: "orderDate",
+      key: "orderDate",
+      responsive: ["xs", "sm", "md", "lg", "xl"],
+    },
     {
       title: "Order Progress",
       dataIndex: "status",
       key: "status",
       render: (status: string) => getStatusTag(status),
+      responsive: ["xs", "sm", "md", "lg", "xl"],
     },
   ];
 
@@ -116,6 +135,7 @@ export default function OrderHistory() {
             pagination={false}
             scroll={{ x: "max-content" }}
             loading={isFetching}
+            bordered
           />
         </Col>
       </Row>

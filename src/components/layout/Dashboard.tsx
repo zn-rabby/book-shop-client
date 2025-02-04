@@ -1,5 +1,6 @@
 import { Layout, Menu, Breadcrumb, Button, Row, Col } from "antd";
 import {
+  FaHistory,
   FaHome,
   FaList,
   FaUser,
@@ -34,7 +35,12 @@ const Dashboard = () => {
     <Layout style={{ minHeight: "100vh" }}>
       {/* Sidebar */}
       <Sider width={250} theme="dark" collapsible>
-        <Row justify="center" align="middle" style={{ height: "80px" }}>
+        <Row
+          justify="center"
+          align="middle"
+          className="right-section"
+          style={{ height: "80px" }}
+        >
           <Col>
             <Typography.Title
               level={4}
@@ -96,7 +102,7 @@ const Dashboard = () => {
 
           {isUser && (
             <>
-              <Menu.Item key="1" icon={<FaHome />}>
+              <Menu.Item key="1" icon={<FaHistory />}>
                 <Link to="/dashboard/orderHistory">Orders History</Link>
               </Menu.Item>
             </>
