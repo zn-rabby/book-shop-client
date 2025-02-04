@@ -9,27 +9,7 @@ import {
   useUpdateOrderStatusMutation,
 } from "../../../redux/features/order/orderApi";
 
-export type ShippingAddress = {
-  city: string;
-  country: string;
-};
-
-export type User = {
-  name: string;
-  email: string;
-};
-
-export type OrderItem = {
-  key: string;
-  paymentMethod: string;
-  totalAmount: number | undefined;
-  transactionId: string;
-  shippingAddress: string;
-  orderDate: string;
-  status: "pending" | "shipping" | "delivered";
-  userName: string;
-  userEmail: string;
-};
+// ... (Your types: ShippingAddress, User, OrderItem)
 
 export default function Orders() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +20,6 @@ export default function Orders() {
     isFetching,
     refetch,
   } = useGetAllOrdersQuery([{ name: "page", value: currentPage }, ...params]);
-  console.log(ordersData, "order data");
 
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
@@ -83,13 +62,16 @@ export default function Orders() {
   const metaData = ordersData?.meta;
 
   const columns = [
-    { title: "Name", dataIndex: "userName", key: "userName" },
-    { title: "Email", dataIndex: "userEmail", key: "userEmail" },
     {
-      title: "Payment Method",
-      dataIndex: "paymentMethod",
-      key: "paymentMethod",
+      title: "Serial",
+      key: "serial",
+      width: 80,
+      render: (text, record, index) =>
+        `${(currentPage - 1) * (metaData?.limit || 10) + index + 1}`,
     },
+    { title: "User Name", dataIndex: "userName", key: "userName" },
+    { title: "User Email", dataIndex: "userEmail", key: "userEmail" },
+
     {
       title: "Total Amount",
       dataIndex: "totalAmount",
@@ -101,6 +83,11 @@ export default function Orders() {
       title: "Transaction ID",
       dataIndex: "transactionId",
       key: "transactionId",
+    },
+    {
+      title: "Payment Method",
+      dataIndex: "paymentMethod",
+      key: "paymentMethod",
     },
     { title: "Order Date", dataIndex: "orderDate", key: "orderDate" },
     {
@@ -124,11 +111,11 @@ export default function Orders() {
         { text: "Delivered", value: "delivered" },
       ],
     },
-    {
-      title: "Shipping Address",
-      dataIndex: "shippingAddress",
-      key: "shippingAddress",
-    },
+    // {
+    //   title: "Shipping Address",
+    //   dataIndex: "shippingAddress",
+    //   key: "shippingAddress",
+    // },
   ];
 
   const onChange = (_pagination, filters, _sorter, extra) => {
@@ -142,30 +129,31 @@ export default function Orders() {
   };
 
   return (
-    <Fragment>
-      <div className="p-6 min-h-screen bg-gray-100">
-        <Row gutter={[20, 20]} justify="center">
-          <Col xs={24}>
-            <div className="bg-white p-6 shadow-md rounded-lg overflow-auto">
-              <Table
-                columns={columns}
-                dataSource={tableData}
-                pagination={false}
-                scroll={{ x: "max-content" }}
-                loading={isFetching}
-                onChange={onChange}
-              />
-              <Pagination
-                className="mt-4 flex justify-end"
-                current={currentPage}
-                onChange={(page) => setCurrentPage(page)}
-                pageSize={metaData?.limit}
-                total={metaData?.total}
-              />
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </Fragment>
+    <div className="p-6 min-h-screen bg-gray-100">
+      {" "}
+      {/* Combined Fragment and div */}
+      <Row gutter={[20, 20]} justify="center">
+        <Col xs={24}>
+          <div className="bg-white p-6 shadow-md rounded-lg overflow-auto">
+            <Table
+              columns={columns}
+              dataSource={tableData}
+              pagination={false}
+              scroll={{ x: "max-content" }}
+              loading={isFetching}
+              onChange={onChange}
+            />
+            <Pagination
+              style={{ marginTop: "12px" }}
+              className="mt-8 flex justify-end"
+              current={currentPage}
+              onChange={(page) => setCurrentPage(page)}
+              pageSize={metaData?.limit}
+              total={metaData?.total}
+            />
+          </div>
+        </Col>
+      </Row>
+    </div> // Closing div tag
   );
 }
