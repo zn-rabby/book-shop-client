@@ -37,7 +37,7 @@ export default function Products() {
 
   const { data: productsData, isFetching } = useGetAllProductsQuery([
     { name: "page", value: currentPage },
-    { name: "limit", value: 3 },
+    { name: "limit", value: 6 },
     ...params,
   ]);
 
@@ -59,8 +59,9 @@ export default function Products() {
   };
 
   const tableData = productsData?.data.map(
-    ({ title, category, author, price, image, _id, quantity }) => ({
+    ({ name, title, category, author, price, image, _id, quantity }) => ({
       key: _id,
+      name,
       title,
       category,
       author,
@@ -93,6 +94,12 @@ export default function Products() {
       ),
     },
     {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      sorter: (a, b) => a.name.localeCompare(b.name),
+    },
+    {
       title: "Title",
       dataIndex: "title",
       key: "title",
@@ -110,16 +117,17 @@ export default function Products() {
       key: "author",
     },
     {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+    },
+    {
       title: "Price",
       dataIndex: "price",
       key: "price",
       render: (price: string) => `$${price}`,
     },
-    {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-    },
+
     {
       title: "Action",
       dataIndex: "",
@@ -148,25 +156,9 @@ export default function Products() {
     },
   ];
 
-  // const onChange = (_pagination, filters, _sorter, extra) => {
-  //   if (extra.action === "filter") {
-  //     const queryParams: TQueryParam[] = [];
-
-  //     filters.language?.forEach((item) =>
-  //       queryParams?.push({ name: "language", value: item })
-  //     );
-
-  //     filters.category?.forEach((item) =>
-  //       queryParams?.push({ name: "category", value: item })
-  //     );
-
-  //     setParams(queryParams);
-  //   }
-  // };
-
   return (
     <Fragment>
-      <div style={{ width: "100%", margin: "0 auto", padding: "20px" }}>
+      <div style={{ width: "100%", margin: "0 auto", padding: "5px" }}>
         <Row gutter={[20, 20]}>
           <Col xs={24}>
             <Card

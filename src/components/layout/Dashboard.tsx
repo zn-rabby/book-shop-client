@@ -160,7 +160,7 @@ const Dashboard = () => {
           <div
             className="site-layout-background"
             style={{
-              padding: 24,
+              padding: 12,
               minHeight: 360,
               backgroundColor: "#fff",
             }}

@@ -1,6 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment, useState } from "react";
-import { Col, Row, Table, Select, Button, Pagination, Tooltip, Card, Space } from "antd";
+import {
+  Col,
+  Row,
+  Table,
+  Select,
+  Button,
+  Pagination,
+  Tooltip,
+  Card,
+  Space,
+} from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import moment from "moment-timezone";
 import { toast } from "sonner";
@@ -93,17 +103,17 @@ export default function Users() {
 
   const columns = [
     {
-      title: "Name",
+      title: "User Name",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Email",
+      title: "User Email",
       dataIndex: "email",
       key: "email",
     },
     {
-      title: "Role",
+      title: "User Role",
       dataIndex: "role",
       key: "role",
       render: (role: string, record: { key: string }) => (
@@ -122,7 +132,7 @@ export default function Users() {
       ],
     },
     {
-      title: "Status",
+      title: "User Status",
       dataIndex: "status",
       key: "status",
       render: (status: string, record: { key: string }) => (
@@ -132,12 +142,12 @@ export default function Users() {
           onChange={(value) => handleStatusUpdate(value, record.key)}
         >
           <Select.Option value="active">Active</Select.Option>
-          <Select.Option value="banned">Banned</Select.Option>
+          <Select.Option value="block">Block</Select.Option>
         </Select>
       ),
       filters: [
         { text: "Active", value: "active" },
-        { text: "Banned", value: "banned" },
+        { text: "Block", value: "block" },
       ],
     },
     {
@@ -175,13 +185,16 @@ export default function Users() {
 
   return (
     <Fragment>
-      <div style={{ width: "100%", margin: "0 auto", padding: "20px" }}>
+      <div style={{ width: "100%", margin: "0 auto", padding: "5px" }}>
         <Row gutter={[20, 20]}>
           <Col xs={24}>
             <Card
               title="User Management"
               bordered={false}
-              style={{ borderRadius: "10px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+              style={{
+                borderRadius: "10px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
             >
               <Table
                 columns={columns}
@@ -192,7 +205,13 @@ export default function Users() {
                 onChange={onChange}
                 style={{ width: "100%" }}
               />
-              <Space style={{ marginTop: "20px", justifyContent: "flex-end", width: "100%" }}>
+              <Space
+                style={{
+                  marginTop: "10px",
+                  justifyContent: "flex-end",
+                  width: "100%",
+                }}
+              >
                 <Pagination
                   current={currentPage}
                   onChange={(page) => setCurrentPage(page)}
