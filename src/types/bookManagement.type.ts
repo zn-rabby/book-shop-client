@@ -3,7 +3,7 @@ export type TProduct = {
   name: string;
   title: string;
   category: string;
-  author: string;
+  author?: string;
   description: string;
   price: number;
   image: string;

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CartItem {
   id: string;
+  title: string;
   image: string;
   name: string; // Changed from 'title' to 'name' for consistency
   price: number;
@@ -25,6 +26,7 @@ const cartSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string;
+        title: string;
         image: string;
         name: string; // Changed from 'title' to 'name'
         price: number;

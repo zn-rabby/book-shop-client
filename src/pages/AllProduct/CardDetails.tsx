@@ -24,7 +24,8 @@ const CardDetails = () => {
     dispatch(
       addToCart({
         id: book._id,
-        title: book.title,
+        title: book.title, // Use name if title does not exist
+        name: book.name, // Use name if title does not exist
         price: book.price,
         image: book.image,
         // quantity: 1,
@@ -34,7 +35,7 @@ const CardDetails = () => {
 
     notification.success({
       message: "Added to Cart",
-      description: `${book.title} has been added to your cart.`,
+      description: `${book.name} has been added to your cart.`, // Use name instead of title
       placement: "bottomRight",
       duration: 2,
     });

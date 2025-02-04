@@ -14,6 +14,14 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items || []);
   const [addOrder, { isLoading }] = useAddOrderMutation();
+  interface CartItem {
+    id: string;
+    name: string;
+    author: string;
+    price: number;
+    quantity: number;
+    image: string;
+  }
 
   const groupedItems = cartItems.reduce<{ [key: string]: CartItem }>(
     (acc, item) => {
