@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import {
   Form,
   Input,
@@ -12,11 +12,16 @@ import {
   Col,
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const { Option } = Select;
 const { Dragger } = Upload;
 
 const AdminDashboard = () => {
+  const user = useSelector((state: RootState) => state.auth.user);
+  // console.log(user, "dashboard");
+
   const [form] = Form.useForm();
   const [imageUrl, setImageUrl] = useState("");
 
@@ -78,10 +83,14 @@ const AdminDashboard = () => {
               />
               {/* User Information */}
               <div>
-                <h3 style={{ marginBottom: "8px" }}>John Doe</h3>
-                <p style={{ margin: "0", fontWeight: "bold" }}>Role: User</p>
+                <h3 style={{ marginBottom: "8px" }}>
+                  Name: {user?.name || " undefined"}
+                </h3>
+                <p style={{ margin: "0", fontWeight: "bold" }}>
+                  Role: {user?.role}
+                </p>
                 <p style={{ margin: "0", color: "gray" }}>
-                  Email: johndoe@gmail.com
+                  Email: {user?.email}
                 </p>
               </div>
             </div>
