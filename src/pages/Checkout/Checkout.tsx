@@ -6,42 +6,41 @@ import { removeFromCart, clearCart } from "../../redux/features/cart/cartSlice";
 import { useAddOrderMutation } from "../../redux/features/order/orderApi";
 import { useParams } from "react-router-dom";
 
+// Update CartItem type to match the properties you're passing
+interface CartItem {
+  id: string;
+  name: string; // Add name property
+  price: number;
+  quantity: number;
+  image: string;
+  author: string; // Add author property
+}
+
 const { Content } = Layout;
 const { Text, Title } = Typography;
 
 const Checkout = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Use the ID from URL if required
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items || []);
   const [addOrder, { isLoading }] = useAddOrderMutation();
-  interface CartItem {
-    id: string;
-    name: string;
-    author: string;
-    price: number;
-    quantity: number;
-    image: string;
-  }
 
+  // Group cart items by ID
   const groupedItems = cartItems.reduce<{ [key: string]: CartItem }>(
     (acc, item) => {
-      const updatedItem = {
-        ...item,
-        name: item.name || "Default Name",
-        author: item.author || "Unknown Author",
-      };
-
-      if (acc[updatedItem.id]) {
-        acc[updatedItem.id].quantity += updatedItem.quantity;
+      if (acc[item.id]) {
+        acc[item.id].quantity += item.quantity;
       } else {
-        acc[updatedItem.id] = updatedItem;
+        acc[item.id] = { ...item, author: item.author ?? "Unknown Author" }; // Provide default
       }
       return acc;
     },
     {}
   );
+
   const items = Object.values(groupedItems);
 
+  // Calculate the total price
   const calculateTotal = (): number => {
     return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
@@ -54,13 +53,11 @@ const Checkout = () => {
 
     try {
       const orderData = {
-        userId: id || "67667005127a16ef726212af",
-        products: items.map((item) => ({
-          productId: item.id,
-          quantity: item.quantity,
-        })),
+        userId: id || "67667005127a16ef726212af", // Use URL parameter or default ID
+        product: items[0].id, // First product ID
+        quantity: items[0].quantity,
         total_amount: calculateTotal(),
-        paymentMethod: "sslCommerz",
+        paymentMethod: "sslCommerz", // Payment method
         paymentStatus: "pending",
         shippingAddress: {
           name: "home",
@@ -73,7 +70,7 @@ const Checkout = () => {
         },
         status: "pending",
         orderDate: new Date().toISOString(),
-        transactionId: "abcd1234efgh5678",
+        transactionId: "abcd1234efgh5678", // Replace with dynamic transaction ID
       };
 
       console.log("Sending Order Data:", orderData);
@@ -82,12 +79,14 @@ const Checkout = () => {
       console.log("Order placed successfully:", response);
 
       if (response.success) {
+        // Redirect to the payment URL
         const paymentUrl = response.data.paymentUrl;
         console.log(paymentUrl, "paymentUrl");
 
+        // Uncomment to enable redirection
         window.location.href = paymentUrl;
 
-        dispatch(clearCart());
+        dispatch(clearCart()); // Clear the cart after successful order
       } else {
         alert(response.message || "Order placement failed.");
       }
