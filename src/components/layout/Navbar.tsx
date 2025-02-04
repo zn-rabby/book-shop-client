@@ -28,7 +28,22 @@ const Navbar = () => {
     <Layout>
       <Header className="navbar-header">
         <div className="navbar-container">
-          <div className="logo">Books</div>
+          <div className="logo">
+            <div
+              style={{
+                display: "flex",
+                color: "#00b96b",
+              }}
+            >
+              <img
+                src="https://i.ibb.co.com/tpWdH6mM/books-fotor-2025020321554.png"
+                alt="Bookshop Logo"
+                style={{ width: "50px", height: "50px", margin: "5px" }}
+              />
+
+              <p>BookStack</p>
+            </div>
+          </div>
 
           <Menu mode="horizontal" className="menu">
             <Menu.Item key="home">
