@@ -1,4 +1,3 @@
-import React from "react";
 import { Result, Button, Space } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 
@@ -22,13 +21,9 @@ const Success = () => {
         subTitle="Your payment has been processed successfully. Thank you for your purchase!"
         extra={
           <Space>
-            <Button
-              type="primary"
-              onClick={() => (window.location.href = "/")}
-            >
+            <Button type="primary" onClick={() => (window.location.href = "/")}>
               Go to Home
             </Button>
-           
           </Space>
         }
         style={{

@@ -21,6 +21,11 @@ import {
   useUpdateUserStatusMutation,
 } from "../../../redux/features/user/userApi";
 import { TQueryParam } from "../../../types/global";
+import {
+  FilterValue,
+  SorterResult,
+  TablePaginationConfig,
+} from "antd/es/table/interface";
 
 export type User = {
   _id: string;
@@ -46,16 +51,14 @@ export default function Users() {
   const [updateUserStatus] = useUpdateUserStatusMutation();
   const [deleteUser] = useDeleteUserMutation();
 
-  const tableData = (usersData?.data || []).map(
-    ({ name, role, email, createdAt, status, _id }) => ({
-      key: _id,
-      name,
-      email,
-      role,
-      status,
-      createdAt: moment.tz(createdAt, "Asia/Dhaka").format("YYYY MMM DD"),
-    })
-  );
+  const tableData = (usersData?.data || []).map((user: User) => ({
+    key: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    status: user.status,
+    createdAt: moment.tz(user.createdAt, "Asia/Dhaka").format("YYYY MMM DD"),
+  }));
 
   // Handle role update
   const handleRoleUpdate = async (value: string, userId: string) => {
@@ -142,12 +145,12 @@ export default function Users() {
           onChange={(value) => handleStatusUpdate(value, record.key)}
         >
           <Select.Option value="active">Active</Select.Option>
-          <Select.Option value="block">Block</Select.Option>
+          <Select.Option value="banned">Banned</Select.Option>
         </Select>
       ),
       filters: [
         { text: "Active", value: "active" },
-        { text: "Block", value: "block" },
+        { text: "Banned", value: "banned" },
       ],
     },
     {
@@ -170,14 +173,19 @@ export default function Users() {
     },
   ];
 
-  const onChange = (_pagination, filters, _sorter, extra) => {
+  const onChange = (
+    _pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    _sorter: SorterResult<{ key: string }> | SorterResult<{ key: string }>[],
+    extra: { action: string }
+  ) => {
     if (extra.action === "filter") {
       const queryParams: TQueryParam[] = [];
-      filters.role?.forEach((item) =>
-        queryParams.push({ name: "role", value: item })
+      filters.role?.forEach(
+        (item) => item && queryParams.push({ name: "role", value: item })
       );
-      filters.status?.forEach((item) =>
-        queryParams.push({ name: "status", value: item })
+      filters.status?.forEach(
+        (item) => item && queryParams.push({ name: "status", value: item })
       );
       setParams(queryParams);
     }

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Result, Button, Space } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 

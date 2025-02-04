@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Card, Divider, Space, Rate, Button, Skeleton, Image } from "antd";
+import {  Divider, Space, Rate, Button, Skeleton, Image } from "antd";
 import { useGetProductQuery } from "../../../redux/features/book/productsApi";
 import { TProduct } from "../../../types/bookManagement.type";
 

@@ -4,6 +4,7 @@ import moment from "moment-timezone";
 import { useGetUserOrderHistoryQuery } from "../../../redux/features/order/orderApi";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
+import { ColumnType } from "antd/es/table"; // Import the required types
 
 export interface TableData {
   key: string;
@@ -78,50 +79,50 @@ export default function OrderHistory() {
     );
   };
 
-  const columns = [
+  const columns: ColumnType<TableData>[] = [
     {
       title: "User Name",
       dataIndex: "userName",
       key: "userName",
-      responsive: ["xs", "sm", "md", "lg", "xl"],
+      responsive: ["xs", "sm", "md", "lg", "xl"] as const, // Using `as const` ensures proper type inference
     },
     {
       title: "User Email",
       dataIndex: "userEmail",
       key: "userEmail",
-      responsive: ["xs", "sm", "md", "lg", "xl"],
+      responsive: ["xs", "sm", "md", "lg", "xl"] as const,
     },
     {
       title: "Payment Method",
       dataIndex: "paymentMethod",
       key: "paymentMethod",
-      responsive: ["xs", "sm", "md", "lg", "xl"],
+      responsive: ["xs", "sm", "md", "lg", "xl"] as const,
     },
     {
       title: "Total Amount",
       dataIndex: "totalAmount",
       key: "totalAmount",
       render: (amount: number) => `$${amount.toFixed(2)}`,
-      responsive: ["xs", "sm", "md", "lg", "xl"],
+      responsive: ["xs", "sm", "md", "lg", "xl"] as const,
     },
     {
       title: "Transaction ID",
       dataIndex: "transactionId",
       key: "transactionId",
-      responsive: ["xs", "sm", "md", "lg", "xl"],
+      responsive: ["xs", "sm", "md", "lg", "xl"] as const,
     },
     {
       title: "Date",
       dataIndex: "orderDate",
       key: "orderDate",
-      responsive: ["xs", "sm", "md", "lg", "xl"],
+      responsive: ["xs", "sm", "md", "lg", "xl"] as const,
     },
     {
       title: "Order Progress",
       dataIndex: "status",
       key: "status",
       render: (status: string) => getStatusTag(status),
-      responsive: ["xs", "sm", "md", "lg", "xl"],
+      responsive: ["xs", "sm", "md", "lg", "xl"] as const,
     },
   ];
 

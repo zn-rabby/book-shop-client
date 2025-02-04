@@ -2,16 +2,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
-import {
-  Card,
-  Col,
-  Row,
-  Typography,
-  Button,
-  notification,
-  Rate,
-  Space,
-} from "antd";
+import { Card, Col, Row, Typography, Button, notification, Rate } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 
@@ -36,8 +27,8 @@ const CardDetails = () => {
         title: book.title,
         price: book.price,
         image: book.image,
-        quantity: 1,
-        author: book.author,
+        // quantity: 1,
+        // author: book.author,
       })
     );
 

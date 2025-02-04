@@ -2,13 +2,7 @@ import { Row, Col, Card } from "antd";
 import { SmileOutlined, HeartOutlined, BookOutlined } from "@ant-design/icons";
 
 const BannerCard = () => {
-  const cardStyle = {
-    borderRadius: "12px",
-    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
-    textAlign: "left",
-    padding: "20px",
-    transition: "transform 0.3s",
-  };
+
 
   const iconStyle = {
     fontSize: "30px",
@@ -28,7 +22,6 @@ const BannerCard = () => {
       <Col xs={24} md={12} lg={8}>
         <Card
           hoverable
-          style={cardStyle}
           bodyStyle={{ padding: "20px" }}
           onMouseEnter={(e) =>
             (e.currentTarget.style.transform = "scale(1.05)")
@@ -49,7 +42,6 @@ const BannerCard = () => {
       <Col xs={24} md={12} lg={8}>
         <Card
           hoverable
-          style={cardStyle}
           bodyStyle={{ padding: "20px" }}
           onMouseEnter={(e) =>
             (e.currentTarget.style.transform = "scale(1.05)")
@@ -70,7 +62,6 @@ const BannerCard = () => {
       <Col xs={24} md={12} lg={8}>
         <Card
           hoverable
-          style={cardStyle}
           bodyStyle={{ padding: "20px" }}
           onMouseEnter={(e) =>
             (e.currentTarget.style.transform = "scale(1.05)")

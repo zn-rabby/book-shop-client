@@ -1,18 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment } from "react/jsx-runtime";
-import {
-  MailOutlined,
-  UserOutlined,
-  ShoppingOutlined,
-  StarOutlined,
-  NumberOutlined,
-} from "@ant-design/icons";
 import { Button, Card, Col, Row, Typography, Space } from "antd";
 import { toast } from "sonner";
 import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
 import PHTextArea from "../../../components/form/PHTextArea";
-import { z } from "zod";
-import { TProduct } from "../../../types/bookManagement.type";
 import { useUpdateProductMutation } from "../../../redux/features/book/productsApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProductQuery } from "../../../redux/features/book/productsApi"; // Import the missing hook
@@ -30,14 +22,14 @@ export default function UpdateProduct() {
   const [updateProduct] = useUpdateProductMutation();
 
   // Handle form submission
-  const onSubmit = async (data: TProduct) => {
+  const onSubmit = async (data: any) => {
     const toastId = toast.loading("Updating product...");
     try {
       const productData = {
         ...data,
-        price: parseFloat(data.price),
-        rating: parseFloat(data.rating),
-        quantity: parseInt(data.quantity),
+        price: parseFloat(data.price as unknown as string), // Ensure it's parsed as a number
+        rating: parseFloat(data.rating as unknown as string), // Ensure it's parsed as a number
+        quantity: parseInt(data.quantity as unknown as string, 10), // Ensure it's parsed as a number
       };
 
       // Send the update request with the product ID
@@ -96,7 +88,6 @@ export default function UpdateProduct() {
           >
             <PHForm
               onSubmit={onSubmit}
-              schema={updateProductValidationSchema}
               defaultValues={initialValues} // Set initial values
             >
               <Space
@@ -105,152 +96,27 @@ export default function UpdateProduct() {
                 style={{ width: "100%" }}
               >
                 {/* Name */}
-                <PHInput
-                  label={
-                    <span>
-                      Name <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  type="text"
-                  name="name"
-                  placeholder="Enter Product Name"
-                  rules={[
-                    { required: true, message: "Please enter product name" },
-                  ]}
-                  icon={<UserOutlined />}
-                />
+                <PHInput label="Name" type="text" name="name" />
                 {/* Title */}
-                <PHInput
-                  type="text"
-                  label={
-                    <span>
-                      Title <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  name="title"
-                  placeholder="Product Title"
-                  rules={[
-                    { required: true, message: "Please enter product title" },
-                  ]}
-                  icon={<ShoppingOutlined />}
-                />
+                <PHInput type="text" label="Title" name="title" />
                 {/* Category */}
-                <PHInput
-                  type="text"
-                  name="category"
-                  label={
-                    <span>
-                      Category <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  placeholder="Product Category"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter product category!",
-                    },
-                  ]}
-                  icon={<ShoppingOutlined />}
-                />
+                <PHInput type="text" name="category" label="Category" />
                 {/* Author */}
-                <PHInput
-                  type="text"
-                  name="author"
-                  label={
-                    <span>
-                      Author <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  placeholder="Product Author"
-                  rules={[
-                    { required: true, message: "Please enter product author!" },
-                  ]}
-                  icon={<UserOutlined />}
-                />
+                <PHInput type="text" name="author" label="Author" />
                 {/* Description */}
                 <PHTextArea
-                  type="text"
                   name="description"
-                  label={
-                    <span>
-                      Description <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  placeholder="Product Description"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter product description!",
-                    },
-                  ]}
-                  icon={<MailOutlined />}
+                  label="Product Description"
+                  rows={4} // Optional, defaults to 4
                 />
                 {/* Price */}
-                <PHInput
-                  type="number"
-                  name="price"
-                  label={
-                    <span>
-                      Price <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  placeholder="Product Price"
-                  rules={[
-                    { required: true, message: "Please enter product price!" },
-                  ]}
-                  icon={<NumberOutlined />}
-                />
+                <PHInput type="number" name="price" label="Price" />
                 {/* Image */}
-                <PHInput
-                  type="text"
-                  name="image"
-                  label={
-                    <span>
-                      Image URL <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  placeholder="Product Image URL"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter product image URL!",
-                    },
-                  ]}
-                  icon={<MailOutlined />}
-                />
+                <PHInput type="text" name="image" label="Image URL" />
                 {/* Rating */}
-                <PHInput
-                  type="number"
-                  name="rating"
-                  label={
-                    <span>
-                      Rating <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  placeholder="Product Rating (1-5)"
-                  rules={[
-                    { required: true, message: "Please enter product rating!" },
-                  ]}
-                  icon={<StarOutlined />}
-                />
+                <PHInput type="number" name="rating" label="Rating" />
                 {/* Quantity */}
-                <PHInput
-                  type="number"
-                  name="quantity"
-                  label={
-                    <span>
-                      Quantity <span style={{ color: "red" }}>*</span>
-                    </span>
-                  }
-                  placeholder="Product Quantity"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter product quantity!",
-                    },
-                  ]}
-                  icon={<NumberOutlined />}
-                />
+                <PHInput type="number" name="quantity" label="Quantity" />
                 <Button type="primary" htmlType="submit" block>
                   Update Product
                 </Button>
@@ -262,22 +128,3 @@ export default function UpdateProduct() {
     </Fragment>
   );
 }
-
-// Validation schema for updating a product
-const updateProductValidationSchema = z.object({
-  name: z.string().nonempty("Name is required"),
-  title: z.string().nonempty("Title is required"),
-  category: z.string().nonempty("Category is required"),
-  author: z.string().nonempty("Author is required"),
-  description: z.string().nonempty("Description is required"),
-  price: z.string().refine((val) => !isNaN(parseFloat(val)), {
-    message: "Price must be a number",
-  }),
-  image: z.string().url("Image must be a valid URL"),
-  rating: z.string().refine((val) => !isNaN(parseFloat(val)), {
-    message: "Rating must be a number",
-  }),
-  quantity: z.string().refine((val) => !isNaN(parseInt(val)), {
-    message: "Quantity must be a number",
-  }),
-});

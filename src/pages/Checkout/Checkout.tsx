@@ -6,40 +6,34 @@ import { removeFromCart, clearCart } from "../../redux/features/cart/cartSlice";
 import { useAddOrderMutation } from "../../redux/features/order/orderApi";
 import { useParams } from "react-router-dom";
 
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-  author: string;
-}
-
 const { Content } = Layout;
 const { Text, Title } = Typography;
 
 const Checkout = () => {
-  const { id } = useParams(); // Get the ID from the URL
+  const { id } = useParams();
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items || []);
   const [addOrder, { isLoading }] = useAddOrderMutation();
 
-  // Group cart items by ID
   const groupedItems = cartItems.reduce<{ [key: string]: CartItem }>(
     (acc, item) => {
-      if (acc[item.id]) {
-        acc[item.id].quantity += item.quantity;
+      const updatedItem = {
+        ...item,
+        name: item.name || "Default Name",
+        author: item.author || "Unknown Author",
+      };
+
+      if (acc[updatedItem.id]) {
+        acc[updatedItem.id].quantity += updatedItem.quantity;
       } else {
-        acc[item.id] = { ...item };
+        acc[updatedItem.id] = updatedItem;
       }
       return acc;
     },
     {}
   );
-
   const items = Object.values(groupedItems);
 
-  // Calculate the total price
   const calculateTotal = (): number => {
     return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
@@ -52,11 +46,13 @@ const Checkout = () => {
 
     try {
       const orderData = {
-        userId: "67667005127a16ef726212af", // Replace with dynamic userId
-        product: items[0].id, // First product ID
-        quantity: items[0].quantity,
+        userId: id || "67667005127a16ef726212af",
+        products: items.map((item) => ({
+          productId: item.id,
+          quantity: item.quantity,
+        })),
         total_amount: calculateTotal(),
-        paymentMethod: "sslCommerz", // Payment method
+        paymentMethod: "sslCommerz",
         paymentStatus: "pending",
         shippingAddress: {
           name: "home",
@@ -69,7 +65,7 @@ const Checkout = () => {
         },
         status: "pending",
         orderDate: new Date().toISOString(),
-        transactionId: "abcd1234efgh5678", // Replace with dynamic transaction ID
+        transactionId: "abcd1234efgh5678",
       };
 
       console.log("Sending Order Data:", orderData);
@@ -78,14 +74,12 @@ const Checkout = () => {
       console.log("Order placed successfully:", response);
 
       if (response.success) {
-        // Redirect to the payment URL
         const paymentUrl = response.data.paymentUrl;
         console.log(paymentUrl, "paymentUrl");
 
-        // Uncomment to enable redirection
         window.location.href = paymentUrl;
 
-        dispatch(clearCart()); // Clear the cart after successful order
+        dispatch(clearCart());
       } else {
         alert(response.message || "Order placement failed.");
       }

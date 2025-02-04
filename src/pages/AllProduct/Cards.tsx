@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { TProduct } from "../../types/bookManagement.type";
 import { Card, Button, Rate } from "antd";

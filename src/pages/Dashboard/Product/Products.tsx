@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment, useState } from "react";
 import {
@@ -33,7 +34,7 @@ export type ProductItem = {
 
 export default function Products() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params] = useState<TQueryParam[]>([]);
 
   const { data: productsData, isFetching } = useGetAllProductsQuery([
     { name: "page", value: currentPage },
@@ -97,19 +98,19 @@ export default function Products() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      sorter: (a: { name: string; }, b: { name: any; }) => a.name.localeCompare(b.name),
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      sorter: (a, b) => a.title.localeCompare(b.title),
+      sorter: (a: { title: string; }, b: { title: any; }) => a.title.localeCompare(b.title),
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
-      onFilter: (value, record) => record.category.includes(value),
+      onFilter: (value: any, record: { category: string | any[]; }) => record.category.includes(value),
     },
     {
       title: "Author",

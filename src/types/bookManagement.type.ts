@@ -16,4 +16,10 @@ export type ApiResponse<T = unknown> = {
   data: T;
   status: number;
   message?: string;
+  meta?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPage: number;
+  };
 };

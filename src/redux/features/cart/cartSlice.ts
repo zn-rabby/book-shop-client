@@ -3,9 +3,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface CartItem {
   id: string;
   image: string;
-  title: string;
+  name: string; // Changed from 'title' to 'name' for consistency
   price: number;
   quantity: number;
+  author?: string; // Optional author property
 }
 
 interface CartState {
@@ -25,8 +26,9 @@ const cartSlice = createSlice({
       action: PayloadAction<{
         id: string;
         image: string;
-        title: string;
+        name: string; // Changed from 'title' to 'name'
         price: number;
+        author?: string; // Optional author property
       }>
     ) => {
       const existingItem = state.items.find(

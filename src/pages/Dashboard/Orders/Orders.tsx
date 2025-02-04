@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Fragment, useState } from "react";
-import { Button, Col, Pagination, Row, Select, Space, Table } from "antd";
+import { useState } from "react";
+import { Col, Pagination, Row, Select, Table } from "antd";
 import moment from "moment-timezone";
 import { toast } from "sonner";
 import { TQueryParam } from "../../../types/global";
@@ -36,7 +36,7 @@ export default function Orders() {
     }
   };
 
-  const tableData: OrderItem[] = ordersData?.data.map(
+  const tableData = ordersData?.data.map(
     ({
       paymentMethod,
       status,
@@ -62,13 +62,7 @@ export default function Orders() {
   const metaData = ordersData?.meta;
 
   const columns = [
-    {
-      title: "Serial",
-      key: "serial",
-      width: 80,
-      render: (text, record, index) =>
-        `${(currentPage - 1) * (metaData?.limit || 10) + index + 1}`,
-    },
+    
     { title: "User Name", dataIndex: "userName", key: "userName" },
     { title: "User Email", dataIndex: "userEmail", key: "userEmail" },
 
@@ -94,7 +88,7 @@ export default function Orders() {
       title: "Order Progress",
       dataIndex: "status",
       key: "status",
-      render: (status: string, record: OrderItem) => (
+      render: (status: string, record) => (
         <Select
           defaultValue={status}
           style={{ width: 120 }}

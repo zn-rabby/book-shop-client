@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
+import logo from "../../assets/cc.png";
 
 const { Header } = Layout;
 
@@ -36,7 +37,7 @@ const Navbar = () => {
               }}
             >
               <img
-                src="https://i.ibb.co.com/tpWdH6mM/books-fotor-2025020321554.png"
+                src={logo}
                 alt="Bookshop Logo"
                 style={{ width: "50px", height: "50px", margin: "5px" }}
               />

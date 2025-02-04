@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Card, Col, Row, Typography } from "antd";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch } from "../redux/hooks";
@@ -69,17 +71,11 @@ const Login = () => {
               type="email"
               name="email"
               label="Email"
-              placeholder="Enter your email"
-              rules={[{ required: true, message: "Please enter your email!" }]}
             />
             <PHInput
               type="password"
               name="password"
               label="Password"
-              placeholder="Enter your password"
-              rules={[
-                { required: true, message: "Please enter your password!" },
-              ]}
             />
             <Button
               type="primary"

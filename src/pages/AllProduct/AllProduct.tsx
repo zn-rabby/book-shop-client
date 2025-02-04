@@ -11,16 +11,14 @@ const { Option } = Select;
 const AllProduct = () => {
   const { data: books } = useGetAllBooksQuery(undefined);
 
-  // Moved bookList initialization inside useMemo to avoid unnecessary re-calculations
   const bookList = useMemo(() => books?.data ?? [], [books]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState("all");
-  const [categoryFilter, setCategoryFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(8);
 
-  // Filtering books based on search term, price range, and category
+  // Filtering books
   const filteredBooks = useMemo(() => {
     return bookList.filter((book: TProduct) => {
       const matchesSearch = book.title
@@ -31,14 +29,11 @@ const AllProduct = () => {
         (priceRange === "low" && book.price < 20) ||
         (priceRange === "mid" && book.price >= 20 && book.price <= 50) ||
         (priceRange === "high" && book.price > 50);
-      const matchesCategory =
-        categoryFilter === "all" || book.category === categoryFilter;
 
-      return matchesSearch && matchesPrice && matchesCategory;
+      return matchesSearch && matchesPrice;
     });
-  }, [searchTerm, priceRange, categoryFilter, bookList]);
+  }, [searchTerm, priceRange, bookList]);
 
-  // Pagination calculations
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedBooks = filteredBooks.slice(startIndex, endIndex);
@@ -47,13 +42,8 @@ const AllProduct = () => {
     setCurrentPage(page);
   };
 
-  const onPageSizeChange = (value: string) => {
-    setPageSize(Number(value)); // Update page size based on the selected value
-  };
-
   return (
     <div className="home" style={{ padding: "20px" }}>
-      {/* Header Section */}
       <div
         style={{
           textAlign: "center",
@@ -117,7 +107,7 @@ const AllProduct = () => {
           pageSize={pageSize}
           onChange={onPageChange}
           showSizeChanger
-          onShowSizeChange={(current, size) => setPageSize(size)}
+          onShowSizeChange={(_current, size) => setPageSize(size)}
           pageSizeOptions={["3", "6", "9", "12"]}
         />
       </div>

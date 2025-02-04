@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import {
   Form,
@@ -25,12 +27,6 @@ const AdminDashboard = () => {
   const [form] = Form.useForm();
   const [imageUrl, setImageUrl] = useState("");
 
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
 
   const handleUploadChange = ({ fileList }) => {
     if (fileList.length > 0) {
@@ -40,12 +36,12 @@ const AdminDashboard = () => {
     }
   };
 
-  const onFinish = (values) => {
+  const onFinish = (values: any) => {
     console.log("Success:", values);
     message.success("Profile updated successfully!");
   };
 
-  const onFinishFailed = (errorInfo) => {
+  const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
     message.error("Failed to update profile.");
   };
@@ -83,9 +79,7 @@ const AdminDashboard = () => {
               />
               {/* User Information */}
               <div>
-                <h3 style={{ marginBottom: "8px" }}>
-                  Name: {user?.name || " undefined"}
-                </h3>
+                <h3 style={{ marginBottom: "8px" }}>Name: User</h3>
                 <p style={{ margin: "0", fontWeight: "bold" }}>
                   Role: {user?.role}
                 </p>
@@ -103,7 +97,7 @@ const AdminDashboard = () => {
           <Form.Item label="Profile Picture">
             <Dragger
               name="avatar"
-              normFile={normFile}
+              // normFile={normFile}
               onChange={handleUploadChange}
               listType="picture-card"
             >
