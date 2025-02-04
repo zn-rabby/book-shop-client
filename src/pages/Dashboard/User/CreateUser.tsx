@@ -27,7 +27,7 @@ export default function CreateUser() {
       });
 
       setTimeout(() => {
-        navigate("/login");
+        navigate("/dashboard/users");
       }, 2000);
     } catch (err: any) {
       toast.error(
