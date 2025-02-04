@@ -14,7 +14,7 @@ const orderApi = baseApi.injectEndpoints({
     }),
     getUserOrderHistory: builder.query({
       query: (email) => ({
-        url: `/orders/order-history/${email}`,
+        url: `/order/order-history/${email}`,
         method: "GET",
       }),
       transformResponse: (response: any) => {
