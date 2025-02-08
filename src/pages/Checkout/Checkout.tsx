@@ -102,7 +102,7 @@ const Checkout = () => {
         <Row
           gutter={[24, 24]}
           justify="center"
-          style={{ paddingBottom: "100px" }}
+          style={{ paddingBottom: "99px" }}
         >
           <Col xs={24} sm={16} md={12}>
             <Card title={`Your Cart (${items.length} Items)`}>
