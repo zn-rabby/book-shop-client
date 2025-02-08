@@ -99,7 +99,11 @@ const Checkout = () => {
   return (
     <Layout>
       <Content style={{ padding: "20px", backgroundColor: "#f8f8f8" }}>
-        <Row gutter={[24, 24]} justify="center">
+        <Row
+          gutter={[24, 24]}
+          justify="center"
+          style={{ paddingBottom: "100px" }}
+        >
           <Col xs={24} sm={16} md={12}>
             <Card title={`Your Cart (${items.length} Items)`}>
               {items.length > 0 ? (

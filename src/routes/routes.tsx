@@ -18,6 +18,7 @@ import ProductDetails from "../pages/Dashboard/Product/ProductDetails";
 import UpdateProduct from "../pages/Dashboard/Product/UpdateProduct";
 import Orders from "../pages/Dashboard/Orders/Orders";
 import OrderHistory from "../pages/Dashboard/OrderHistory/OrderHistory";
+import NotFound from "../pages/NotFound";
 import Success from "../pages/Success";
 import Fail from "../pages/Fail";
 import Cancel from "../pages/Cancel";
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
+
       {
         path: "/pay-success",
         element: <Success></Success>,
@@ -124,6 +126,10 @@ const router = createBrowserRouter([
         element: <OrderHistory></OrderHistory>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound></NotFound>,
   },
 ]);
 

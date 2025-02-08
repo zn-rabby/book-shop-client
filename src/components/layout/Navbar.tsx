@@ -127,15 +127,15 @@ const Navbar = () => {
             <Menu.Item key="dashboard" onClick={closeDrawer}>
               <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
-            <Menu.Item key="checkout" onClick={closeDrawer}>
+            {/* <Menu.Item key="checkout" onClick={closeDrawer}>
               <Link to="/checkout">Checkout</Link>
-            </Menu.Item>
-            <Menu.Item key="services" onClick={closeDrawer}>
+            </Menu.Item> */}
+            {/* <Menu.Item key="services" onClick={closeDrawer}>
               <Link to="/services">Services</Link>
             </Menu.Item>
             <Menu.Item key="contact" onClick={closeDrawer}>
               <Link to="/contact">Contact</Link>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item key="cart" className="cart-menu" onClick={closeDrawer}>
               <Link to="/checkout">
