@@ -13,7 +13,7 @@ const BookshopFooter = () => {
     <Footer
       style={{ background: "#1A2A3A", color: "#fff", padding: "40px 20px" }}
     >
-      <div className="ft">
+      <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
         <Row gutter={[32, 32]}>
           {/* About Section */}
           <Col xs={24} md={12} lg={6}>
