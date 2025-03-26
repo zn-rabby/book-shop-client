@@ -1,51 +1,69 @@
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, Typography, Space, theme } from "antd";
 import { useGetAllBooksQuery } from "../../redux/features/book/bookManagement";
 import { TProduct } from "../../types/bookManagement.type";
 import Cards from "../AllProduct/Cards";
 import { Link } from "react-router-dom";
-// import Cards from "./Cards";
+
+const { Title, Text } = Typography;
+const { useToken } = theme;
 
 const HomeProducts = () => {
   const { data: books } = useGetAllBooksQuery(undefined);
   const bookList = books?.data ?? [];
+  const { token } = useToken();
 
   return (
     <div
-      className="home"
       style={{
-        padding: "20px",
-        maxWidth: "1600px",
+        padding: "40px 20px",
+        maxWidth: 1600,
         margin: "0 auto",
         width: "100%",
       }}
     >
-      <div
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-          padding: "10px 0",
-          borderBottom: "2px solid #00b96b",
-        }}
+      <Space
+        direction="vertical"
+        size="middle"
+        style={{ width: "100%", textAlign: "center", marginBottom: 32 }}
       >
-        <h2
+        <Text
           style={{
-            fontSize: "2rem",
-            fontWeight: "bold",
-            color: "#333",
+            color: token.colorPrimary,
+            fontWeight: 600,
+            letterSpacing: 1.5,
+            fontSize: 14,
             textTransform: "uppercase",
-            marginTop: "30px",
-            marginBottom: "30px",
           }}
         >
-          Books Display
-        </h2>
-      </div>
-      <Row gutter={[16, 16]}>
+          Featured Collection
+        </Text>
+        <Title
+          level={2}
+          style={{
+            margin: 0,
+            fontSize: "clamp(24px, 3vw, 36px)",
+            fontWeight: 700,
+            color: token.colorTextHeading,
+          }}
+        >
+          Explore Our Curated Selection
+        </Title>
+      </Space>
+
+      <Row gutter={[24, 24]} justify="center">
         {bookList?.slice(0, 8)?.map((book: TProduct) => (
-          <Col xs={24} sm={12} lg={6} key={book._id}>
-            <Link to={`/product/${book._id}`}>
-              {" "}
-              {/* Add Link here */}
+          <Col
+            key={book._id}
+            xs={24}
+            sm={12}
+            md={8}
+            lg={6}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <Link
+              to={`/product/${book._id}`}
+              style={{ width: "100%", textDecoration: "none" }}
+            >
               <Cards book={book} />
             </Link>
           </Col>
@@ -56,7 +74,7 @@ const HomeProducts = () => {
         style={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "20px",
+          marginTop: 40,
         }}
       >
         <Link to="/product">
@@ -64,13 +82,15 @@ const HomeProducts = () => {
             type="primary"
             size="large"
             style={{
-              padding: "12px 24px",
-              fontSize: "1rem",
-              fontWeight: "bold",
-              borderRadius: "6px",
+              height: 48,
+              padding: "0 32px",
+              fontSize: 16,
+              fontWeight: 500,
+              borderRadius: 8,
+              boxShadow: `0 4px 12px ${token.colorPrimaryBg}`,
             }}
           >
-            View All
+            View All Books
           </Button>
         </Link>
       </div>
