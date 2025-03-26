@@ -1,86 +1,130 @@
 import { Col, Row, Button } from "antd";
 import { Link } from "react-router-dom";
-import image from "../../assets/books.png";
+import bannerImage from "../../../src/assets/book-shop.jpg";
 
 const Banner = () => {
   return (
     <div
-      style={{ padding: "50px 0px", margin: "20px 0px", background: "#f0f2f5" }}
+      style={{
+        background: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(${bannerImage}) no-repeat center center / cover`,
+        color: "white",
+        position: "relative",
+        minHeight: "80vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+      }}
     >
-      <Row gutter={16} align="middle" className="reverse-xs">
-        {/* Text Section */}
+      <Row
+        gutter={[24, 24]}
+        align="middle"
+        justify="center"
+        style={{
+          width: "100%",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "40px 24px",
+        }}
+      >
         <Col
           xs={24}
-          md={12}
           style={{
-            padding: "20px",
+            textAlign: "center",
+            padding: "24px",
+            zIndex: 1,
           }}
         >
           <h1
             style={{
-              fontSize: "3rem",
-              fontWeight: "bold",
-              color: "#2c3e50",
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              fontWeight: 800,
+              color: "white",
+              marginBottom: "24px",
+              lineHeight: 1.2,
+              textShadow: "2px 2px 8px rgba(0,0,0,0.5)",
             }}
           >
-            Welcome to Our Bookshop
+            Discover Your Next{" "}
+            <span style={{ color: "#20c77c" }}>Favorite Book</span>
           </h1>
+
           <p
             style={{
-              fontSize: "1.2rem",
-              color: "#7f8c8d",
-              marginBottom: "15px",
-              lineHeight: "1.6",
+              fontSize: "clamp(1rem, 1.5vw, 1.2rem)",
+              color: "rgba(255,255,255,0.9)",
+              marginBottom: "32px",
+              lineHeight: 1.6,
+              maxWidth: "800px",
+              margin: "0 auto",
+              textShadow: "1px 1px 3px rgba(0,0,0,0.5)",
             }}
           >
-            "Dive into a world of endless stories and knowledge. Discover our
-            wide collection of books across genres – from timeless classics to
-            the latest bestsellers. Your next great read awaits!"
-          </p>
-          <p
-            style={{
-              fontSize: "1.1rem",
-              color: "#555",
-              marginBottom: "20px",
-              lineHeight: "1.5",
-            }}
-          >
-            Whether you're looking for a novel to escape into, a guide to
-            enhance your skills, or a children's book to spark imagination, we
-            have something for every reader.
+            Explore our curated collection of over 10,000 titles spanning all
+            genres. From timeless classics to contemporary bestsellers, find the
+            perfect book for every reader.
           </p>
 
-          <div>
+          <div
+            style={{
+              display: "flex",
+              gap: "16px",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
             <Link to="/product">
               <Button
                 type="primary"
                 size="large"
                 style={{
-                  padding: "12px 24px",
+                  padding: "16px 40px",
                   fontSize: "1rem",
-                  fontWeight: "bold",
-                  borderRadius: "6px",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  background: "#20c77c",
+                  border: "none",
+                  boxShadow: "0 4px 12px rgba(32, 199, 124, 0.3)",
+                  transition: "all 0.3s ease",
                 }}
               >
-                Browse Books
+                Browse Collection
+              </Button>
+            </Link>
+
+            <Link to="/featured">
+              <Button
+                type="primary"
+                size="large"
+                style={{
+                  padding: "16px 40px",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  background: "#20c77c",
+                  border: "none",
+                  boxShadow: "0 4px 12px rgba(32, 199, 124, 0.3)",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                New Releases
               </Button>
             </Link>
           </div>
         </Col>
-
-        {/* Image Section */}
-        <Col xs={24} md={12}>
-          <img
-            src={image}
-            alt="Bookshop Banner"
-            style={{
-              width: "100%",
-              //   borderRadius: "10px",
-              //   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-            }}
-          />
-        </Col>
       </Row>
+
+      {/* Decorative bottom fade */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "100px",
+          background: "linear-gradient(transparent, rgba(0,0,0,0.3))",
+        }}
+      />
     </div>
   );
 };

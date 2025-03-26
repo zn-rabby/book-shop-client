@@ -11,7 +11,7 @@ const { Footer } = Layout;
 const BookshopFooter = () => {
   return (
     <Footer
-      style={{ background: "#2c3e50", color: "#fff", padding: "40px 20px" }}
+      style={{ background: "#1A2A3A", color: "#fff", padding: "40px 20px" }}
     >
       <div className="ft">
         <Row gutter={[32, 32]}>

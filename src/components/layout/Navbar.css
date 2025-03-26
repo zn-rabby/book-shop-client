@@ -140,7 +140,7 @@
 
 .cart-icon {
   color: white;
-  font-size: 24px;
+  font-size: 30px;
   transition: all 0.3s;
 }
 
@@ -163,7 +163,7 @@
 /* User Profile Section */
 .user-avatar-container {
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 4px 6px;
   border-radius: 50px;
   transition: all 0.3s;
   display: flex;

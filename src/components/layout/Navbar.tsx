@@ -224,13 +224,12 @@ const Navbar = () => {
                 }
                 placement="bottomRight"
               >
-                <Space className="user-avatar-container">
+                <Space className="">
                   <Avatar
                     icon={<UserOutlined />}
                     className="user-avatar"
                     src="https://res.cloudinary.com/daxjf1buu/image/upload/v1741228886/users_jauzzl.jpg"
                   />
-                  <DownOutlined className="profile-dropdown-icon" />
                 </Space>
               </Dropdown>
             ) : (
@@ -256,7 +255,7 @@ const Navbar = () => {
           title={
             <div className="drawer-header">
               <Link to="/" onClick={closeDrawer}>
-                <img src={logo} alt="Logo" className="drawer-logo" />
+                {/* <img src={logo} alt="Logo" className="drawer-logo" /> */}
                 <span className="drawer-logo-text">BookStack</span>
               </Link>
             </div>
