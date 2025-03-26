@@ -10,7 +10,15 @@ const HomeProducts = () => {
   const bookList = books?.data ?? [];
 
   return (
-    <div className="home" style={{ padding: "20px" }}>
+    <div
+      className="home"
+      style={{
+        padding: "20px",
+        maxWidth: "1600px",
+        margin: "0 auto",
+        width: "100%",
+      }}
+    >
       <div
         style={{
           textAlign: "center",

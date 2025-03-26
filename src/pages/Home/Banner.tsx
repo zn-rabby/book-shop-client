@@ -1,12 +1,11 @@
 import { Col, Row, Button } from "antd";
 import { Link } from "react-router-dom";
-import bannerImage from "../../../src/assets/book-shop.jpg";
 
 const Banner = () => {
   return (
     <div
       style={{
-        background: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(${bannerImage}) no-repeat center center / cover`,
+        background: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(${"https://images.unsplash.com/photo-1535905557558-afc4877a26fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"}) no-repeat center center / cover`,
         color: "white",
         position: "relative",
         minHeight: "80vh",
