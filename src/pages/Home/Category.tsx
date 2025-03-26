@@ -1,7 +1,7 @@
 import { Card, Row, Col, Typography } from "antd";
 import { Link } from "react-router-dom";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 type Category =
   | "fiction"
@@ -107,32 +107,48 @@ const CategorySection = () => {
         margin: "0 auto",
       }}
     >
-      <Title
-        level={2}
-        style={{
-          textAlign: "center",
-          marginBottom: 60,
-          fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-          fontWeight: 600,
-        }}
-      >
-        Browse Our Book Categories
-      </Title>
+      <div style={{ textAlign: "center", marginBottom: 60 }}>
+        <Text
+          style={{
+            display: "inline-block",
+            color: "#20C77C",
+            fontWeight: 600,
+            letterSpacing: "1px",
+            marginBottom: 12,
+            fontSize: "1rem",
+            textTransform: "uppercase",
+          }}
+        >
+          Book Categories
+        </Text>
+        <Title
+          level={2}
+          style={{
+            margin: 0,
+            fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+            fontWeight: 700,
+            lineHeight: 1.3,
+            color: "#1a1a1a",
+          }}
+        >
+          Discover Your Next Read
+        </Title>
+      </div>
 
-      <Row gutter={[24, 32]} justify="center">
+      <Row gutter={[24, 24]} justify="center">
         {categories.map((category) => (
           <Col
             key={category.id}
             xs={24}
             sm={12}
-            md={8}
-            lg={6}
+            md={12}
+            lg={4}
             xl={4}
             style={{ display: "flex" }}
           >
             <Link
               to={`/books?category=${category.id}`}
-              style={{ width: "100%" }}
+              style={{ width: "100%", textDecoration: "none" }}
             >
               <Card
                 hoverable
@@ -140,39 +156,46 @@ const CategorySection = () => {
                   height: "100%",
                   borderRadius: 12,
                   overflow: "hidden",
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                  transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
                   border: "none",
                 }}
+                bodyStyle={{ padding: 0 }}
                 cover={
                   <div
                     style={{
-                      height: 160,
-                      background: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url(${category.image}) center/cover`,
-                    }}
-                  />
-                }
-                bodyStyle={{ padding: "20px 16px" }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Title
-                    level={4}
-                    style={{
-                      margin: 0,
-                      fontSize: "1.25rem",
-                      fontWeight: 500,
+                      height: 140,
+                      background: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url(${category.image}) center/cover`,
+                      position: "relative",
                     }}
                   >
-                    {category.name}
-                  </Title>
-                </div>
-              </Card>
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        padding: "16px",
+                        background:
+                          "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+                      }}
+                    >
+                      <Title
+                        level={4}
+                        style={{
+                          margin: 0,
+                          color: "#fff",
+                          fontSize: "1.1rem",
+                          fontWeight: 600,
+                          textShadow: "0 1px 3px rgba(0,0,0,0.3)",
+                        }}
+                      >
+                        {category.name}
+                      </Title>
+                    </div>
+                  </div>
+                }
+              />
             </Link>
           </Col>
         ))}

@@ -25,7 +25,7 @@ const BannerCard = () => {
       gutter={[24, 24]}
       justify="center"
       style={{
-        padding: "20px",
+        padding: "10px",
         maxWidth: "1600px",
         margin: "0 auto",
         width: "100%",
@@ -115,6 +115,7 @@ const BannerCard = () => {
             padding: "24px",
             display: "flex",
             flexDirection: "column",
+            textAlign: "center",
             height: "100%",
           }}
         >
@@ -136,6 +137,7 @@ const BannerCard = () => {
               margin: 0,
               fontSize: "clamp(0.875rem, 1vw, 1rem)",
               lineHeight: 1.6,
+              textAlign: "center",
             }}
           >
             Handpicked books just for you, based on your reading preferences.
