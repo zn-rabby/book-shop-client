@@ -112,6 +112,10 @@ const Navbar = () => {
       label: <Link to="/about">About</Link>,
     },
     {
+      key: "author",
+      label: <Link to="/author">Author</Link>,
+    },
+    {
       key: "contact",
       label: <Link to="/contact">Contact</Link>,
     },

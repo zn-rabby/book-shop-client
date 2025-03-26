@@ -23,6 +23,7 @@ import Success from "../pages/Success";
 import Fail from "../pages/Fail";
 import Cancel from "../pages/Cancel";
 import Contact from "../pages/Contact/Contact";
+import Author from "../pages/Author/Author";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About></About>,
+      },
+      {
+        path: "/author",
+        element: <Author></Author>,
       },
       {
         path: "/contact",
