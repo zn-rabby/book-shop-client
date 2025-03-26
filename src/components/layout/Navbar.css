@@ -1,0 +1,382 @@
+/* Top Contact Bar */
+.top-contact-bar {
+  background-color: #1a1a1a;
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+}
+
+.top-contact-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-icon {
+  color: #20c77c;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.contact-text {
+  color: #b0b0b0;
+  font-size: 14px;
+}
+
+.contact-icon:hover,
+.contact-text:hover {
+  color: white;
+}
+
+/* Main Navbar */
+.main-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0;
+  background-color: #1a2a3a !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  height: 80px;
+  padding: 0 24px;
+}
+
+/* Logo Section */
+.logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white;
+  transition: all 0.3s;
+}
+
+.logo-img {
+  width: 45px;
+  height: 45px;
+  margin-right: 12px;
+  object-fit: contain;
+}
+
+.logo-text {
+  margin-left: 8px;
+}
+
+.logo-container:hover {
+  opacity: 0.9;
+}
+
+/* Desktop Menu */
+.desktop-menu {
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+  line-height: 78px;
+  margin: 0 20px;
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+.desktop-menu .ant-menu-item {
+  padding: 0 25px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9) !important;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+}
+
+.desktop-menu .ant-menu-item:hover {
+  color: white !important;
+  background-color: transparent !important;
+  border-bottom: 3px solid #20c77c;
+}
+
+.desktop-menu .ant-menu-item-selected {
+  color: white !important;
+  border-bottom: 3px solid #20c77c;
+}
+
+/* Books Dropdown Menu */
+.ant-dropdown-menu {
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ant-dropdown-menu-item {
+  padding: 12px 20px !important;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.ant-dropdown-menu-item:hover {
+  background-color: #f0f9f5 !important;
+  color: #20c77c !important;
+}
+
+/* Right Section */
+.right-section {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.cart-link {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cart-icon {
+  color: white;
+  font-size: 24px;
+  transition: all 0.3s;
+}
+
+.cart-link:hover .cart-icon {
+  color: #20c77c;
+  transform: scale(1.1);
+}
+
+.cart-badge .ant-badge-count {
+  box-shadow: none;
+  font-weight: 600;
+  background: #20c77c;
+  color: white;
+  font-size: 12px;
+  height: 20px;
+  min-width: 20px;
+  line-height: 20px;
+}
+
+/* User Profile Section */
+.user-avatar-container {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar-container:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+}
+
+.profile-dropdown-icon {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  margin-left: 8px;
+  transition: all 0.3s;
+}
+
+.user-avatar-container:hover .profile-dropdown-icon {
+  color: white;
+}
+
+.profile-dropdown-menu {
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profile-dropdown-menu .ant-dropdown-menu-item {
+  padding: 12px 20px !important;
+}
+
+.profile-dropdown-menu .ant-dropdown-menu-item-icon {
+  margin-right: 10px;
+}
+
+.login-button,
+.logout-button {
+  font-weight: 500;
+  transition: all 0.3s;
+  height: 40px;
+  padding: 0 20px;
+  background: #20c77c !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.login-button:hover,
+.logout-button:hover {
+  background: #18a866 !important;
+  transform: translateY(-2px);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-button {
+  display: none;
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  color: white !important;
+}
+
+.mobile-menu-button:hover {
+  color: #20c77c !important;
+  background: transparent !important;
+}
+
+/* Drawer Styles */
+.drawer-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.drawer-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 12px;
+  object-fit: contain;
+}
+
+.drawer-logo-text {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.drawer-menu .ant-menu-item {
+  padding-left: 24px !important;
+  margin: 4px 0;
+  font-size: 16px;
+  height: 48px;
+  line-height: 48px;
+  transition: all 0.3s;
+  color: #1a2a3a !important;
+}
+
+.drawer-menu .ant-menu-item:hover {
+  color: white !important;
+  background-color: #20c77c !important;
+}
+
+.drawer-menu .ant-menu-submenu-title {
+  padding-left: 24px !important;
+}
+
+.drawer-menu .ant-menu-submenu-title:hover {
+  color: white !important;
+  background-color: #20c77c !important;
+}
+
+.mobile-cart-item .ant-badge {
+  margin-left: 8px;
+}
+
+.mobile-cart-badge .ant-badge-count {
+  box-shadow: none;
+  background: #20c77c;
+  color: white;
+}
+
+.drawer-footer {
+  padding: 24px 16px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .top-contact-container .ant-space {
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .desktop-menu,
+  .right-section {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .top-contact-bar {
+    display: none;
+  }
+
+  .logo-text {
+    font-size: 1.3rem;
+  }
+
+  .logo-img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-container {
+    padding: 0 16px;
+    height: 70px;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+    margin-left: 6px;
+  }
+
+  .logo-img {
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+  }
+
+  .mobile-menu-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+/* Animation for mobile menu */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.mobile-drawer .ant-drawer-content {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Hover effects */
+.ant-menu-item:active,
+.ant-menu-item:hover {
+  transform: translateY(-2px);
+}
