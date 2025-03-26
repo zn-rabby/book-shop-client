@@ -22,6 +22,7 @@ import NotFound from "../pages/NotFound";
 import Success from "../pages/Success";
 import Fail from "../pages/Fail";
 import Cancel from "../pages/Cancel";
+import Contact from "../pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About></About>,
+      },
+      {
+        path: "/contact",
+        element: <Contact></Contact>,
       },
       {
         path: "/checkout",
