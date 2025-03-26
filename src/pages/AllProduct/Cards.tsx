@@ -176,7 +176,7 @@ const Cards: React.FC<CartProps> = ({ book }) => {
               }}
               onClick={handleAddToCart}
             >
-              Add to Cart
+              Add To Cart
             </Button>
           </Tooltip>
         </div>

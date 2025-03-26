@@ -303,12 +303,12 @@ const AllProduct = () => {
                 {paginatedBooks.map((book: TProduct) => (
                   <Col
                     key={book._id}
-                    xs={24}
-                    sm={12}
-                    md={12}
-                    lg={8}
-                    xl={6}
-                    onClick={() => navigate(`/book/${book._id}`)}
+                    xs={24} // 1 column on extra small screens (full width)
+                    sm={24} // 1 column on small screens (full width)
+                    md={12} // 2 columns on medium screens (half width)
+                    lg={8} // 3 columns on large screens (one-third width)
+                    xl={8} // 3 columns on extra large screens (one-third width)
+                    onClick={() => navigate(`/product/${book._id}`)}
                     style={{ cursor: "pointer" }}
                   >
                     <Cards book={book} />
