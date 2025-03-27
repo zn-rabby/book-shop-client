@@ -4,6 +4,7 @@ import Banner from "./Banner";
 import BannerCard from "./BannerCard";
 import CategorySection from "./Category";
 import HomeProducts from "./HomeProduct";
+import ExclusiveAuthorSpotlight from "./OfferSection";
 import Testimonials from "./Testimonial";
 
 const Home = () => {
@@ -13,8 +14,9 @@ const Home = () => {
       <BannerCard></BannerCard>
       <CategorySection></CategorySection>
       <HomeProducts></HomeProducts>
-      <Testimonials></Testimonials>
       <FeaturedAuthors></FeaturedAuthors>
+      <ExclusiveAuthorSpotlight></ExclusiveAuthorSpotlight>
+      <Testimonials></Testimonials>
       <NewsLatter></NewsLatter>
     </div>
   );

@@ -1,10 +1,13 @@
-import { Layout, Row, Col, Input, Button } from "antd";
+import { Layout, Row, Col } from "antd";
 import {
   MailOutlined,
   PhoneOutlined,
   EnvironmentOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+  InstagramOutlined,
+  LinkedinOutlined,
 } from "@ant-design/icons";
-import ssl from "../../assets/ssl.png";
 
 const { Footer } = Layout;
 
@@ -90,35 +93,46 @@ const BookshopFooter = () => {
             </p>
           </Col>
 
-          {/* Newsletter Section */}
+          {/* Social Media Section */}
           <Col xs={24} md={12} lg={6}>
-            <h3 style={{ color: "#fff", fontWeight: "bold" }}>Newsletter</h3>
+            <h3 style={{ color: "#fff", fontWeight: "bold" }}>Follow Us</h3>
             <p style={{ color: "#bdc3c7", marginBottom: "20px" }}>
-              Subscribe to receive updates, offers, and special deals!
+              Stay connected through our social media platforms.
             </p>
-            <Input.Group compact>
-              <Input
-                style={{
-                  width: "calc(100% - 80px)",
-                  borderRadius: "5px",
-                  border: "1px solid #ddd",
-                  padding: "10px 10px",
-                }}
-                placeholder="Enter your email"
-              />
-              <Button
-                type="primary"
-                style={{
-                  borderRadius: "5px ",
-                  marginTop: "6px",
-                  background: "#00b96b",
-                  border: "1px solid #00b96b",
-                  padding: "10px 10px",
-                }}
+            <div style={{ display: "flex", gap: "15px" }}>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#bdc3c7", fontSize: "24px" }}
               >
-                Subscribe
-              </Button>
-            </Input.Group>
+                <FacebookOutlined />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#bdc3c7", fontSize: "24px" }}
+              >
+                <TwitterOutlined />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#bdc3c7", fontSize: "24px" }}
+              >
+                <InstagramOutlined />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#bdc3c7", fontSize: "24px" }}
+              >
+                <LinkedinOutlined />
+              </a>
+            </div>
           </Col>
         </Row>
 
@@ -129,7 +143,9 @@ const BookshopFooter = () => {
         >
           <Col span={24}>
             <img
-              src={ssl}
+              src={
+                "https://res.cloudinary.com/daxjf1buu/image/upload/v1742999275/ssl_khpnpm.png"
+              }
               alt="Payment Methods"
               style={{ width: "100%", maxWidth: "800px" }}
             />

@@ -28,7 +28,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
-import logo from "../../assets/cc.png";
 import "./Navbar.css";
 
 const { Header } = Layout;
@@ -51,6 +50,18 @@ const Navbar = () => {
     closeDrawer();
     setProfileDropdownVisible(false);
   };
+  //   | 'fiction'
+  //   | 'children'
+  //   | 'science'
+  //   | 'religion'
+  //   | 'history'
+  //   | 'biography'
+  //   | 'romance'
+  //   | 'mystery'
+  //   | 'selfHelp'
+  //   | 'politics'
+  //   | 'business'
+  //   | 'education';
 
   const booksMenuItems = [
     {
@@ -59,15 +70,51 @@ const Navbar = () => {
     },
     {
       key: "fiction",
-      label: <Link to="/product/fiction">Fiction</Link>,
+      label: <Link to="/product">Fiction</Link>,
     },
     {
-      key: "non-fiction",
-      label: <Link to="/product/non-fiction">Non-Fiction</Link>,
+      key: "children",
+      label: <Link to="/product">Children</Link>,
     },
     {
-      key: "academic",
-      label: <Link to="/product/academic">Academic</Link>,
+      key: "science",
+      label: <Link to="/product">Science</Link>,
+    },
+    {
+      key: "history",
+      label: <Link to="/product">History</Link>,
+    },
+    {
+      key: "biography",
+      label: <Link to="/product">Biography</Link>,
+    },
+    {
+      key: "religion",
+      label: <Link to="/product">Religion</Link>,
+    },
+    {
+      key: "romance",
+      label: <Link to="/product">Romance</Link>,
+    },
+    {
+      key: "mystery",
+      label: <Link to="/product">Mystery</Link>,
+    },
+    {
+      key: "selfHelp",
+      label: <Link to="/product">Self Help</Link>,
+    },
+    {
+      key: "pcience",
+      label: <Link to="/product">Politics</Link>,
+    },
+    {
+      key: "business",
+      label: <Link to="/product">Business</Link>,
+    },
+    {
+      key: "education",
+      label: <Link to="/product">Education</Link>,
     },
   ];
 
@@ -193,7 +240,13 @@ const Navbar = () => {
         <div className="navbar-container">
           {/* Logo Section */}
           <Link to="/" className="logo-container">
-            <img src={logo} alt="Bookshop Logo" className="logo-img" />
+            <img
+              src={
+                "https://i.ibb.co.com/tpWdH6mM/books-fotor-2025020321554.png"
+              }
+              alt="Bookshop Logo"
+              className="logo-img"
+            />
             <span className="logo-text">BookStack</span>
           </Link>
 
