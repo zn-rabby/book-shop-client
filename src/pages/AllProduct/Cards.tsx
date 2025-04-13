@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { TProduct } from "../../types/bookManagement.type";
 import { Card, Button, Rate, notification, Tooltip, Typography } from "antd";
-import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 
@@ -139,7 +139,6 @@ const Cards: React.FC<CartProps> = ({ book }) => {
           <Tooltip title="View Details">
             <Button
               type="default"
-              icon={<EyeOutlined />}
               style={{
                 flex: 1,
                 borderRadius: "8px",

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Col, Row, Typography } from "antd";
 import { toast } from "sonner";
 import { useSignupMutation } from "../redux/features/auth/authApi";
@@ -58,9 +58,54 @@ export default function CreateUser() {
             textAlign: "left",
           }}
         >
-          <Title level={3} style={{ marginBottom: "20px" }}>
-            Register
-          </Title>
+          <div style={{ textAlign: "center", marginBottom: "28px" }}>
+            <Link
+              to="/"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                textDecoration: "none",
+                marginBottom: "16px",
+              }}
+            >
+              <img
+                src="https://i.ibb.co.com/tpWdH6mM/books-fotor-2025020321554.png"
+                alt="BookStack Logo"
+                style={{
+                  height: "60px",
+                  width: "60px",
+                  objectFit: "contain",
+                  marginRight: "12px",
+                  filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.1))",
+                }}
+              />
+              <span
+                style={{
+                  fontSize: "28px",
+                  fontWeight: 700,
+                  color: "#1890ff",
+                  background:
+                    "linear-gradient(90deg, #1890ff 0%, #52c41a 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                }}
+              >
+                BookStack
+              </span>
+            </Link>
+            <Title
+              level={3}
+              style={{
+                margin: "8px 0 0 0",
+                color: "#2c3e50",
+                fontWeight: 500,
+                fontSize: "20px",
+              }}
+            >
+              Welcome to Our BookStack Online Book Store
+            </Title>
+          </div>
           <PHForm onSubmit={onSubmit}>
             <PHInput label="Name" type="text" name="name" />
             <PHInput type="email" label="Email" name="email" />
