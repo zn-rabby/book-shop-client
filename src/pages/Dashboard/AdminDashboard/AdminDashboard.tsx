@@ -1,40 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Upload,
-  message,
-  Card,
-  Avatar,
-  Row,
-  Col,
-} from "antd";
+
+import { Form, message, Card, Avatar, Row, Col } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-
-const { Option } = Select;
-const { Dragger } = Upload;
 
 const AdminDashboard = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   // console.log(user, "dashboard");
 
   const [form] = Form.useForm();
-  const [imageUrl, setImageUrl] = useState("");
-
-
-  const handleUploadChange = ({ fileList }) => {
-    if (fileList.length > 0) {
-      setImageUrl("https://via.placeholder.com/150");
-    } else {
-      setImageUrl("");
-    }
-  };
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -73,8 +48,10 @@ const AdminDashboard = () => {
               {/* Profile Image */}
               <Avatar
                 size={64}
-                src={imageUrl || "https://via.placeholder.com/150"}
-                icon={!imageUrl && <InboxOutlined />}
+                src={
+                  "https://res.cloudinary.com/daxjf1buu/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1743350573/rabby_y54jos.jpg"
+                }
+                icon={<InboxOutlined />}
                 style={{ marginRight: "20px" }}
               />
               {/* User Information */}
@@ -90,61 +67,7 @@ const AdminDashboard = () => {
             </div>
           </Card>
         </Col>
-
-        <Col xs={24} lg={12}>
-          {/* Profile Settings */}
-          <h2>Profile Settings</h2>
-          <Form.Item label="Profile Picture">
-            <Dragger
-              name="avatar"
-              // normFile={normFile}
-              onChange={handleUploadChange}
-              listType="picture-card"
-            >
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-            </Dragger>
-            {imageUrl && (
-              <img
-                src={imageUrl}
-                alt="avatar"
-                style={{ width: "100px", marginTop: "10px" }}
-              />
-            )}
-          </Form.Item>
-          <Form.Item label="Current Password" name="current_password">
-            <Input.Password />
-          </Form.Item>
-          <Form.Item label="New Password" name="new_password">
-            <Input.Password />
-          </Form.Item>
-          <Form.Item label="Confirm New Password" name="confirm_new_password">
-            <Input.Password />
-          </Form.Item>
-          <Form.Item label="Language" name="language" initialValue="en">
-            <Select>
-              <Option value="en">English</Option>
-              <Option value="bn">Bengali</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Theme" name="theme" initialValue="light">
-            <Select>
-              <Option value="light">Light</Option>
-              <Option value="dark">Dark</Option>
-            </Select>
-          </Form.Item>
-        </Col>
       </Row>
-
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Save Changes
-        </Button>
-      </Form.Item>
     </Form>
   );
 };

@@ -42,11 +42,32 @@ const userApi = baseApi.injectEndpoints({
         body: args.data,
       }),
     }),
+
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/user/delete/${id}`,
         method: "DELETE",
       }),
+    }),
+
+    getProfile: builder.query({
+      query: () => ({
+        url: `/user/me`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => {
+        return {
+          data: response?.data,
+        };
+      },
+    }),
+    updateProduct: builder.mutation({
+      query: (args) => ({
+        url: `/user/${args.id}`,
+        method: "PATCH",
+        body: args.data,
+      }),
+      invalidatesTags: ["products"],
     }),
   }),
 });
@@ -56,4 +77,6 @@ export const {
   useUpdateUserRoleMutation,
   useUpdateUserStatusMutation,
   useDeleteUserMutation,
+  useGetProfileQuery,
+  useUpdateProductMutation,
 } = userApi;

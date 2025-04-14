@@ -1,168 +1,252 @@
-import { Layout, Menu, Breadcrumb, Button, Row, Col } from "antd";
 import {
-  FaHistory,
-  FaHome,
-  FaList,
-  FaUser,
-  // FaUsers,
-} from "react-icons/fa";
+  Layout,
+  Menu,
+  Breadcrumb,
+  Button,
+  Avatar,
+  Dropdown,
+  Typography,
+  theme,
+} from "antd";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
 import { RootState } from "../../redux/store";
-import SubMenu from "antd/es/menu/SubMenu";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
-import { AiFillProduct } from "react-icons/ai";
+import {
+  DashboardOutlined,
+  UserOutlined,
+  TeamOutlined,
+  ShoppingOutlined,
+  OrderedListOutlined,
+  HistoryOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  SettingOutlined,
+  PlusCircleOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from "@ant-design/icons";
+import type { MenuProps } from "antd";
+import { useState } from "react";
+
 const { Header, Content, Sider } = Layout;
-import { Typography } from "antd";
+const { Title, Text } = Typography;
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.user);
-  console.log(user, 1);
+  const [collapsed, setCollapsed] = useState(false);
+  const {
+    token: { colorBgContainer, colorPrimary },
+  } = theme.useToken();
 
   const isAdmin = user?.role === "admin";
   const isUser = user?.role === "user";
 
-  // Get user authentication state
-  const isAuthenticated = useSelector((state: RootState) => state.auth.user);
-
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/login");
   };
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      icon: <UserOutlined />,
+      label: "Profile",
+      onClick: () => navigate("/dashboard/profile"),
+    },
+    {
+      key: "2",
+      icon: <SettingOutlined />,
+      label: "Settings",
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "3",
+      icon: <LogoutOutlined />,
+      label: "Logout",
+      danger: true,
+      onClick: handleLogout,
+    },
+  ];
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
       {/* Sidebar */}
-      <Sider width={250} theme="dark" collapsible>
-        <Row
-          justify="center"
-          align="middle"
-          className="right-section"
-          style={{ height: "80px" }}
+      <Sider
+        width={250}
+        theme="light"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        style={{
+          boxShadow: "2px 0 8px 0 rgba(29, 35, 41, 0.05)",
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          zIndex: 100,
+        }}
+      >
+        <div
+          style={{
+            height: "64px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
+          }}
         >
-          <Col>
-            <Typography.Title
-              level={4}
-              style={{
-                color: "#00b96b",
-                textAlign: "center",
-                fontWeight: "bold",
-                margin: 0,
-              }}
-            >
-              Dashboard
-            </Typography.Title>
-          </Col>
-        </Row>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="5" icon={<FaHome />}>
-            <Link to="/">Home</Link>
+          <Title
+            level={4}
+            style={{
+              color: colorPrimary,
+              margin: 0,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {collapsed ? "DB" : "Dashboard"}
+          </Title>
+        </div>
+
+        <Menu
+          theme="light"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          style={{ borderRight: 0 }}
+        >
+          <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
+            <Link to="/dashboard">Dashboard</Link>
           </Menu.Item>
 
           {isAdmin && (
             <>
-              {/* <Menu.Item key="01" icon={<FaHome />}>
-                <Link to="/dashboard">Admin Home</Link>
-              </Menu.Item> */}
-
-              <SubMenu key="sub1" icon={<FaUser />} title="Mange User">
-                <Menu.Item key="02">
+              <Menu.SubMenu
+                key="users"
+                icon={<TeamOutlined />}
+                title="User Management"
+              >
+                <Menu.Item key="create-user" icon={<PlusCircleOutlined />}>
                   <Link to="/dashboard/createUser">Create User</Link>
                 </Menu.Item>
-                <Menu.Item key="03">
-                  <Link to="/dashboard/users">Manage Users</Link>
+                <Menu.Item key="manage-users" icon={<TeamOutlined />}>
+                  <Link to="/dashboard/users">All Users</Link>
                 </Menu.Item>
-              </SubMenu>
+              </Menu.SubMenu>
 
-              <SubMenu
-                key="sub2"
-                icon={<AiFillProduct />}
-                title="Mange Product"
+              <Menu.SubMenu
+                key="products"
+                icon={<ShoppingOutlined />}
+                title="Product Management"
               >
-                <Menu.Item key="12">
-                  <Link to="/dashboard/createProduct">Create Product</Link>
+                <Menu.Item key="create-product" icon={<PlusCircleOutlined />}>
+                  <Link to="/dashboard/createProduct">Add Product</Link>
                 </Menu.Item>
-                <Menu.Item key="13">
-                  <Link to="/dashboard/products">Manage Manage</Link>
+                <Menu.Item key="manage-products" icon={<ShoppingOutlined />}>
+                  <Link to="/dashboard/products">All Products</Link>
                 </Menu.Item>
-              </SubMenu>
-              {/*  */}
-              <SubMenu key="sub3" icon={<FaList />} title="Mange Order">
-                <Menu.Item key="32">
-                  <Link to="/dashboard/orders">Orders</Link>
-                </Menu.Item>
-              </SubMenu>
+              </Menu.SubMenu>
 
-              {/* <Menu.Item key="3" icon={<FaList />}>
-                <Link to="/dashboard/manageItem">Manage Items</Link>
-              </Menu.Item> */}
+              <Menu.Item key="orders" icon={<OrderedListOutlined />}>
+                <Link to="/dashboard/orders">Order Management</Link>
+              </Menu.Item>
             </>
           )}
 
           {isUser && (
-            <>
-              <Menu.Item key="1" icon={<FaHistory />}>
-                <Link to="/dashboard/orderHistory">Orders History</Link>
-              </Menu.Item>
-            </>
+            <Menu.Item key="order-history" icon={<HistoryOutlined />}>
+              <Link to="/dashboard/orderHistory">My Orders</Link>
+            </Menu.Item>
           )}
+
+          <Menu.Item key="profile" icon={<UserOutlined />}>
+            <Link to="/dashboard/profile">My Profile</Link>
+          </Menu.Item>
+
+          <Menu.Item key="home" icon={<HomeOutlined />}>
+            <Link to="/">Back to Home</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
 
       {/* Main Layout */}
-      <Layout>
+      <Layout
+        style={{
+          marginLeft: collapsed ? 80 : 250,
+          transition: "all 0.2s",
+        }}
+      >
         <Header
-          className="site-layout-background"
           style={{
-            padding: 0,
+            padding: "0 24px",
+            background: colorBgContainer,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            backgroundColor: "#001529",
+            boxShadow: "0 1px 4px rgba(0, 21, 41, 0.08)",
+            position: "sticky",
+            top: 0,
+            zIndex: 1,
           }}
         >
-          {/* <h2
-            className="text-white"
-            style={{
-              textAlign: "center",
-              color: "#00b96b",
-              marginLeft: "16px",
-            }}
-          >
-            Dashboard
-          </h2> */}
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{ fontSize: "16px", width: 64, height: 64 }}
+          />
 
-          {/* Conditional Rendering for Login/Logout */}
-          {isAuthenticated ? (
-            <Button
-              onClick={handleLogout}
-              type="primary"
-              style={{ fontWeight: "bold" }}
+          <Dropdown menu={{ items }} placement="bottomRight">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                cursor: "pointer",
+              }}
             >
-              Logout
-            </Button>
-          ) : (
-            <Link to="/login">
-              <Button type="primary" style={{ fontWeight: "bold" }}>
-                Login
-              </Button>
-            </Link>
-          )}
+              <Avatar
+                size="default"
+                style={{ backgroundColor: colorPrimary }}
+                icon={<UserOutlined />}
+              />
+              {!collapsed && (
+                <div>
+                  <Text strong style={{ display: "block" }}>
+                    {user?.name}
+                  </Text>
+                  <Text type="secondary" style={{ fontSize: 12 }}>
+                    {user?.role}
+                  </Text>
+                </div>
+              )}
+            </div>
+          </Dropdown>
         </Header>
 
         {/* Content */}
-        <Content style={{ padding: "16px" }}>
-          <Breadcrumb style={{ marginBottom: "16px" }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
+        <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+          <Breadcrumb style={{ marginBottom: 16 }}>
+            <Breadcrumb.Item>
+              <HomeOutlined />
+            </Breadcrumb.Item>
             <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
           </Breadcrumb>
+
           <div
-            className="site-layout-background"
             style={{
-              padding: 12,
-              minHeight: 360,
-              backgroundColor: "#fff",
+              padding: 24,
+              minHeight: "calc(100vh - 180px)",
+              background: colorBgContainer,
+              borderRadius: 8,
             }}
           >
             <Outlet />

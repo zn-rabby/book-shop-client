@@ -93,7 +93,7 @@ const Cards: React.FC<CartProps> = ({ book }) => {
           style={{
             margin: 0,
             fontWeight: 700,
-            fontSize: "18px",
+            fontSize: "22px",
             color: "#333",
           }}
         >
@@ -107,11 +107,11 @@ const Cards: React.FC<CartProps> = ({ book }) => {
             marginBottom: "8px",
           }}
         >
-          <Text strong style={{ fontSize: "16px", color: "#27ae60" }}>
+          <Text strong style={{ fontSize: "18px", color: "#27ae60" }}>
             ${book.price}
           </Text>
           <Rate
-            style={{ fontSize: "14px", color: "#f1c40f" }}
+            style={{ fontSize: "16px", color: "#f1c40f" }}
             disabled
             value={book.rating || 4}
           />
@@ -120,7 +120,7 @@ const Cards: React.FC<CartProps> = ({ book }) => {
           type="secondary"
           style={{
             display: "block",
-            fontSize: "14px",
+            fontSize: "16px",
             marginBottom: "12px",
             color: "#666",
           }}
@@ -133,7 +133,7 @@ const Cards: React.FC<CartProps> = ({ book }) => {
         <div
           style={{
             display: "flex",
-            gap: "10px",
+            gap: "12px",
           }}
         >
           <Tooltip title="View Details">

@@ -6,6 +6,7 @@ export type TUser = {
   role: "admin" | "user";
   iat: number;
   exp: number;
+  name?: string; // Added optional name property
 };
 
 type TAuthState = {
