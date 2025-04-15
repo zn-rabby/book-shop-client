@@ -14,19 +14,19 @@ import {
 import {
   UserOutlined,
   BookOutlined,
-  //   ShoppingCartOutlined,
   DollarOutlined,
   SolutionOutlined,
   CheckCircleOutlined,
   SyncOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { useAppSelector } from "../../../redux/hooks";
+import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
 import { useGetAllBooksQuery } from "../../../redux/features/book/bookManagement";
 import { useGetAllOrdersQuery } from "../../../redux/features/order/orderApi";
 import { useGetAllProductsQuery } from "../../../redux/features/book/productsApi";
 import { useGetAllUsersQuery } from "../../../redux/features/user/userApi";
+import { useGetUserOrderHistoryQuery } from "../../../redux/features/order/orderApi";
 import {
   BarChart,
   PieChart,
@@ -53,63 +53,81 @@ const STATUS_COLORS = {
 };
 
 const DashboardHome = () => {
-  const user = useSelector((state: RootState) => state.auth.user) as TUser;
+  const user = useAppSelector(selectCurrentUser) as TUser;
   const isAdmin = user?.role === "admin";
-  const isUser = user?.role === "user";
 
-  //   const {
-  //     data: ordersData,
-
-  //   } = useGetAllOrdersQuery([ ]);
-
-  // Data fetching
+  // Data fetching for admin
   const { data: booksData, isLoading: booksLoading } =
     useGetAllBooksQuery(undefined);
-
   const { data: ordersData } = useGetAllOrdersQuery([{ name: "page" }]);
-  //   console.log(75, ordersData, "ordersData");
   const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery([
     { name: "page" },
   ]);
-
   const { data: productsData, isLoading: productsLoading } =
     useGetAllProductsQuery({});
-  //   const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery({});
-  console.log(76, usersData, "usersData");
-  // Filter and process data
-  const userOrders = isUser
-    ? ordersData?.data?.filter((order) => order.user === user?._id)
-    : [];
 
-  const recentOrders = isAdmin
-    ? ordersData?.data?.slice(0, 5)
-    : userOrders?.slice(0, 5);
+  // Data fetching for regular user
+  const { data: userOrdersData, isFetching: isUserOrdersFetching } =
+    useGetUserOrderHistoryQuery(user?.email);
 
-  // Calculate status counts
-  const statusCounts = ordersData?.data?.reduce(
-    (acc: Record<string, number>, order) => {
-      acc[order.status] = (acc[order.status] || 0) + 1;
-      return acc;
-    },
-    {}
-  );
+  if (
+    (isAdmin && (booksLoading || usersLoading || productsLoading)) ||
+    (!isAdmin && isUserOrdersFetching)
+  ) {
+    return (
+      <Spin
+        size="large"
+        className="flex justify-center items-center h-screen"
+        tip="Loading dashboard..."
+      />
+    );
+  }
 
-  // Stats data with status information
-  const stats = {
-    books: booksData?.data?.length || 0,
-    products: productsData?.data?.length || 0,
-    users: usersData?.data?.length || 0,
-    // orders: isAdmin ? ordersData?.data?.length || 0 : userOrders?.length || 0,
-    orders: ordersData?.data?.length,
-    userBooks:
-      userOrders?.reduce((acc, order) => acc + (order.books?.length || 0), 0) ||
-      0,
-    completedOrders: statusCounts?.completed || 0,
-    pendingOrders: statusCounts?.pending || 0,
-    cancelledOrders: statusCounts?.cancelled || 0,
-    processingOrders: statusCounts?.processing || 0,
-  };
-  console.log(stats, "stats");
+  // Prepare data based on user role
+  let stats, recentOrders, statusCounts;
+
+  if (isAdmin) {
+    // Admin statistics
+    statusCounts = ordersData?.data?.reduce(
+      (acc: Record<string, number>, order) => {
+        acc[order.status] = (acc[order.status] || 0) + 1;
+        return acc;
+      },
+      {}
+    );
+
+    stats = {
+      books: booksData?.data?.length || 0,
+      products: productsData?.data?.length || 0,
+      users: usersData?.data?.length || 0,
+      orders: ordersData?.data?.length || 0,
+      completedOrders: statusCounts?.completed || 0,
+      pendingOrders: statusCounts?.pending || 0,
+      cancelledOrders: statusCounts?.cancelled || 0,
+      processingOrders: statusCounts?.processing || 0,
+    };
+
+    recentOrders = ordersData?.data?.slice(0, 5);
+  } else {
+    // Regular user statistics
+    statusCounts = userOrdersData?.data?.reduce(
+      (acc: Record<string, number>, order) => {
+        acc[order.status] = (acc[order.status] || 0) + 1;
+        return acc;
+      },
+      {}
+    );
+
+    stats = {
+      orders: userOrdersData?.data?.length || 0,
+      completedOrders: statusCounts?.completed || 0,
+      pendingOrders: statusCounts?.pending || 0,
+      cancelledOrders: statusCounts?.cancelled || 0,
+      processingOrders: statusCounts?.processing || 0,
+    };
+
+    recentOrders = userOrdersData?.data?.slice(0, 5);
+  }
 
   // Chart data
   const salesData = [
@@ -122,17 +140,17 @@ const DashboardHome = () => {
   ];
 
   const inventoryData = [
-    { name: "Books", value: stats.books },
-    { name: "Products", value: stats.products },
-    ...(isAdmin ? [{ name: "Users", value: stats.users }] : []),
-    { name: "Orders", value: stats.orders },
+    { name: "Books", value: stats.books || 0 },
+    { name: "Products", value: stats.products || 0 },
+    ...(isAdmin ? [{ name: "Users", value: stats.users || 0 }] : []),
+    { name: "Orders", value: stats.orders || 0 },
   ];
 
   const statusData = [
-    { name: "Completed", value: stats.completedOrders },
-    { name: "Processing", value: stats.processingOrders },
-    { name: "Pending", value: stats.pendingOrders },
-    { name: "Cancelled", value: stats.cancelledOrders },
+    { name: "Completed", value: stats.completedOrders || 0 },
+    { name: "Processing", value: stats.processingOrders || 0 },
+    { name: "Pending", value: stats.pendingOrders || 0 },
+    { name: "Cancelled", value: stats.cancelledOrders || 0 },
   ];
 
   // Table columns
@@ -197,16 +215,6 @@ const DashboardHome = () => {
     },
   ];
 
-  if (booksLoading || productsLoading || (isAdmin && usersLoading)) {
-    return (
-      <Spin
-        size="large"
-        className="flex justify-center items-center h-screen"
-        tip="Loading dashboard..."
-      />
-    );
-  }
-
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       {/* Header */}
@@ -230,7 +238,7 @@ const DashboardHome = () => {
 
       {/* Stats Cards */}
       <Row gutter={[16, 16]} className="mb-8">
-        {isAdmin && (
+        {isAdmin ? (
           <>
             <Col xs={24} sm={12} md={6}>
               <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
@@ -243,16 +251,6 @@ const DashboardHome = () => {
                 />
               </Card>
             </Col>
-            {/* <Col xs={24} sm={12} md={6}>
-              <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
-                <Statistic
-                  title={<span className="text-gray-600">Total Products</span>}
-                  value={stats.products}
-                  prefix={<ShoppingCartOutlined className="text-purple-500" />}
-                  valueStyle={{ color: "#1890ff", fontSize: 24 }}
-                />
-              </Card>
-            </Col> */}
             <Col xs={24} sm={12} md={6}>
               <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
                 <Statistic
@@ -263,149 +261,183 @@ const DashboardHome = () => {
                 />
               </Card>
             </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
+                <Statistic
+                  title={<span className="text-gray-600">Total Orders</span>}
+                  value={stats.orders}
+                  prefix={<DollarOutlined className="text-yellow-500" />}
+                  valueStyle={{ color: "#faad14", fontSize: 24 }}
+                />
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
+                <Statistic
+                  title={
+                    <span className="text-gray-600">Completed Orders</span>
+                  }
+                  value={stats.completedOrders}
+                  prefix={<CheckCircleOutlined className="text-teal-500" />}
+                  valueStyle={{ color: "#52c41a", fontSize: 24 }}
+                />
+              </Card>
+            </Col>
           </>
-        )}
-        <Col xs={24} sm={12} md={isAdmin ? 6 : 12}>
-          <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
-            <Statistic
-              title={
-                <span className="text-gray-600">
-                  {isAdmin ? "Total Orders" : "Your Orders"}
-                </span>
-              }
-              value={stats.orders}
-              prefix={<DollarOutlined className="text-yellow-500" />}
-              valueStyle={{ color: "#faad14", fontSize: 24 }}
-            />
-          </Card>
-        </Col>
-        {isUser && (
-          <Col xs={24} sm={12} md={12}>
-            <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
-              <Statistic
-                title={<span className="text-gray-600">Books Purchased</span>}
-                value={stats.userBooks}
-                prefix={<BookOutlined className="text-teal-500" />}
-                valueStyle={{ color: "#13c2c2", fontSize: 24 }}
-              />
-            </Card>
-          </Col>
+        ) : (
+          <>
+            <Col xs={24} sm={12} md={6}>
+              <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
+                <Statistic
+                  title={<span className="text-gray-600">Total Orders</span>}
+                  value={stats.orders}
+                  prefix={<DollarOutlined className="text-yellow-500" />}
+                  valueStyle={{ color: "#faad14", fontSize: 24 }}
+                />
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
+                <Statistic
+                  title={<span className="text-gray-600">Completed</span>}
+                  value={stats.completedOrders}
+                  prefix={<CheckCircleOutlined className="text-teal-500" />}
+                  valueStyle={{ color: "#52c41a", fontSize: 24 }}
+                />
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
+                <Statistic
+                  title={<span className="text-gray-600">Processing</span>}
+                  value={stats.processingOrders}
+                  prefix={<SyncOutlined className="text-blue-500" />}
+                  valueStyle={{ color: "#1890ff", fontSize: 24 }}
+                />
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card className="shadow-md border-0 rounded-lg hover:shadow-lg transition-shadow">
+                <Statistic
+                  title={<span className="text-gray-600">Pending</span>}
+                  value={stats.pendingOrders}
+                  prefix={<SyncOutlined spin className="text-orange-500" />}
+                  valueStyle={{ color: "#fa8c16", fontSize: 24 }}
+                />
+              </Card>
+            </Col>
+          </>
         )}
       </Row>
 
       {/* Status Overview */}
-      {isAdmin && (
-        <Row gutter={[16, 16]} className="mb-8">
-          <Col span={24}>
-            <Card
-              title="Order Status Overview"
-              className="shadow-md border-0 rounded-lg"
-              extra={
-                <Badge
-                  count={stats.orders}
-                  style={{ backgroundColor: "#1890ff" }}
-                />
-              }
-            >
-              <Row gutter={[16, 16]}>
-                <Col xs={24} md={12}>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={statusData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
-                        paddingAngle={5}
-                        dataKey="value"
-                        nameKey="name"
-                        label={({ name, percent }) =>
-                          `${name}: ${percent * 100}%`
-                        }
-                      >
-                        {statusData.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={
-                              STATUS_COLORS[
-                                entry.name.toLowerCase() as keyof typeof STATUS_COLORS
-                              ] || "#d9d9d9"
-                            }
-                          />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        formatter={(value) => [`${value} orders`, "Count"]}
-                      />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </Col>
-                <Col xs={24} md={12}>
-                  <Space direction="vertical" size="middle" className="w-full">
-                    {statusData.map((status) => (
-                      <div key={status.name}>
-                        <div className="flex justify-between mb-1">
-                          <Text>{status.name}</Text>
-                          <Text strong>
-                            {status.value} (
-                            {Math.round((status.value / stats.orders) * 100)}%)
-                          </Text>
-                        </div>
-                        <Progress
-                          percent={Math.round(
-                            (status.value / stats.orders) * 100
-                          )}
-                          strokeColor={
-                            STATUS_COLORS[
-                              status.name.toLowerCase() as keyof typeof STATUS_COLORS
-                            ]
-                          }
-                          showInfo={false}
-                          strokeLinecap="round"
-                        />
-                      </div>
-                    ))}
-                  </Space>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-        </Row>
-      )}
-
-      {/* Charts */}
       <Row gutter={[16, 16]} className="mb-8">
-        <Col xs={24} md={isAdmin ? 12 : 24}>
+        <Col span={24}>
           <Card
-            title={isAdmin ? "Monthly Revenue" : "Your Spending History"}
+            title="Order Status Overview"
             className="shadow-md border-0 rounded-lg"
+            extra={
+              <Badge
+                count={stats.orders}
+                style={{ backgroundColor: "#1890ff" }}
+              />
+            }
           >
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip
-                  formatter={(value) => [
-                    `$${value}`,
-                    isAdmin ? "Revenue" : "Amount",
-                  ]}
-                  labelFormatter={(label) => `Month: ${label}`}
-                />
-                <Legend />
-                <Bar
-                  dataKey="value"
-                  fill="#8884d8"
-                  name={isAdmin ? "Revenue" : "Amount"}
-                  radius={[4, 4, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} md={12}>
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={statusData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={80}
+                      paddingAngle={5}
+                      dataKey="value"
+                      nameKey="name"
+                      label={({ name, percent }) =>
+                        `${name}: ${(percent * 100).toFixed(0)}%`
+                      }
+                    >
+                      {statusData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={
+                            STATUS_COLORS[
+                              entry.name.toLowerCase() as keyof typeof STATUS_COLORS
+                            ] || "#d9d9d9"
+                          }
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      formatter={(value) => [`${value} orders`, "Count"]}
+                    />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Col>
+              <Col xs={24} md={12}>
+                <Space direction="vertical" size="middle" className="w-full">
+                  {statusData.map((status) => (
+                    <div key={status.name}>
+                      <div className="flex justify-between mb-1">
+                        <Text>{status.name}</Text>
+                        <Text strong>
+                          {status.value} (
+                          {Math.round((status.value / stats.orders) * 100)}%)
+                        </Text>
+                      </div>
+                      <Progress
+                        percent={Math.round(
+                          (status.value / stats.orders) * 100
+                        )}
+                        strokeColor={
+                          STATUS_COLORS[
+                            status.name.toLowerCase() as keyof typeof STATUS_COLORS
+                          ]
+                        }
+                        showInfo={false}
+                        strokeLinecap="round"
+                      />
+                    </div>
+                  ))}
+                </Space>
+              </Col>
+            </Row>
           </Card>
         </Col>
-        {isAdmin && (
+      </Row>
+
+      {/* Charts */}
+      {isAdmin && (
+        <Row gutter={[16, 16]} className="mb-8">
+          <Col xs={24} md={12}>
+            <Card
+              title="Monthly Revenue"
+              className="shadow-md border-0 rounded-lg"
+            >
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={salesData}>
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip
+                    formatter={(value) => [`$${value}`, "Revenue"]}
+                    labelFormatter={(label) => `Month: ${label}`}
+                  />
+                  <Legend />
+                  <Bar
+                    dataKey="value"
+                    fill="#8884d8"
+                    name="Revenue"
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </Card>
+          </Col>
           <Col xs={24} md={12}>
             <Card
               title="Inventory Distribution"
@@ -422,7 +454,9 @@ const DashboardHome = () => {
                     paddingAngle={5}
                     dataKey="value"
                     nameKey="name"
-                    label={({ name, percent }) => `${name}: ${percent * 100}%`}
+                    label={({ name, percent }) =>
+                      `${name}: ${(percent * 100).toFixed(0)}%`
+                    }
                   >
                     {inventoryData.map((_, index) => (
                       <Cell
@@ -437,8 +471,8 @@ const DashboardHome = () => {
               </ResponsiveContainer>
             </Card>
           </Col>
-        )}
-      </Row>
+        </Row>
+      )}
 
       {/* Recent Orders Table */}
       <Row gutter={[16, 16]}>
