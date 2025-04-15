@@ -17,10 +17,11 @@ export default function UpdateProduct() {
 
   // Fetch the product data
   const { data: productData, isLoading } = useGetProductQuery(id);
+  //   console.log(22, productData);
 
   // Update product mutation
   const [updateProduct] = useUpdateProductMutation();
-  console.log(updateProduct, 22);
+  //   console.log(updateProduct, 22);
 
   // Handle form submission
   const onSubmit = async (data: any) => {
@@ -35,7 +36,12 @@ export default function UpdateProduct() {
       console.log("Product data to update:", productData, id); // Log the product data
 
       // Send the update request with the product ID
-      await updateProduct({ id, data: productData }).unwrap();
+
+      const productUpdate = await updateProduct({
+        id,
+        data: productData,
+      }).unwrap();
+      console.log(productUpdate, "productUpdate");
       toast.success("Product has been updated successfully!", {
         id: toastId,
         duration: 2000,
