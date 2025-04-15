@@ -9,7 +9,6 @@ import Login from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import CardDetails from "../pages/AllProduct/CardDetails";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
-import AdminDashboard from "../pages/Dashboard/AdminDashboard/AdminDashboard";
 import CreateUser from "../pages/Dashboard/User/CreateUser";
 import Users from "../pages/Dashboard/User/Users";
 import CreateProduct from "../pages/Dashboard/Product/CreateProduct";
@@ -24,6 +23,8 @@ import Fail from "../pages/Fail";
 import Cancel from "../pages/Cancel";
 import Contact from "../pages/Contact/Contact";
 import Author from "../pages/Author/Author";
+import DashboardProfile from "../pages/Dashboard/DashboardProfile/DashboardProfile";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -101,7 +102,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <AdminDashboard></AdminDashboard>,
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/profile",
+        element: <DashboardProfile></DashboardProfile>,
       },
       {
         path: "/dashboard/createUser",
