@@ -21,6 +21,7 @@ export default function Orders() {
     refetch,
   } = useGetAllOrdersQuery([{ name: "page", value: currentPage }, ...params]);
 
+  console.log(ordersData, "ordersData");
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
   const handleOrderStatusUpdate = async (value: string, id: string) => {
@@ -62,7 +63,6 @@ export default function Orders() {
   const metaData = ordersData?.meta;
 
   const columns = [
-    
     { title: "User Name", dataIndex: "userName", key: "userName" },
     { title: "User Email", dataIndex: "userEmail", key: "userEmail" },
 

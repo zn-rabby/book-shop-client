@@ -5,6 +5,7 @@ export type TSignUp = {
 };
 
 export type TUser = {
+  _id: any;
   email: string;
   name?: string;
   role: string;
