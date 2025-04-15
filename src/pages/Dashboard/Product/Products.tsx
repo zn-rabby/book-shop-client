@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment, useState } from "react";
 import {
@@ -98,19 +97,22 @@ export default function Products() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      sorter: (a: { name: string; }, b: { name: any; }) => a.name.localeCompare(b.name),
+      sorter: (a: { name: string }, b: { name: any }) =>
+        a.name.localeCompare(b.name),
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      sorter: (a: { title: string; }, b: { title: any; }) => a.title.localeCompare(b.title),
+      sorter: (a: { title: string }, b: { title: any }) =>
+        a.title.localeCompare(b.title),
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
-      onFilter: (value: any, record: { category: string | any[]; }) => record.category.includes(value),
+      onFilter: (value: any, record: { category: string | any[] }) =>
+        record.category.includes(value),
     },
     {
       title: "Author",

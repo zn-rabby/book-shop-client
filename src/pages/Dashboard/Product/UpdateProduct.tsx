@@ -20,6 +20,7 @@ export default function UpdateProduct() {
 
   // Update product mutation
   const [updateProduct] = useUpdateProductMutation();
+  console.log(updateProduct, 22);
 
   // Handle form submission
   const onSubmit = async (data: any) => {
@@ -31,6 +32,7 @@ export default function UpdateProduct() {
         rating: parseFloat(data.rating as unknown as string), // Ensure it's parsed as a number
         quantity: parseInt(data.quantity as unknown as string, 10), // Ensure it's parsed as a number
       };
+      console.log("Product data to update:", productData, id); // Log the product data
 
       // Send the update request with the product ID
       await updateProduct({ id, data: productData }).unwrap();
