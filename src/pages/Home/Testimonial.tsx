@@ -94,7 +94,7 @@ const Testimonial: React.FC = () => {
             { breakpoint: 1024, settings: { slidesToShow: 2 } },
             { breakpoint: 768, settings: { slidesToShow: 1 } },
           ]}
-          style={{ padding: "0 20px", marginTop: "40px" }}
+          style={{ padding: "5px 20px", marginTop: "40px" }}
         >
           {testimonials.map(({ id, name, review, rating, avatar }) => (
             <div key={id} style={{ padding: "10px" }}>
